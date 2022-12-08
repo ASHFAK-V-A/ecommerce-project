@@ -3,12 +3,15 @@ const express = require('express')
 const userRouter = require('../routes/user')
 const UserModel = require('../models/UserSchema')
 const bcrypt = require('bcrypt');
-const { redirect } = require('statuses');
 const emailregex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 const PasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 const Products = require('../models/ProductSchema')
 require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
+const products=require('../models/ProductSchema');
+
+
+
 
 
 let name
@@ -28,12 +31,11 @@ async function emailExists(email) {
 
 module.exports = {
 
-
   getHome: async (req, res) => {
-    let users = req.session.isUser
+    
     const product = await Products.find({delete:false})
 
-    if (users) {
+    if (req.session.isUser) {
       customer = true
       res.render('user/home', { product })
     } else {
@@ -73,6 +75,7 @@ module.exports = {
     }
   },
   getsignup: (req, res) => {
+    
     res.render('user/signup')
   },
   // Signup Validation
@@ -134,7 +137,10 @@ module.exports = {
 
 
           getotp:(req,res)=>{
-            res.render('user/otp')
+           
+              res.render('user/otp') 
+       
+           
           },
 
    
@@ -162,6 +168,7 @@ module.exports = {
   getlogout: (req, res) => { 
     req.session.destroy((err) => {
       if (err) throw err;
+      customer=false
       res.redirect('/')
     })
   },
@@ -181,8 +188,14 @@ module.exports = {
 
   },
 
-  viewproduct:(req,res)=>{
-    res.render('user/viewproduct')
+
+  viewproduct:async(req,res)=>{
+
+      const id =req.params.id
+    const product = await products.findOne({_id:id})
+    res.render('user/viewproduct',{product})
+    
+    
   }
 
 

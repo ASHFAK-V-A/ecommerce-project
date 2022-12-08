@@ -3,6 +3,9 @@ const userRouter=express()
 
 const userController=require('../controls/UserController')
 
+const VerfySession=require('../midlweare/session')
+
+
 userRouter.set('view engine','ejs')
 
 
@@ -15,16 +18,16 @@ userRouter.post('/login',userController.postlogin)
 
 userRouter.get('/signup',userController.getsignup)
 
-userRouter.get('/logout',userController.getlogout)
+userRouter.get('/logout', userController.getlogout)
 
 userRouter.post('/signup',userController.postsignup)
 
-userRouter.get('/cart',userController.getCart)
+userRouter.get('/cart',VerfySession.VerfyLoginUser, userController.getCart)
 
-userRouter.get('/otp',userController.getotp)
+userRouter.get('/otp', VerfySession.VerfyLoginUser,userController.getotp)
  
 userRouter.post('/otpid',userController.postotp)
 
-userRouter.get('/viewproduct',userController.viewproduct)
+userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.viewproduct)
 
 module.exports=userRouter   

@@ -1,4 +1,5 @@
 const { name } = require("ejs")
+const { VerifyLoginAdmin } = require("../midlweare/session")
 const categories = require("../models/cateogary")
 const products = require("../models/ProductSchema")
 const user=require('../models/UserSchema')
@@ -12,14 +13,12 @@ module.exports={
 
 
       getadminhome:(req,res)=>{
-          let admin=req.session.isAdmin
-          if(admin){
+       
             owner=true
            res.render('admin/admin-home',{owner})
-         }else{
-          
-            res.redirect('/admin/admin-signin')
-         }
+     
+        
+      
      
      },
  
@@ -52,6 +51,7 @@ module.exports={
     admingetlogout:(req,res)=>{ 
         req.session.destroy((err)=>{
             if(err) throw err;
+            owner=false
             res.render('admin/admin-login')
         })
     },
@@ -73,11 +73,11 @@ addproducts:async (req,res)=>{
 
 
 ProductDetail:async(req,res)=>{
-    if(req.session.isAdmin){
+   
         const product=await products.find()
       res.render('admin/ProductDetails',{product})   
       console.log(product);
-    }
+   
 
  },
 
@@ -164,23 +164,16 @@ restoreProduct:async(req,res)=>{
 
 
 category:async(req,res)=>{
-    if(req.session.isAdmin){
         const category= await categories.find()
         let productfound=req.session.err
         req.session.err = " "
        res.render('admin/cateogary',{productfound,category})  
-      
-    }else{
-        res.redirect('/admin/admin-signin')
-    }
-   
+     
 },
 
 
 addcategory:async(req,res)=>{
     
-
-
     if(req.body.category_name){
         const category_name=req.body.category_name
       const category=await categories.findOne({category_name:category_name}) 
@@ -238,11 +231,11 @@ deleteCategory:async (req,res)=>{
 // USER LIST
 
 getusers:async(req,res)=>{
-    if(req.session.isAdmin){
+   
         const users=await user.find()
         console.log(users);
         res.render('admin/userDetails',{users})   
-    }
+  
  
 },
 
