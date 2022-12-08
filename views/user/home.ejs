@@ -4,7 +4,7 @@
 <%- include('../partials/user-header') %>
 
 <%- include('../partials/carousel') %>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="/public/stylesheet/card.css">
 <title>home</title>
 <section>
@@ -21,7 +21,7 @@
              <p class="card-text"><%= products?.category %></p>
               
            <h4 class="card-text text-danger">₹<%= products.price %></h4>
-             <a href="#" class="btn btn-dark " style="width:5rem;">buy</a>
+             <a href="/viewproduct" class="btn btn-dark " style="width:5rem;">buy</a>
              <a href="#" class="btn btn-dark" style="width: 7rem;">Add to Cart</a>
            </div>
          </div>
@@ -30,5 +30,21 @@
    </div>
    </div>
 </section>
+<script>
+  $(document).ready(function(){
+   $('.col-md-3').hover(
+    function(){
+      $(this).animate({
+        marginTop: "-1%",
+      },100)
+    },
+    function(){
+      $(this).animate({
+      marginTop: "0%"
+      },100)
+    }
+   )
 
+  })
+</script>
  <!-- <%- include('../partials/prfumes') %> -->

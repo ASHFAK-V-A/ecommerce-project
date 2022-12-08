@@ -25,4 +25,6 @@ userRouter.get('/otp',userController.getotp)
  
 userRouter.post('/otpid',userController.postotp)
 
+userRouter.get('/viewproduct',userController.viewproduct)
+
 module.exports=userRouter   

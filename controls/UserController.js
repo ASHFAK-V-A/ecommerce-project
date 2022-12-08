@@ -111,7 +111,7 @@ module.exports = {
             from:process.env.EMAIL,
             to:email,
             subject : 'Otp for TheMenFactory',
-            html: `<p>Your OTP for registering in Cadbury is ${mailer.OTP}</p>`,
+            html: `<p>Your OTP for registering in TheMenFactory is ${mailer.OTP}</p>`,
            }
            mailer.mailTransporter.sendMail(mailDetails,function(err){
             if(err){
@@ -181,7 +181,9 @@ module.exports = {
 
   },
 
-
+  viewproduct:(req,res)=>{
+    res.render('user/viewproduct')
+  }
 
 
 
