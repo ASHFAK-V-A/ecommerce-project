@@ -1,0 +1,44 @@
+
+<%- include('../layout/metatag') %>
+
+<%- include('../partials/admin-header') %>
+
+
+    <!-- Main Content -->
+       <link rel="stylesheet" href="/public//stylesheet//login.css">
+    <div class="container-fluid">
+   
+      <div class="row main-content   text-center">
+        <div class="col-md-4 text-center company__info bg-white border">
+        <img src="/public/product-images/mustache-15048 (1).png" alt="" >
+          <h5 class="brand">Admin </h5>
+        </div> 
+      
+        <div class="col-md-8  login_form ">
+          <div class="container-fluid">
+            <div class="row " >
+              <h2 style="color: black;margin-left:-22px;">Log In</h2>
+            </div>
+            <div class="row">
+              <form control="" class="form-group" action="/admin/admin-login" method="post">
+                <div class="row">
+                  <input type="email" name="email" id="username" class="form__input" placeholder="Email" required>
+                </div>
+                <div class="row">
+                  <!-- <span class="fa fa-lock"></span> -->
+                  <input type="password" name="Password" id="password" class="form__input" placeholder="Password" required>
+                </div>
+     
+                <div class="row ms-5">
+                  <input type="submit" value="Submit" class="btn" style= "width:116px;
+                  background-color: black;
+                  margin-left: 36px;
+                  color: white;">
+                </div>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>

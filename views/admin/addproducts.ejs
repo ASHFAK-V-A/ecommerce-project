@@ -1,0 +1,58 @@
+<%- include('../partials/admin-header') %>
+
+<!-- admin sidebar -->
+<%- include('../partials/admin-sidebar')%>
+<!-- end admin sidebar -->
+
+      <div class="col py-3">
+
+        <div class="container ms-5 w-50 border mt-5">
+          <form action="/admin/postProduct" method="post" id="form" enctype="multipart/form-data">
+            <div class="d-flex justify-content-center">
+              <h1>Add Product</h1>
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <input type="text" required placeholder="Product name" name="product_name" id="product_name"
+                class="form-control" />
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <input type="text" required placeholder="Price per kg" name="price" id="price" class="form-control" />
+            </div>
+             <div class="form-outline flex-fill mb-0 mt-4">
+              <select class="form-select " name="category_name"  aria-label="Default select example">
+                <option selected disabled  >Category</option>
+              <% category.forEach((categories)=>{ %>  
+                <option value="<%=categories.category_name %>"><%=categories.category_name %></option>
+            <% }) %>
+                
+              </select>
+             
+       
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <input type="text" required  placeholder="Description" name="description" id="description" class="form-control" />
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <input type="text" required  placeholder="Stock in ml" name="stock" id="stock" class="form-control" />
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <input class="form-control" required  placeholder="Product image" type="file" name="image"
+                id="product_image">
+            </div>
+            <div class="d-flex justify-content-center mt-4 ">
+              <button type="submit" class="btn btn-success btn-block mb-4">Add product</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

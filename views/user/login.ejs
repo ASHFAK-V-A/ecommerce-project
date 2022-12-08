@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+ <link rel="stylesheet" href="/public/stylesheet/login.css">
+ </head>
+  <body> 
+    <!-- Main Content -->
+    
+    <div class="container-fluid">
+      <div class="row main-content  text-center">
+        <div class="col-md-4 text-center company__info bg-white border">
+        <img src="/public/product-images/mustache-15048 (1).png" alt="" >
+          <h5 class="brand">The Men Factory</h5>
+        </div> 
+      
+        <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+          <div class="container-fluid">
+            <div class="row " >
+              <h2 style="color: black;margin-left:-22px;">Log In</h2>
+            </div>
+            <div class="row">
+              <form control="" class="form-group" action="/login" method="post">
+                <div class="row">
+                  <input type="email" name="email" id="username" class="form__input" placeholder="Email" >
+                </div>
+                <div class="row">
+                  <!-- <span class="fa fa-lock"></span> -->
+                  <input type="password" name="Password" id="password" class="form__input" placeholder="Password">
+                </div>
+                <% if(locals.blocked){%>
+                  <p class="text-danger"><%=blocked%></p>
+                <%}%>
+                
+                <div class="row ms-5">
+                  <input type="submit" value="Submit" class="btnn">
+                </div>
+              </form>
+            </div>
+            <div class="row">
+              <p>Don't have an account? <a href="/signup">Register Here</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ </body>
+
+</html>

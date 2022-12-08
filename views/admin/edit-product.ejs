@@ -1,0 +1,58 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-sidebar')%>
+
+<div class="container mt-1 w-50 border mt-5 ms-3 ">
+
+    <form action="/admin/post-editedprotect/<%=productData._id%>" method="post" id="form"
+      enctype="multipart/form-data">
+      <div class="d-flex justify-content-center">
+        <h1>Edit Product</h1>
+      </div>
+      <div class="form-outline flex-fill mb-0 ">
+        <label class="form-label" for="form3Example1c">Product name</label>
+        <input type="text" value="<%= productData.product_name %>" name="name" id="name"
+          class="form-control" />
+
+      </div>
+      <div class="form-outline flex-fill mb-0 mt-3">
+        <label class="form-label" for="form3Example1c">Price </label>
+        <input type="text" value="<%= productData.price %>" name="price" id="price" class="form-control" />
+      </div>
+      <div class="form-outline flex-fill mb-0 mt-3">
+        <select class="form-select " name="category" id="category"   aria-label="Default select example">
+            <option selected disabled >Category</option>
+            <% category.forEach((categories)=> {%>
+            <option value="<%=categories.category_name%>" ><%=categories.category_name%></option>
+            <% }) %>
+          
+        </select>
+      </div>
+
+  
+      <div class="form-outline flex-fill mb-0 mt-3">
+        <label class="form-label" for="form3Example1c">Description</label>
+        <input type="text" value="<%= productData.description %>" name="description" id="description"
+          class="form-control" />
+
+      </div>
+      <div class="form-outline flex-fill mb-0 mt-3">
+        <label class="form-label" for="form3Example1c">Stock in kg</label>
+        <input type="text" value="<%= productData.stock %>" name="stock" id="stock" class="form-control" />
+
+      </div>
+      <div class="form-outline flex-fill mb-0 mt-3">
+        <label for="formFile" class="form-label">Product image</label>
+        <input class="form-control" type="file" onchange="viewImage(event)" name="image"
+          id="image">
+        <img src="/products-images/<%=productData._id%>.jpg" id="imgView" alt="" style="margin-top: 25px; width:100px;height:auto">
+      </div>
+      <div class="d-flex justify-content-center mt-1">
+        <button type="submit" class="btn btn-success btn-block mb-4" style=" margin-top: -47px;">Edit product</button>
+      </div>
+    </form>
+<script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+      }
+    </script>

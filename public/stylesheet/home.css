@@ -1,0 +1,48 @@
+.header-bar{
+    background-color: black;
+    
+   height: 17px;
+
+
+}
+
+img{
+
+    width: 50px;
+}
+.navbar-brand{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 900;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar{
+position:fixed;
+
+}
+
+.skin-care{
+    text-align: center;
+    margin-top: 40px;
+    font-family:  Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.Fragrance{
+    text-align: center;
+    margin-top: 40px;
+    font-family:  Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.dropdown-menu {
+background-color: transparent;
+        
+  border: 0;
+}
+.log{
+  background-color: rgb(0, 0, 0);
+  border: 0;
+  border-radius: 8px;
+  margin-top: 3px;
+  color: white;
+}

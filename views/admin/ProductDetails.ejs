@@ -1,0 +1,106 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-sidebar')%>
+
+<div class="col ">
+
+    <section>
+      <div class="container mt-5 table-responsive"></div>
+      <div class="d-flex align-items-center justify-content-center">
+        <h1 class="text-decoration-underline ">Product details</h1>
+      </div>
+
+      <table class="table mt-5" id="table">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Image</th>
+            <th scope="col">Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tbody>
+            <% let count=1 %>
+            <% product.forEach((products)=> { %>
+             <tr>
+                 <td>
+                 <%=count %>
+                 </td>
+                 <td>
+                  <%=products.product_name %>
+                 </td>
+                 <td>
+                  <%=products.price%>
+                 </td>
+                 <td>
+                   <%=products.category%>
+                 </td>
+                 <td>
+                   <%=products.description%>
+                 </td>
+                 <td>
+                   <%=products.stock%>
+                 </td>
+                 <td><img style="width:50px; height:50px;     position: relative;
+                  top: -3px;
+                  left: 5px;" src="/products-images/<%=products._id%>.jpg" alt=""></td>
+                 <td>
+                   <a href="/admin/edit-product/<%=products._id%>" class="btn btn-success">Edit</a>
+                   <!-- Button trigger modal -->
+                   <% if(products.delete===false) { %>
+                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                       data-bs-target="#exampleModal-<%=products._id%>">
+                       Delete
+                     </button>
+                     <% }else{ %>
+                       <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                         data-bs-target="#exampleModal-<%=products._id%>">
+                         Restore
+                       </button>
+                       <%}%>
+                   <!-- Modal -->
+                   <div class="modal fade" id="exampleModal-<%=products._id%>" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog">
+                       <div class="modal-content">
+                         <div class="modal-header">
+                           <h1 class="modal-title fs-5" id="exampleModalLabel">Delete confirmation</h1>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal"
+                             aria-label="Close"></button>
+                         </div>
+                         <% if(products.delete===false) { %>
+                           <div class="modal-body">
+                             Are you sure you want to delete <b><%=products.product_name %>? </b>
+                           </div>
+                           <% }else{ %>
+                             <div class="modal-body">
+                               Are you sure you want to restore: <b> <%=products.product_name %>?
+                            </b>
+                                </div>
+                             <%}%>
+                               <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary"
+                                   data-bs-dismiss="modal">Close</button>
+                                 <% if(products.delete===false) { %>
+                                   <a href="/admin/deleteProduct/<%=products._id%>"><button type="button"
+                                       class="btn btn-danger">Delete</button></a>
+                                   <% }else{ %>
+                                     <a href="/admin/restoreProduct/<%=products._id%>"><button type="button"
+                                         class="btn btn-danger">Restore</button></a>
+                                     <%}%>
+                               </div>
+                       </div>
+                     </div>
+                   </div>
+           </td>
+         </tr>
+         <% count++ %>
+           <% }) %>
+ 
+        </tbody>  

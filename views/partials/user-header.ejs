@@ -1,0 +1,69 @@
+
+
+<body>
+
+
+    <header>
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <nav class="navbar sticky-top  navbar-expand-lg bg-white ">
+                    <div class="container-fluid ">
+                        <a class="navbar-brand" href="#">
+                            <img src="/public/logo/mustache.png" alt="">
+                            The Men Factory</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0  ">
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold" href="/cart">Cart</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold" href="#">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold" href="#">Contact</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold " href="#">About Us</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex me-3" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-dark" type="submit">Search</button>
+                            </form>
+                            <div class="dropdown ">
+                                <button class="btn btn-secondary bg-dark" type="button"
+                                    aria-expanded="false">
+                                    <% if(customer) {%>
+                                    
+                                 <a href="/logout" style="text-decoration:none ; color: white;"> Logout</a>
+                                
+                                  <%}else{%>
+                                    <a href="/login" style="text-decoration:none ; color: white;">login</a>
+                      
+                                    <%} %>
+
+                                </button>
+                             
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+      
+
+    </header>

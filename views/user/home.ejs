@@ -1,0 +1,34 @@
+
+<%- include('../layout/metatag') %>
+
+<%- include('../partials/user-header') %>
+
+<%- include('../partials/carousel') %>
+
+<link rel="stylesheet" href="/public/stylesheet/card.css">
+<title>home</title>
+<section>
+   <h2 class="skin-care">skin cares</h2>
+   <div class="container-fluid">
+     <div class="row"> 
+      <% product.forEach((products)=>{ %>
+       <div class="col-md-3">
+         <div class="card m-4 border-0" style="width: 15rem;">
+           <img src="/products-images/<%=products?._id%>.jpg" class="card-img-top" alt="..."
+            style="width:10rem ; height:10rem ;margin-left:10px ;">
+           <div class="card-body">
+             <h5 class="card-title"><%= products?.product_name %></h5>
+             <p class="card-text"><%= products?.category %></p>
+              
+           <h4 class="card-text text-danger">₹<%= products.price %></h4>
+             <a href="#" class="btn btn-dark " style="width:5rem;">buy</a>
+             <a href="#" class="btn btn-dark" style="width: 7rem;">Add to Cart</a>
+           </div>
+         </div>
+       </div>
+       <% }) %>
+   </div>
+   </div>
+</section>
+
+ <!-- <%- include('../partials/prfumes') %> -->
