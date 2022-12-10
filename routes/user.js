@@ -28,6 +28,15 @@ userRouter.get('/otp', VerfySession.VerfyLoginUser,userController.getotp)
  
 userRouter.post('/otpid',userController.postotp)
 
+userRouter.get('/addtocart/:id',userController.addTocart)
+
 userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.viewproduct)
+
+userRouter.get('/addtocart/:id',userController.addTocart)
+
+userRouter.get('/viewcart',userController.viewcart)
+
+
+
 
 module.exports=userRouter   

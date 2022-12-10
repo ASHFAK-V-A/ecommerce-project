@@ -14,20 +14,23 @@
      <div class="row"> 
       <% product.forEach((products)=>{ %>
        <div class="col-md-3">
-         <div class="card m-4 border-0" style="width: 15rem;">
+         <div class="card m-4 border-0" style="width: 15rem;"> 
+          <a href=" /viewproduct/<%=products?._id%>" class="text-decoration-none">
            <img src="/products-images/<%=products?._id%>.jpg" class="card-img-top" alt="..."
             style="width:10rem ; height:10rem ;margin-left:10px ;">
+            
            <div class="card-body">
-             <h5 class="card-title"><%= products?.product_name %></h5>
-             <p class="card-text"><%= products?.category %></p>
+             <h5 class="card-title text-dark"><%= products?.product_name %></h5>
+             <p class="card-text text-dark"><%= products?.category %></p>
               
            <h4 class="card-text text-dark">$<%= products.price %>.00</h4>
            <div style="margin-top:25px;">
-                   <a href="/viewproduct/<%=products?._id%>" class="btn btn-dark " style="width:5rem;">buy</a>
-             <a href="#" class="btn btn-dark" style="width: 7rem;">Add to Cart</a>
+                   <a href="/viewproduct/<%=products?._id%>" class="btn btn-dark" style="width:10rem;">buy</a>
+            
            </div>
       
            </div>
+          </a>
          </div>
        </div>
        <% }) %>

@@ -1,6 +1,4 @@
 
-const express = require('express')
-const userRouter = require('../routes/user')
 const UserModel = require('../models/UserSchema')
 const bcrypt = require('bcrypt');
 const emailregex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
@@ -8,8 +6,8 @@ const PasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 const Products = require('../models/ProductSchema')
 require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
-const products=require('../models/ProductSchema');
-
+const cart=require('../models/CartSchema')
+const mongoose = require('mongoose')
 
 
 
@@ -18,6 +16,8 @@ let name
 let email
 let Password
 let phone
+
+
 async function emailExists(email) {
   const userfound = await UserModel.findOne({ email: email })
   if (userfound) {
@@ -37,6 +37,7 @@ module.exports = {
 
     if (req.session.isUser) {
       customer = true
+      
       res.render('user/home', { product })
     } else {
       customer = false
@@ -59,7 +60,8 @@ module.exports = {
         if (user.isBlocked == false) {
           const passwordMatch = await bcrypt.compare(Password, user.Password)
           if (passwordMatch) {
-            req.session.isUser = true
+            req.session.isUser =req.body.email
+           
             res.redirect('/')
           } else {
             res.render('user/login')
@@ -78,6 +80,16 @@ module.exports = {
     
     res.render('user/signup')
   },
+
+
+
+
+
+
+
+
+
+
   // Signup Validation
   postsignup:async (req,res)=>{
    
@@ -172,28 +184,118 @@ module.exports = {
       res.redirect('/')
     })
   },
+
  
-
-
-  // Navbat iteams section
-
   getCart: (req, res) => {
 
-    if (customer == true) {
       res.render('user/cart')
-    } else {
-      res.redirect('/login')
-    }
-
 
   },
 
 
-  viewproduct:async(req,res)=>{
+  addTocart: async(req,res)=>{
 
+    // Product Id
+    const prodid=req.params.id
+
+    // User Id
+    let session=req.session.isUser
+
+    // product id conver to object model
+    const objId = mongoose.Types.ObjectId(prodid)
+
+
+let proObj = {
+productId : objId,
+
+  };
+
+  const UserData= await UserModel.findOne({email:session})
+  const userCart = await cart.findOne({userId :UserData._id})
+
+    if(userCart){
+ 
+      let proExist =userCart.product.findIndex(
+      (product) =>product.productId== prodid
+      )
+console.log(proExist);
+
+    if(proExist !=-1){
+  await cart.aggregate([
+     {
+      $unwind :"$product"
+     }
+   ])
+ }
+
+   
+
+
+
+
+    // if(proExist !=-1){
+    //   await cart.aggregate([
+    //     {
+    //       $unwind: "$product"
+    //     }
+    //   ])
+    //   await cart.updateOne(
+    //     {userId:UserData._id, "product.productId":objId},
+    //     {$inc :{"product.$.quantity ":1}}
+    //   )
+    //   res.redirect('/cart')
+    // }else{
+    //   cart
+    //      .updateOne({userId:UserData._id},{$push: {product:proObj}})
+    //      .then(()=>{
+    //       res.redirect('/viewcart')
+    //      })
+    // }
+
+
+    }else{
+      const newCart = new cart ({
+        userId:UserData._id,
+
+        product:[{
+          productId:objId,
+           quantity:1
+        }
+      ]
+      })
+      newCart.save().then(()=>{
+        res.render('user/cart')
+        console.log(newCart);
+      })
+      
+      
+    }
+
+  
+
+  },
+  
+
+  
+
+viewcart: async(req,res)=>{
+
+},
+
+
+
+
+
+
+
+
+
+
+
+  viewproduct:async(req,res)=>{
       const id =req.params.id
-    const product = await products.findOne({_id:id})
-    res.render('user/viewproduct',{product})
+    const products = await Products.findOne({_id:id})
+    res.render('user/viewproduct',{products})
     
     
   }

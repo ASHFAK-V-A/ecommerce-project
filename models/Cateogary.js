@@ -7,5 +7,8 @@ const categorySchema = new mongoose.Schema({
     }
 })
 
+
+
+
 const categories=mongoose.model('categories',categorySchema);
 module.exports = categories

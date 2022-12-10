@@ -1,5 +1,4 @@
-const { name } = require("ejs")
-const { VerifyLoginAdmin } = require("../midlweare/session")
+
 const categories = require("../models/cateogary")
 const products = require("../models/ProductSchema")
 const user=require('../models/UserSchema')
