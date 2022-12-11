@@ -15,26 +15,21 @@ userRouter.get('/login',userController.getlogin)
 
 userRouter.post('/login',userController.postlogin)
 
-
 userRouter.get('/signup',userController.getsignup)
 
 userRouter.get('/logout', userController.getlogout)
 
 userRouter.post('/signup',userController.postsignup)
 
-userRouter.get('/cart',VerfySession.VerfyLoginUser, userController.getCart)
-
 userRouter.get('/otp', VerfySession.VerfyLoginUser,userController.getotp)
- 
+
 userRouter.post('/otpid',userController.postotp)
 
-userRouter.get('/addtocart/:id',userController.addTocart)
+userRouter.get('/addtocart/:id',VerfySession.VerfyLoginUser,userController.addTocart)
 
 userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.viewproduct)
 
-userRouter.get('/addtocart/:id',userController.addTocart)
-
-userRouter.get('/viewcart',userController.viewcart)
+userRouter.get('/viewcart', VerfySession.VerfyLoginUser,userController.viewcart)
 
 
 

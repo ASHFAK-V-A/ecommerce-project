@@ -1,8 +1,5 @@
 
 
-<body>
-
-
     <header>
         
         <div class="container-fluid">
@@ -24,18 +21,24 @@
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" aria-current="page" href="/">Home</a>
                                 </li>
-                              
+                                
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" href="/shop">Shop</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active fw-semibold" href="/cart">Cart</a>
+                                    <a class="nav-link active fw-semibold" href="/viewcart">Cart</a>
+                                    <% if(customer) {%>
+                                     <span class="badge rounded-pill  bg-danger" style="       font-size: 9px;
+                                    position: fixed;
+                                    top: 25px;
+                                    right: 630px;
+                                        "><%=countInCart %>
+                                        </span>
+                                        <%} %>
                                 </li>
+                            
                                 <li class="nav-item">
-                                    <a class="nav-link active fw-semibold" href="#">Contact</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active fw-semibold " href="#">About Us</a>
+                                    <a class="nav-link active fw-semibold ms-2 " href="#">About Us</a>
                                 </li>
                           
                             </ul>
@@ -71,15 +74,8 @@
         </div>
 
 
-        <style>
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
-</style>
+
   
 
-    </header>
+
+

@@ -7,7 +7,8 @@ const Products = require('../models/ProductSchema')
 require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
 const cart=require('../models/CartSchema')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const products = require('../models/ProductSchema');
 
 
 
@@ -175,7 +176,6 @@ module.exports = {
               
               },
 
-
   
   getlogout: (req, res) => { 
     req.session.destroy((err) => {
@@ -195,20 +195,21 @@ module.exports = {
 
   addTocart: async(req,res)=>{
 
+    console.log('api cal');
     // Product Id
-    const prodid=req.params.id
+    const proid=req.params.id
 
     // User Id
     let session=req.session.isUser
 
     // product id conver to object model
-    const objId = mongoose.Types.ObjectId(prodid)
+    const objId = mongoose.Types.ObjectId(proid)
 
 
-let proObj = {
-productId : objId,
-
-  };
+    let proObj = {
+      productId : objId,
+      quantity : 1,
+  };;
 
   const UserData= await UserModel.findOne({email:session})
   const userCart = await cart.findOne({userId :UserData._id})
@@ -216,9 +217,9 @@ productId : objId,
     if(userCart){
  
       let proExist =userCart.product.findIndex(
-      (product) =>product.productId== prodid
+      (product) =>product.productId== proid
       )
-console.log(proExist);
+
 
     if(proExist !=-1){
   await cart.aggregate([
@@ -226,32 +227,20 @@ console.log(proExist);
       $unwind :"$product"
      }
    ])
- }
-
+  await cart.updateOne(
+    {userId:UserData._id,"product.productId":objId},
+    {$inc :{"product.$.quantity" :1}}
+    ) 
+    res.redirect('/viewcart')
+  }else{
+    cart
+       .updateOne({ userId: UserData._id }, { $push: { product: proObj } })
+       .then(() => {
+    
+         res.redirect("/viewcart");    
    
-
-
-
-
-    // if(proExist !=-1){
-    //   await cart.aggregate([
-    //     {
-    //       $unwind: "$product"
-    //     }
-    //   ])
-    //   await cart.updateOne(
-    //     {userId:UserData._id, "product.productId":objId},
-    //     {$inc :{"product.$.quantity ":1}}
-    //   )
-    //   res.redirect('/cart')
-    // }else{
-    //   cart
-    //      .updateOne({userId:UserData._id},{$push: {product:proObj}})
-    //      .then(()=>{
-    //       res.redirect('/viewcart')
-    //      })
-    // }
-
+       }); 
+}
 
     }else{
       const newCart = new cart ({
@@ -264,32 +253,67 @@ console.log(proExist);
       ]
       })
       newCart.save().then(()=>{
-        res.render('user/cart')
-        console.log(newCart);
+        res.redirect('/viewcart')
+       
       })
       
-      
-    }
-
+        
   
 
-  },
-  
-
-  
-
-viewcart: async(req,res)=>{
-
+  }
 },
 
+viewcart: async(req,res)=>{
+const session = req.session.isUser
+
+const userData=await UserModel.findOne({email:session})
+
+const ProductData =await cart.aggregate([
+  {
+    $match: {userId:userData.id}  
+  },
+  
+{
+  $unwind:'$product'
+},
+ 
+{
+  $project:{
+    iteam:'$product.productId',
+    quantity:"$product.quantity"
+  } 
+},
+{
+  $lookup:{
+   from:"products", 
+   localField:"iteam", 
+   foreignField:"_id",
+   as:"productDetail"
+ 
+  } 
+},
+{
+  
+    $project: {
+        iteam: 1,
+        quantity: 1,
+        productDetail: { $arrayElemAt: ["$productDetail", 0] },
+      },
+
+}
 
 
+])
+.exec();
 
 
+countInCart = ProductData.length
 
 
+res.render('user/cart',{ProductData,countInCart})
+console.log(ProductData);
 
-
+},
 
 
   viewproduct:async(req,res)=>{
@@ -297,11 +321,7 @@ viewcart: async(req,res)=>{
     const products = await Products.findOne({_id:id})
     res.render('user/viewproduct',{products})
     
-    
   }
-
-
-
 
 }
 
