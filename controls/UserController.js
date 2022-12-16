@@ -17,7 +17,7 @@ let name
 let email
 let Password
 let phone
-
+let countInCart;
 
 async function emailExists(email) {
   const userfound = await UserModel.findOne({ email: email })
@@ -31,7 +31,6 @@ async function emailExists(email) {
 
 
 module.exports = {
-
   getHome: async (req, res) => {
     
     const product = await Products.find({delete:false})
@@ -39,7 +38,7 @@ module.exports = {
     if (req.session.isUser) {
       customer = true
       
-      res.render('user/home', { product })
+      res.render('user/home', { product,countInCart })
     } else {
       customer = false
       res.render('user/home', { product })
@@ -81,14 +80,6 @@ module.exports = {
     
     res.render('user/signup')
   },
-
-
-
-
-
-
-
-
 
 
   // Signup Validation
@@ -231,7 +222,7 @@ module.exports = {
     {userId:UserData._id,"product.productId":objId},
     {$inc :{"product.$.quantity" :1}}
     ) 
-    res.redirect('/viewcart')
+    res.redirect('/viewcart')  
   }else{
     cart
        .updateOne({ userId: UserData._id }, { $push: { product: proObj } })
@@ -256,9 +247,6 @@ module.exports = {
         res.redirect('/viewcart')
        
       })
-      
-        
-  
 
   }
 },
@@ -300,28 +288,149 @@ const ProductData =await cart.aggregate([
         productDetail: { $arrayElemAt: ["$productDetail", 0] },
       },
 
+},
+{
+  $addFields: {
+      productPrice: {
+        $multiply: ["$quantity", "$productDetail.price"]
+      }
+    }
 }
-
-
+ 
 ])
+
 .exec();
+const sum = ProductData.reduce((accumulator, object) => {
+  return accumulator + object.productPrice;
+}, 0);
 
 
 countInCart = ProductData.length
 
 
-res.render('user/cart',{ProductData,countInCart})
-console.log(ProductData);
+res.render('user/cart',{ProductData,countInCart,sum})
 
 },
+
+changeQuantity: (req, res, next) => {
+  const data = req.body; 
+  console.log(data);
+  data.count = parseInt(data.count);
+  data.quantity = parseInt(data.quantity);  
+  const objId = mongoose.Types.ObjectId(data.product);
+
+  if (data.count == -1 && data.quantity == 1) {
+    res.json({ quantity: true }) 
+  } else {
+    cart 
+      .aggregate([
+        {
+          $unwind: "$product",
+        },
+      ])
+      .then((data) => {
+        console.log(data);
+      });
+    cart.updateOne(
+      { _id: data.cart, "product.productId": objId },
+      { $inc: { "product.$.quantity": data.count } }
+    ).then(() => {
+      next();
+    })
+
+  }
+
+
+
+},
+
+totalAmount: async (req, res) => {
+
+
+  let session = req.session.user;
+  const userData = await user.findOne({ email: session });
+  const productData = await cart.aggregate([
+    {
+      $match: { userId: userData.id },
+    },
+    {
+      $unwind: "$product",
+    },
+    {
+      $project: {
+        iteam: "$product.productId",
+        quantity: "$product.quantity",
+      },
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "productItem",
+        foreignField: "_id",
+        as: "productDetail",
+      },
+    },
+    {
+      $project: {
+        item: 1,
+        quantity: 1,
+        productDetail: { $arrayElemAt: ["$productDetail", 0] },
+      },
+    },
+    {
+      $addFields: {
+        productPrice: {
+          $multiply: ["$quantity", "$productDetail.price"],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: userData.id,
+        total: {
+          $sum: { $multiply: ["$quantity", "$productDetail.price"] },
+        },
+      },
+    },
+  ]).exec();
+  
+
+  res.json({ status: true, productData });
+
+},
+
 
 
   viewproduct:async(req,res)=>{
       const id =req.params.id
     const products = await Products.findOne({_id:id})
-    res.render('user/viewproduct',{products})
+    res.render('user/viewproduct',{products,countInCart})
     
+  },
+
+
+  removeProduct:async(req,res)=>{
+    const data = req.body;
+console.log(data);
+    await cart.aggregate([
+      {
+        $unwind: "$product"
+      }
+    ])
+    await cart
+      .updateOne(
+        { _id: data.cartId, "product.productId": data.product },
+        { $pull: { product: { productId: data.product } } }
+      )
+      .then(() => { 
+        res.json({ status: true });
+   
+      });
+  },
+  wishlist:(req,res)=>{
+    res.render('user/wishlist',{countInCart})
   }
+
 
 }
 
@@ -329,4 +438,4 @@ console.log(ProductData);
 // muhammadarshad8935@gmail.com
 
   //password 
-  //af10ashfak#ii            
+  //af10ashfak#ii              

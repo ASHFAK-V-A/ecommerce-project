@@ -2,7 +2,8 @@
 
 <%- include('../partials/user-header') %>
 
-<section class="h-100 gradient-custom">
+<% if (countInCart !== 0) { %>
+      <section class="h-100 gradient-custom">
     <div class="container py-5">
       <div class="row d-flex justify-content-center my-4 mt-5">
         <div class="col-md-8">
@@ -12,7 +13,6 @@
             </div>
             <% ProductData.forEach((product)=>{ %>
             <div class="card-body">
-    
               <div class="row">
                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                   <!-- Image -->
@@ -33,12 +33,14 @@
                   <p><%= product.productDetail.category %></p>
                   <p><%= product.productDetail.description %></p>
                   <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
-                    title="Remove item">
-                    <i class="fa fa-trash"></i>
+                    title="Remove item"
+                    onclick="removeProduct('<%= product._id %>','<%= product.productDetail._id %>')">          
+                  <i class="fa fa-trash text-white"></i>
                   </button>
                   <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+          
                     title="Move to the wish list">
-                    <i class="fa fa-heart"></i>
+                  <a href="/wishlisht"><i class="fa fa-heart text-white"></i> </a>  
                   </button>
                   <!-- Data -->
                 </div>
@@ -46,24 +48,21 @@
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                   <!-- Quantity -->
                   <div class="d-flex mb-4" style="max-width: 300px">
-                    <button class="btn btn-primary px-3 me-2"
-                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                      <i class="fa fa-minus"></i>
-                    </button>
-  
-                    <div class="form-outline">
-                      <input id="form1" min="0" name="quantity" value="<%= product.quantity%>" type="number" class="form-control" />
-                      <label class="form-label" for="form1">Quantity</label>
-                      
-                    </div>
-        
-  
-                    <button class="btn btn-primary px-3 ms-2"
-                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                      
-                      <i class="fa fa-plus"></i>
-                    </button>
+                   <% if (product.quantity>1) { %>
                     
+                   <button class="btn btn-primary px-3 me-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepDown(),changeQuantity('<%= product._id %>','<%= product.productDetail._id %>',-1)"> 
+                      <i class="fa fa-minus"></i>
+                         <% } %>
+                    </button>
+                    <div class="form-outline">
+                      <input id="<%= product.productDetail._id %>"  min="0" name="quantity" value="<%= product.quantity%>" type="number" class="form-control" />
+                      <label class="form-label" for="form1">Quantity</label>              
+                    </div>
+                    <button class="btn btn-primary px-3 ms-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepUp(),changeQuantity('<%= product._id %>','<%= product.productDetail._id %>',1)">                     
+                      <i class="fa fa-plus"></i>
+                    </button>                  
                   </div>
                   <!-- Quantity -->
   
@@ -122,15 +121,15 @@
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                   <div>
-                    <strong>Total amount</strong>
+          
                     <strong>
-                      <p class="mb-0">(including VAT)</p>
+                      <p class="mb-0">Tottal</p>
                     </strong>
                   </div>
-                  <span><strong>$53.98</strong></span>
+                 
                 </li>
               </ul>
-  
+             <p id="netamount">$<%= sum%> </p>
               <button type="button" class="btn btn-primary btn-lg btn-block">
                 Go to checkout
               </button>
@@ -140,4 +139,14 @@
         </div>
       </div>
     </div>
-  </section>  -->
+  </section>  
+  <% }else { %>
+  
+  <%- include('../partials/emptycart') %>
+
+  <% } %>
+
+  <%- include('../partials/footer') %>
+  
+  <script src="http://localhost:3000/javascript/cart.js"></script>
+

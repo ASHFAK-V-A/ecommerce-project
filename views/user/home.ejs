@@ -1,58 +1,58 @@
 
-<%- include('../layout/metatag') %>
 
-<%- include('../partials/user-header') %>
 
-<%- include('../partials/carousel') %>
+       <%- include('../partials/user-header') %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="/public/stylesheet/card.css">
-<title>home</title>
-<section>
-   <h2 class="skin-care">skin cares</h2>
-   <div class="container-fluid">
-     <div class="row"> 
-      <% product.forEach((products)=>{ %>
-       <div class="col-md-3">
-         <div class="card m-4 border-0" style="width: 15rem;"> 
-          <a href=" /viewproduct/<%=products?._id%>" class="text-decoration-none">
+       <%- include('../partials/carousel') %>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <link rel="stylesheet" href="/public/stylesheet/card.css">
+         <title>home</title>
+          <section>
+           <h2 class="skin-care">skin cares</h2>
+           <div class="container-fluid">
+            <div class="row"> 
+           <% product.forEach((products)=>{ %>
+           <div class="col-md-3">
+           <div class="card m-4 border-0" style="width: 15rem;"> 
+            <a href=" /viewproduct/<%=products?._id%>" class="text-decoration-none">
            <img src="/products-images/<%=products?._id%>.jpg" class="card-img-top" alt="..."
             style="width:10rem ; height:10rem ;margin-left:10px ;">
-            
+
            <div class="card-body">
              <h5 class="card-title text-dark"><%= products?.product_name %></h5>
              <p class="card-text text-dark"><%= products?.category %></p>
               
            <h4 class="card-text text-dark">$<%= products.price %>.00</h4>
            <div style="margin-top:25px;">
-                   <a href="/viewproduct/<%=products?._id%>" class="btn btn-dark" style="width:10rem;">buy</a>
+           <a href="/viewproduct/<%=products?._id%>" class="btn btn-dark" style="width:10rem;">buy</a>
             
            </div>
       
            </div>
-          </a>
-         </div>
+           </a>
+           </div>
+           </div>
+           <% }) %>
        </div>
-       <% }) %>
-   </div>
-   </div>
-</section>
-<script>
-  $(document).ready(function(){
-   $('.col-md-3').hover(
-    function(){
-      $(this).animate({
+       </div>
+        </section>
+       <script>
+       $(document).ready(function(){
+       $('.col-md-3').hover(
+       function(){
+       $(this).animate({
         marginTop: "-1%",
-      },100)
-    },
-    function(){
-      $(this).animate({
-      marginTop: "0%"
-      },100)
-    }
-   )
+       },100)
+       },
+       function(){
+       $(this).animate({
+       marginTop: "0%"
+       },100)
+       }
+       ) 
 
-  })
-</script>
-<%- include('../partials/footer') %>
- <!-- <%- include('../partials/prfumes') %> -->
+        })
+       </script>
+       <%- include('../partials/footer') %>
+       <%- include('../partials/prfumes') %>

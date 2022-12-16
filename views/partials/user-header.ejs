@@ -1,11 +1,8 @@
 
-
-    <header>
-        
+<%- include('../layout/metatag') %>
+    <header> 
         <div class="container-fluid">
-
             <div class="row">
-
                 <nav class="navbar sticky-top  navbar-expand-lg bg-white ">
                     <div class="container-fluid ">
                         <a class="navbar-brand" href="#">
@@ -21,22 +18,27 @@
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" aria-current="page" href="/">Home</a>
                                 </li>
-                                
+                        
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" href="/shop">Shop</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" href="/viewcart">Cart</a>
-                                    <% if(customer) {%>
+                                    <% if(customer) { %>
+                                        <% if (countInCart !== 0) { %>                                  
                                      <span class="badge rounded-pill  bg-danger" style="       font-size: 9px;
                                     position: fixed;
                                     top: 25px;
                                     right: 630px;
-                                        "><%=countInCart %>
+                                        "><%= countInCart  %>
                                         </span>
+                                   
+                                        
                                         <%} %>
-                                </li>
+                                        
+                                        <% } %>
                             
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold ms-2 " href="#">About Us</a>
                                 </li>
@@ -52,10 +54,9 @@
                             <div class="dropdown ">
                                 <button class="btn btn-secondary bg-dark" type="button"
                                     aria-expanded="false">
-                                    <% if(customer) {%>
-                                    
+                                    <% if(customer) {%>                                   
                                  <a href="/logout" style="text-decoration:none ; color: white;"> Logout</a>
-                                
+                    
                                   <%}else{%>
                                     <a href="/login" style="text-decoration:none ; color: white;">login</a>
                       
