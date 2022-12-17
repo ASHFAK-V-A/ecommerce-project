@@ -7,6 +7,7 @@
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
@@ -31,9 +32,8 @@
 	        	<div class="col-md-6">
 	        		<div class="product-dtl">
         				<div class="product-info">
-							<button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" 
-							onclick="getWishlist()">
-								<a href="/wishlisht"><i class="fa fa-heart text-white"></i> </a>  
+							<button onclick="addtowishlist()" type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" >
+								<a href="/wishlisht/<%=products._id%>"><i class="fa fa-heart text-white"></i> </a>  
 								</button>
 		        			<div class="product-name mt-1"><%=products.product_name %></div>
 		        			<div class="reviews-counter mt-3">

@@ -14,7 +14,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0  ">
+                            <ul class="navbar-nav me-auto  mb-lg-0  ">
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold" aria-current="page" href="/">Home</a>
                                 </li>
@@ -26,33 +26,28 @@
                                     <a class="nav-link active fw-semibold" href="/viewcart">Cart</a>
                                     <% if(customer) { %>
                                         <% if (countInCart !== 0) { %>                                  
-                                     <span class="badge rounded-pill  bg-danger" style="       font-size: 9px;
+                                    <sup> <span class="badge rounded-pill  bg-danger" style="font-size: 9px;
                                     position: fixed;
                                     top: 25px;
-                                    right: 630px;
-                                        "><%= countInCart  %>
-                                        </span>
-                                   
-                                        
+                                    right: 500px;"><%= countInCart  %>
+                                     </span>
+                                         </sup>
                                         <%} %>
-                                        
-                                        <% } %>
-                            
+                            <% } %>                         
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active fw-semibold ms-2 " href="#">About Us</a>
-                                </li>
-                          
+                                </li>                         
                             </ul>
-                            <a href="" class="text-decoration:null"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart me-5" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                              </svg></a>
-                            <form class="d-flex me-3" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-dark" type="submit">Search</button>
-                            </form>
+                           <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger">  </i> </a>
+                           <% if(customer) { %>
+                           <sup> <span class="badge rounded-pill badge-notification bg-danger" style="font-size:9px;"></span></sup> 
+                           <%} %>
+                            <button class="btn btn-light btn-circle btn-circle-xl m-1 ms-3" 
+                            style="border-radius: 20px; 
+                              "><i class="fa fa-user"></i></button>
                             <div class="dropdown ">
-                                <button class="btn btn-secondary bg-dark" type="button"
+                                <button class="btn btn-secondary bg-dark ms-3" type="button"
                                     aria-expanded="false">
                                     <% if(customer) {%>                                   
                                  <a href="/logout" style="text-decoration:none ; color: white;"> Logout</a>
@@ -65,7 +60,7 @@
                                 </button>
                              
 
-                                </ul>
+                                 </ul>
                             </div>
                         </div>
                     </div>

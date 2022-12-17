@@ -40,27 +40,24 @@
                   <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
           
                     title="Move to the wish list">
-                  <a href="/wishlisht"><i class="fa fa-heart text-white"></i> </a>  
+                  <a href="/wishlisht/<%= product._id %>"><i class="fa fa-heart text-white"></i> </a>  
                   </button>
                   <!-- Data -->
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                   <!-- Quantity -->
-                  <div class="d-flex mb-4" style="max-width: 300px">
-                   <% if (product.quantity>1) { %>
-                    
+                  <div class="d-flex mb-4" style="max-width: 300px">           
                    <button class="btn btn-primary px-3 me-2"
-                      onclick="this.parentNode.querySelector('input[type=number]').stepDown(),changeQuantity('<%= product._id %>','<%= product.productDetail._id %>',-1)"> 
-                      <i class="fa fa-minus"></i>
-                         <% } %>
+                      onclick="changequantity('<%= product._id %>','<%= product.productDetail._id %>',-1)"> 
+                      <i class="fa fa-minus"></i>                  
                     </button>
                     <div class="form-outline">
-                      <input id="<%= product.productDetail._id %>"  min="0" name="quantity" value="<%= product.quantity%>" type="number" class="form-control" />
+                      <strong>  <p class="mt-5" id="<%= product.productDetail._id %>" min="0" name="quantity"><%= product.quantity%></p></strong>
                       <label class="form-label" for="form1">Quantity</label>              
                     </div>
                     <button class="btn btn-primary px-3 ms-2"
-                      onclick="this.parentNode.querySelector('input[type=number]').stepUp(),changeQuantity('<%= product._id %>','<%= product.productDetail._id %>',1)">                     
+                      onclick="changequantity('<%= product._id %>','<%= product.productDetail._id %>',1)">                     
                       <i class="fa fa-plus"></i>
                     </button>                  
                   </div>
@@ -140,6 +137,7 @@
       </div>
     </div>
   </section>  
+    <script src="/public/javascript/change.js"></script>
   <% }else { %>
   
   <%- include('../partials/emptycart') %>
@@ -147,6 +145,9 @@
   <% } %>
 
   <%- include('../partials/footer') %>
+
+
+
   
-  <script src="http://localhost:3000/javascript/cart.js"></script>
+ 
 

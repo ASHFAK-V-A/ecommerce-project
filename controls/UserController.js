@@ -6,9 +6,11 @@ const PasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 const Products = require('../models/ProductSchema')
 require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
-const cart=require('../models/CartSchema')
+const cart = require('../models/CartSchema')
 const mongoose = require('mongoose');
 const products = require('../models/ProductSchema');
+const wishlist = require('../models/wishlistSchema');
+
 
 
 
@@ -260,7 +262,7 @@ const ProductData =await cart.aggregate([
   {
     $match: {userId:userData.id}  
   },
-  
+   
 {
   $unwind:'$product'
 },
@@ -312,43 +314,38 @@ res.render('user/cart',{ProductData,countInCart,sum})
 
 },
 
-changeQuantity: (req, res, next) => {
-  const data = req.body; 
-  console.log(data);
-  data.count = parseInt(data.count);
-  data.quantity = parseInt(data.quantity);  
-  const objId = mongoose.Types.ObjectId(data.product);
+changequantity : (req,res,next)=>{   
+  const data = req.body
+  const objId = mongoose.Types.ObjectId(data.productId)
 
-  if (data.count == -1 && data.quantity == 1) {
-    res.json({ quantity: true }) 
-  } else {
-    cart 
-      .aggregate([
-        {
-          $unwind: "$product",
-        },
-      ])
-      .then((data) => {
-        console.log(data);
-      });
-    cart.updateOne(
-      { _id: data.cart, "product.productId": objId },
-      { $inc: { "product.$.quantity": data.count } }
-    ).then(() => {
-      next();
-    })
-
+console.log('quentity'+data.quantity);
+console.log(data.cartId);
+  if(data.count == -1 && data.quantity == 1){
+       cart.updateOne( 
+        {_id: data.cartId, "product.productId":objId},
+        {$pull : { product : { productId:objId }}} 
+       )
+       .then(()=>{ 
+       res.json({quantity:true})   
+       })  
+  }else{
+    cart.updateOne( 
+      { _id: data.cartId, "product.productId":objId},
+      { $inc:{"product.$.quantity": data.count }}
+     ).then(()=>{ 
+        console.log('hello');
+        next()
+     })
   }
-
-
-
-},
-
+  
+  
+}, 
 totalAmount: async (req, res) => {
 
+console.log('tottal working start');
 
-  let session = req.session.user;
-  const userData = await user.findOne({ email: session });
+  let session = req.session.isUser;
+  const userData = await UserModel.findOne({ email: session });
   const productData = await cart.aggregate([
     {
       $match: { userId: userData.id },
@@ -358,14 +355,14 @@ totalAmount: async (req, res) => {
     },
     {
       $project: {
-        iteam: "$product.productId",
+        item: "$product.productId",
         quantity: "$product.quantity",
       },
     },
     {
       $lookup: {
         from: "products",
-        localField: "productItem",
+        localField: "item",
         foreignField: "_id",
         as: "productDetail",
       },
@@ -380,7 +377,7 @@ totalAmount: async (req, res) => {
     {
       $addFields: {
         productPrice: {
-          $multiply: ["$quantity", "$productDetail.price"],
+          $multiply: ["$quantity", "$productDetail.price"], 
         },
       },
     },
@@ -393,11 +390,10 @@ totalAmount: async (req, res) => {
       },
     },
   ]).exec();
-  
-
   res.json({ status: true, productData });
 
 },
+  
 
 
 
@@ -427,15 +423,119 @@ console.log(data);
    
       });
   },
-  wishlist:(req,res)=>{
-    res.render('user/wishlist',{countInCart})
-  }
 
+  addToWishlist: async (req, res) => {
+
+    const id = req.params.id;
+    const objId = mongoose.Types.ObjectId(id);
+    const session = req.session.isUser;
+
+    let proObj = {
+      productId: objId,
+    };
+    const userData = await UserModel.findOne({ email: session });
+    const userWishlist = await wishlist.findOne({ userId: userData._id });
+    console.log(userData);
+    console.log(userWishlist);
+
+    if (userWishlist) {
+
+      let proExist = userWishlist.product.findIndex(
+        (product) => product.productId == id
+      );
+      if (proExist != -1) {
+
+        res.redirect('/viewWishlist')
+      } else {
+
+        wishlist.updateOne(
+          { userId: userData._id }, { $push: { product: proObj } }
+        ).then(() => {
+          res.redirect('/viewWishlist')
+        });
+      }
+    } else {
+      const newWishlist = new wishlist({
+        userId: userData._id,
+        product: [
+          {
+            productId: objId,
+
+          },
+        ],
+      });
+      newWishlist.save().then(() => {
+        res.redirect('/viewWishlist')
+      });
+    }
+
+  },
+  viewWishlist: async (req, res) => {
+
+    const session = req.session.isUser;
+    const userData = await UserModel.findOne({ email: session })
+    const userId = mongoose.Types.ObjectId(userData._id);;
+
+    const wishlistData = await wishlist
+      .aggregate([
+        {
+          $match: { userId: userId }
+        },
+        {
+          $unwind: "$product",
+        },
+        {
+          $project: {
+            productItem: "$product.productId",
+
+          }
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "productItem",
+            foreignField: "_id",
+            as: "productDetail",
+          } 
+        },
+        {
+          $project: {
+            productItem: 1,
+            productDetail: { $arrayElemAt: ["$productDetail", 0] }
+          }
+        }
+
+      ])
+    countInWishlist = wishlistData.length
+    res.render('user/wishlist', { wishlistData, countInWishlist, countInCart })
+
+  },
+
+
+  removeFromWishlist:async(req,res)=>{
+    const data = req.body
+    const objId = mongoose.Types.ObjectId(data.productId)
+   await wishlist.aggregate([
+         {
+          $unwind : "$product"
+         },
+   ]);
+   await wishlist.updateOne(
+    {_id : data.wishlistId,"product.productId" : objId},
+    {$pull: { product: { productId : objId}}}
+   )
+   .then(()=>{
+    res.json({ status : true})
+   })
+
+},
 
 }
 
 
+ 
+
 // muhammadarshad8935@gmail.com
 
   //password 
-  //af10ashfak#ii              
+  //af10ashfak#ii               

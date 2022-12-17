@@ -12,14 +12,16 @@ const fileUpload = require('express-fileupload')
 app.use(express.urlencoded({ extended: true }));
  
 
+app.set("view engine", "ejs");
+app.set('views');  
 
 
 // public file access   
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname,'public'))) 
 
+app.use(express.json());
 
- 
 
 
 
@@ -58,7 +60,6 @@ app.use('/',userRouter)
 app.use('/admin',adminRouter)
 
 
-app.use(express.json());
 
 app.listen(3000,()=>{
     console.log('server is running');

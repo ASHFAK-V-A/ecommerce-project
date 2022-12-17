@@ -29,13 +29,18 @@ userRouter.get('/addtocart/:id',VerfySession.VerfyLoginUser,userController.addTo
 
 userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.viewproduct)
 
- userRouter.post('/changeQuantity',VerfySession.VerfyLoginUser,userController.changeQuantity)
+ userRouter.post('/change-quantity',userController.changequantity,userController.totalAmount)
 
  userRouter.get('/viewcart', VerfySession.VerfyLoginUser,userController.viewcart)
 
  userRouter.post("/removeproduct",userController.removeProduct)
 
- userRouter.get('/wishlisht',VerfySession.VerfyLoginUser,userController.wishlist)
+ userRouter.get('/wishlisht/:id',VerfySession.VerfyLoginUser,userController.addToWishlist)
+
+ userRouter.post('/wishlist-remove',VerfySession.VerfyLoginUser,userController.removeFromWishlist)
+
+ userRouter.get('/viewWishlist',VerfySession.VerfyLoginUser,userController.viewWishlist)
 
 
-module.exports=userRouter   
+
+module.exports=userRouter    
