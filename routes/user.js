@@ -44,4 +44,7 @@ userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.vi
 userRouter.get('/userprofile',VerfySession.VerfyLoginUser,userController.userprofile)
 
 userRouter.get('/editprofile',VerfySession.VerfyLoginUser,userController.editprofile)
+
+userRouter.get('/shop',VerfySession.VerfyLoginUser,userController.shop)
+
 module.exports=userRouter    

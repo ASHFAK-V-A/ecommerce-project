@@ -538,6 +538,12 @@ userprofile:async(req,res)=>{
 editprofile:(req,res)=>{
   customer=true
 res.render('user/editprofile',{countInCart,customer})
+},
+
+
+shop:(req,res)=>{
+  customer=true
+  res.render('user/shop',{countInCart,customer})
 }
 
 

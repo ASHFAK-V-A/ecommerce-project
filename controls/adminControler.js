@@ -255,7 +255,12 @@ UnblockUser:async(req,res)=>{
         res.redirect('/admin/userDetails')
        
     })
+},
+
+dashboard:(req,res)=>{
+    res.render('admin/dashboard')
 }
+
 
 
 }

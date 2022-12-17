@@ -40,6 +40,8 @@ adminRouter.get('/blockUser/:id', adminController.blockuser)
  
 adminRouter.get('/UnblockUser/:id', adminController.UnblockUser)
 
+adminRouter.get('/dashboard',adminController.dashboard)
+
 
 
 module.exports=adminRouter 
