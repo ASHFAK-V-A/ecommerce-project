@@ -48,15 +48,21 @@
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                   <!-- Quantity -->
                   <div class="d-flex mb-4" style="max-width: 300px">           
-                   <button class="btn btn-primary px-3 me-2"
+                   <button style="    margin-top: 33px;
+                   height: 60px;" class="btn btn-primary px-3 me-2 "
                       onclick="changequantity('<%= product._id %>','<%= product.productDetail._id %>',-1)"> 
                       <i class="fa fa-minus"></i>                  
                     </button>
                     <div class="form-outline">
-                      <strong>  <p class="mt-5" id="<%= product.productDetail._id %>" min="0" name="quantity"><%= product.quantity%></p></strong>
-                      <label class="form-label" for="form1">Quantity</label>              
+                      <strong>  <p style="margin-left: 13px;
+                        width: 21px;" class="mt-5" id="<%= product.productDetail._id %>" min="0" name="quantity"><%= product.quantity%></p></strong>
+                      <label style="margin-left: -23px;    position: relative;
+                      left: 14px;
+                      top: 7px;
+                  " class="form-label" for="form1">Quantity</label>              
                     </div>
-                    <button class="btn btn-primary px-3 ms-2"
+                    <button style=" margin-top: 33px;
+                    height: 60px;" class="btn btn-primary px-3 ms-2"
                       onclick="changequantity('<%= product._id %>','<%= product.productDetail._id %>',1)">                     
                       <i class="fa fa-plus"></i>
                     </button>                  
@@ -64,8 +70,8 @@
                   <!-- Quantity -->
   
                   <!-- Price -->
-                  <p class="text-start text-md-center">
-                    <strong>$<%= product.productDetail.price%>.00 </strong>
+                  <p  class="text-start text-md-center mt-5">
+                    <strong>Price: $<%= product.productDetail.price%>.00 </strong>
                   </p>
                   <!-- Price -->
                 </div>
@@ -120,13 +126,14 @@
                   <div>
           
                     <strong>
-                      <p class="mb-0">Tottal</p>
+                      <p class="mb-0 mt-3">Tottal :<span style="margin-left: 2rem;" id="netamount"> $<%= sum%> </span></p>
+                    
                     </strong>
                   </div>
                  
                 </li>
               </ul>
-             <p id="netamount">$<%= sum%> </p>
+            
               <button type="button" class="btn btn-primary btn-lg btn-block">
                 Go to checkout
               </button>

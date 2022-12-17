@@ -1,0 +1,83 @@
+
+<%- include('../partials/user-header') %>
+
+<link rel="stylesheet" href="/public/stylesheet/userprofile.css">
+<div class="container">
+<div class="row">
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+<div class="col-xl-6 col-md-12">
+ <div class="card user-card-full mt-5">
+                 <div class="row m-l-0 m-r-0">
+                     <div class="col-sm-4 bg-c-lite-green user-profile">
+                         <div class="card-block text-center text-white">
+                             <div class="m-b-25" style="margin-top:7rem ;">
+                          <img src="/public/payment/abstract-user-flat-4.png" class="img-radius" alt="User-Profile-Image" style="width: 5rem; height: 5rem;">
+                               <h6 class="f-w-600"><h4><%= userData.username %> </h4></h6>
+                        </div>
+                           
+                          
+                             <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                         </div>
+                     </div>
+                     <div class="col-sm-8">
+                         <div class="card-block">
+                             <h5 class="m-b-20 p-b-5 b-b-default f-w-600">About user</h5>
+                             <div class="row">
+                                 <div class="col-sm-6">
+                                     <p class="m-b-10 f-w-600">Email</p>
+                                     <h6 class="text-muted f-w-600"><%= userData.email %></h6>
+                                 </div>
+                                 
+                           <div class="col-sm-6">
+                               <p class="m-b-10 f-w-600">Phone</p>
+                               <h6 class="text-muted f-w-400"><%= userData.phone %></h6>
+                           </div>
+                       </div>
+                       <h5 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600 mt-2">Address</h5>
+                    <div class="float-end"> <a href="/editprofile"><button class="btn btn-primary"><i class="fa fa-edit"></i></button></a></div> 
+                         
+                       <div class="row">
+                           <div class="col-sm-6">
+                               <p class="m-b-10 f-w-600">House name</p>
+                               <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                           </div>
+                           <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Area</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Landmark</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Post office</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">District</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">State</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Recent</p>
+                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                        </div>
+                        
+                           
+                       </div>
+                    
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+    </div>
+             </div>
+         </div>
+          </div>
+          </div>

@@ -32,9 +32,37 @@ trim:true
 isBlocked:{
     type:Boolean,
     default:false
-}
+},
+
+addressDetails:[
+    {
+     housename:{
+        type:String
+     },
+     area:{
+        type:String
+     },
+     landmark:{
+        type:String
+     },
+     district:{
+        type:String
+     },
+     postoffice:{
+        type:String
+     },
+     state:{
+        type:String
+     },
+     pin:{
+        type:String
+     } 
+    }
+  ],
 
 }
+
+
 
 )
 module.exports=mongoose.model('user',userSchema)

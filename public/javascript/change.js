@@ -1,6 +1,6 @@
 
   function changequantity(cartId, productId, count){
-    console.log('ajax request succussfully');
+ 
     console.log(productId);
     let quantity = parseInt(document.getElementById(productId).innerHTML) 
     console.log(quantity);
@@ -18,7 +18,7 @@
           if(response.status){
             document.getElementById(productId).innerHTML = quantity + count;
             document.getElementById("netamount").innerHTML ="₹"+ response.productData[0].total
-            console.log('working sucess fully');
+           
           }  
           if(response.quantity){
             swal({

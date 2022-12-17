@@ -113,7 +113,7 @@ module.exports = {
 
                     name=req.body.username,  
                     email=req.body.email,
-                    phone=req.body.num,
+                    phone=req.body.phone,
                     Password=data
              
            const mailDetails={
@@ -318,8 +318,6 @@ changequantity : (req,res,next)=>{
   const data = req.body
   const objId = mongoose.Types.ObjectId(data.productId)
 
-console.log('quentity'+data.quantity);
-console.log(data.cartId);
   if(data.count == -1 && data.quantity == 1){
        cart.updateOne( 
         {_id: data.cartId, "product.productId":objId},
@@ -333,7 +331,6 @@ console.log(data.cartId);
       { _id: data.cartId, "product.productId":objId},
       { $inc:{"product.$.quantity": data.count }}
      ).then(()=>{ 
-        console.log('hello');
         next()
      })
   }
@@ -341,8 +338,6 @@ console.log(data.cartId);
   
 }, 
 totalAmount: async (req, res) => {
-
-console.log('tottal working start');
 
   let session = req.session.isUser;
   const userData = await UserModel.findOne({ email: session });
@@ -407,7 +402,6 @@ console.log('tottal working start');
 
   removeProduct:async(req,res)=>{
     const data = req.body;
-console.log(data);
     await cart.aggregate([
       {
         $unwind: "$product"
@@ -529,6 +523,23 @@ console.log(data);
    })
 
 },
+
+
+userprofile:async(req,res)=>{
+  const session =req.session.isUser
+  customer=true
+  const userData = await UserModel.findOne({email:session})
+
+  res.render('user/userprofile',{countInCart,userData,customer})
+
+},
+
+
+editprofile:(req,res)=>{
+  customer=true
+res.render('user/editprofile',{countInCart,customer})
+}
+
 
 }
 

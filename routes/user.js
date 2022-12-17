@@ -21,7 +21,7 @@ userRouter.get('/logout', userController.getlogout)
 
 userRouter.post('/signup',userController.postsignup)
 
-userRouter.get('/otp', VerfySession.VerfyLoginUser,userController.getotp)
+userRouter.get('/otp',userController.getotp)
 
 userRouter.post('/otpid',userController.postotp)
 
@@ -41,6 +41,7 @@ userRouter.get('/viewproduct/:id', VerfySession.VerfyLoginUser,userController.vi
 
  userRouter.get('/viewWishlist',VerfySession.VerfyLoginUser,userController.viewWishlist)
 
+userRouter.get('/userprofile',VerfySession.VerfyLoginUser,userController.userprofile)
 
-
+userRouter.get('/editprofile',VerfySession.VerfyLoginUser,userController.editprofile)
 module.exports=userRouter    
