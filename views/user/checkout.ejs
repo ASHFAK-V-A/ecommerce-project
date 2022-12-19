@@ -1,0 +1,63 @@
+<%- include('../partials/user-header') %>
+
+<link rel="stylesheet" href="/public/stylesheet/checkout.css">
+
+<div class="container rounded bg-white">
+    <div class="bg row d-flex justify-content-center pb-5 mt-5">
+        <div class="col-sm-4 col-md-4 ml-1" style="margin-top: 4rem;">
+           
+            <div class="bg-white p-2 d-flex flex-column mt-5" style="border-radius:14px">
+                <!-- <div class="text-center mt-4"> <img class="img-fluid" src="https://i.imgur.com/kvdO7jw.png" width="200"/> </div> -->
+
+                <h5>Your Order Details </h5>
+                <br>
+                <strong>Product <span class="text float-end">Tottal</span> </strong>
+               <br>
+               <strong>Tottal  : <span class="text float-end green"><h4 class="green">$85.00</h4></span> </strong>
+              
+            </div>
+        </div>
+        <div class="col-sm-5 col-md-6 mobile">
+            <div class="py-4 d-flex justify-content-end">
+               
+            </div>
+            <div class="bg-white p-3 d-flex flex-column" style="border-radius:14px">
+                <div class="pt-2">
+                    <h5>Select Your Shipping Address </h5>
+                </div>
+                <div class="d-flex">
+                    <select class="form-select mt-2" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                     
+                      </select>
+                             </div>
+
+                <div class="pt-2 mt-3">
+                    <h5>Apply Coupon</h5>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="usr">Enter Coupon Code:</label>
+                    <input type="text" class="form-control" id="usr" style="width:200px;">
+                  </div>
+       
+                <div class="pt-2 mt-1">
+                    <div class="border-top px-4 mx-8 pt-2"></div>
+                    <h5>Payment mehods</h5>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="check1" name="paymentMethod">
+                    <label class="form-check-label" for="check2">COD</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" id="check2" name="paymentMethod" value="something">
+                    <label class="form-check-label" for="check2">Online</label>
+                  </div>
+               
+              <input type="button" value="Place Order" class=" btn mt-4 btn-primary btn-block" style="border-radius:10px;">
+              <input type="button" value="Add new address" class=" btn mt-4 btn-dark btn-block" style="border-radius:10px;">
+            </div>
+        </div>
+        </div>
+        </div>
+        <%- include('../partials/footer') %>

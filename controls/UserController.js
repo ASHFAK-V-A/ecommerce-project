@@ -10,6 +10,7 @@ const cart = require('../models/CartSchema')
 const mongoose = require('mongoose');
 const products = require('../models/ProductSchema');
 const wishlist = require('../models/wishlistSchema');
+const { checkout } = require('../routes/user');
 
 
 
@@ -20,6 +21,9 @@ let email
 let Password
 let phone
 let countInCart;
+let profileusername;
+let countInWishlist;
+
 
 async function emailExists(email) {
   const userfound = await UserModel.findOne({ email: email })
@@ -39,16 +43,21 @@ module.exports = {
 
     if (req.session.isUser) {
       customer = true
-      
-      res.render('user/home', { product,countInCart })
+
+      let usern=req.session.isUser
+      let  userDatas= await UserModel.findOne({email:usern})
+      profileusername = userDatas.username
+ 
+
+      res.render('user/home', { product,countInCart,profileusername, countInWishlist })
     } else {
       customer = false
-      res.render('user/home', { product })
+      res.render('user/home', { product }) 
     }
 
   },
 
-  getlogin: (req, res) => {
+  getlogin: (req, res) => { 
     res.render('user/login')
   },
 
@@ -63,7 +72,7 @@ module.exports = {
           const passwordMatch = await bcrypt.compare(Password, user.Password)
           if (passwordMatch) {
             req.session.isUser =req.body.email
-           
+ 
             res.redirect('/')
           } else {
             res.render('user/login')
@@ -94,7 +103,6 @@ module.exports = {
         if(req.body.Password === req.body.CPassword){
 
              const userExist= await emailExists(req.body.email)
-           
 
 
           if(userExist==true){
@@ -105,6 +113,7 @@ module.exports = {
             console.log('ivaid password or email');
             res.render('user/signup')
 
+    
 
          }else{ 
                     
@@ -310,7 +319,7 @@ const sum = ProductData.reduce((accumulator, object) => {
 countInCart = ProductData.length
 
 
-res.render('user/cart',{ProductData,countInCart,sum})
+res.render('user/cart',{ProductData,countInCart,sum,profileusername, countInWishlist})
 
 },
 
@@ -395,7 +404,7 @@ totalAmount: async (req, res) => {
   viewproduct:async(req,res)=>{
       const id =req.params.id
     const products = await Products.findOne({_id:id})
-    res.render('user/viewproduct',{products,countInCart})
+    res.render('user/viewproduct',{products,countInCart,profileusername, countInWishlist })
     
   },
 
@@ -427,14 +436,14 @@ totalAmount: async (req, res) => {
     let proObj = {
       productId: objId,
     };
-    const userData = await UserModel.findOne({ email: session });
-    const userWishlist = await wishlist.findOne({ userId: userData._id });
-    console.log(userData);
-    console.log(userWishlist);
 
-    if (userWishlist) {
+    const userData = await UserModel.findOne({ email : session })
+    const userWishlist = await wishlist.findOne({ userId : userData._id})
 
-      let proExist = userWishlist.product.findIndex(
+
+    if (wishlist) {
+
+      let proExist =userWishlist.product.findIndex(
         (product) => product.productId == id
       );
       if (proExist != -1) {
@@ -499,12 +508,15 @@ totalAmount: async (req, res) => {
           }
         }
 
-      ])
-    countInWishlist = wishlistData.length
-    res.render('user/wishlist', { wishlistData, countInWishlist, countInCart })
+      ]) , 
+   
+      countInWishlist = wishlistData.length
+
+
+    res.render('user/wishlist', { wishlistData, countInWishlist, countInCart,profileusername  })
 
   },
-
+   
 
   removeFromWishlist:async(req,res)=>{
     const data = req.body
@@ -530,21 +542,67 @@ userprofile:async(req,res)=>{
   customer=true
   const userData = await UserModel.findOne({email:session})
 
-  res.render('user/userprofile',{countInCart,userData,customer})
+  res.render('user/userprofile',{countInCart,userData,customer,profileusername, countInWishlist })
 
 },
 
 
-editprofile:(req,res)=>{
+editprofile:async (req,res)=>{
+
+  const session=req.session.isUser
   customer=true
-res.render('user/editprofile',{countInCart,customer})
+
+  const userData= await UserModel.findOne({email:session})
+res.render('user/editprofile',{countInCart,customer,userData,profileusername, countInWishlist })
 },
 
 
 shop:(req,res)=>{
   customer=true
-  res.render('user/shop',{countInCart,customer})
+  res.render('user/shop',{countInCart,customer,profileusername })
+},
+
+
+updateprofile: async(req,res)=>{
+
+
+
+const session=req.session.isUser
+
+
+await UserModel.updateOne({email:session},
+  {
+    $set:{
+      username:req.body.username,
+      phone:req.body.phone,
+
+      addressDetails:[
+        {
+           housename:req.body.house,
+           area:req.body.area,
+           landmark:req.body.landmark,
+           state:req.body.state,
+           postoffice:req.body.postoffice,
+           district:req.body.district,
+           pin:req.body.pincode,
+           houseno:req.body.houseno
+           
+        }
+      ]
+
+    }
+   }
+  )
+
+
+  res.redirect('/userprofile')
+},
+
+
+checkout:(req,res)=>{
+  res.render('user/checkout',{countInWishlist,countInCart,profileusername})
 }
+
 
 
 }

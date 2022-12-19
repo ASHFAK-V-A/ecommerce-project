@@ -1,9 +1,10 @@
 
 <%- include('../partials/user-header') %>
+
 <link rel="stylesheet" href="/public/stylesheet/editprofile.css">
 
+<form action="/update" method="post">
         <div class="container">
-
             <div class="row gutters mt-5">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
@@ -17,7 +18,8 @@
                                
                             </div>  
              
-                            <h5 class="user-name text-white">Yuki Hayashi</h5>
+                            <h5 class="user-name text-white"><%= userData.username %></h5>
+                            <p class="text-white text-muted"><%= userData.email %></p>
                        
                         </div>
                       
@@ -28,22 +30,43 @@
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
-
+                    
                     <div class="row gutters">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h5 class="mt-3 mb-2 text-primary">Address</h5>
+                            <h5 class="mt-3 mb-2 text-primary text-center">User Information</h5>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group mt-4">
+                                <label for="Street">Name</label>
+                                <input type="name" class="form-control" value="<%= userData.username %>" name="username" id="Street" placeholder="Enter Your Name" required/>
+                            </div>
+                        </div>
+                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group mt-4">     
+                                <label for="ciTy">Phone</label>
+                       <input type="text" class="form-control" value="<%= userData.phone %>" name="phone" id="ciTy" placeholder="Enter New Phone Number " required="true">
+                    
+                            </div>
+                        </div>
+                      
+                    </div> 
+                     <br>
+                     <hr>
+                    
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4">
+                            <h5 class=" mb-2 text-primary text-center">Address</h5>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group mt-2">
                                 <label for="Street">House Name</label>
-                                <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                                <input type="name" class="form-control" name="house" value="<%= userData?.addressDetails[0]?.housename %>" placeholder="Enter House Name" required/>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group mt-2">
-                            
+                            <div class="form-group mt-2">     
                                 <label for="ciTy">Area</label>
-                                <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+                       <input type="text" class="form-control" name="area" value="<%= userData?.addressDetails[0]?.area %>" id="ciTy" placeholder="Enter Street" required="true">
                           <br>
                             </div>
                         </div>
@@ -51,48 +74,52 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="sTate">Landmark</label>
-                                <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                                <input type="text" class="form-control" name="landmark" value="<%= userData?.addressDetails[0]?.landmark %>" id="sTate" placeholder="Enter Landmark">
                             </div>
    <br>
                             <div class="form-group">
                                 <label for="sTate">District</label>
-                                <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                                <input type="text" name="district" class="form-control" value="<%= userData?.addressDetails[0]?.district %>" id="sTate" placeholder="Enter District">
                                
                             </div>
                          <br>
                             <div class="form-group">
                                 <label for="sTate">Post office</label>
-                                <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                                <input type="text" class="form-control" name="postoffice" id="pos" value="<%= userData?.addressDetails[0]?.state %>" placeholder="Enter Post office">
                           
                             </div>
+                            
 
                         </div>
                      
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="zIp">Zip Code</label>
-                                <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                                <label for="zIp">House.No</label>
+                                <input type="text" class="form-control" name="houseno" value="<%= userData?.addressDetails[0]?.houseno %>" id="zIp" placeholder="Enter House.No">
                                
                             </div>
                              <br>
                             <div class="form-group">
                                 <label for="zIp">State</label>
-                                <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                                <input type="text" value="<%= userData?.addressDetails[0]?.state %>" class="form-control" name="state"  id="zIp" placeholder="Enter State" read>
                              
+                            </div> 
+                            <br>
+                            <div class="form-group">
+                                <label for="sTate">Pin Code</label>
+                                <input type="text" class="form-control"  name="pincode" value="<%= userData?.addressDetails[0]?.pin %>" placeholder="Enter Pin Code">
+                          
                             </div>
                                <br>
-                            <div class="form-group">
-                                <label for="zIp">Pin <code></code></label>
-                                <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
-                            </div>
+                           
                         </div>
                     </div>
                     <br>
                     <div class="row gutters">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="float-end">
-                                <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                                <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-secondary">Cancel</button>
+                             <button type="submit" class="btn btn-primary">Update</button> 
                             </div>
                         </div>
                     </div>
@@ -102,3 +129,6 @@
            </div>
            </div>
          
+    </div>
+         
+</form> 

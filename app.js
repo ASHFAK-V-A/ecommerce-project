@@ -10,7 +10,6 @@ const adminRouter=require('./routes/admin')
 const store = require('./connections/conn')
 const fileUpload = require('express-fileupload')
 app.use(express.urlencoded({ extended: true }));
- 
 
 app.set("view engine", "ejs");
 app.set('views');  

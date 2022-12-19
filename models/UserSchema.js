@@ -25,7 +25,7 @@ Password:{
 },
 
 phone:{
-type:Number,
+type:String,
 trim:true
 },
 
@@ -56,7 +56,11 @@ addressDetails:[
      },
      pin:{
         type:String
-     } 
+     } ,
+     houseno:{
+      type:String
+     }
+     
     }
   ],
 

@@ -47,4 +47,7 @@ userRouter.get('/editprofile',VerfySession.VerfyLoginUser,userController.editpro
 
 userRouter.get('/shop',VerfySession.VerfyLoginUser,userController.shop)
 
+userRouter.post("/update",VerfySession.VerfyLoginUser,userController.updateprofile)
+
+userRouter.get('/checkout',VerfySession.VerfyLoginUser,userController.checkout)
 module.exports=userRouter    
