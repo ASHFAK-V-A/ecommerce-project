@@ -6,7 +6,7 @@
 
 }
 
-img{
+.mustache{
 
     width: 50px;
 }
@@ -40,4 +40,4 @@ background-color: transparent;
   border-radius: 8px;
   margin-top: 3px;
   color: white;
-}
+} 

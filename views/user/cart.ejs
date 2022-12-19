@@ -1,14 +1,14 @@
 <%- include('../layout/metatag') %>
 
-<%- include('../partials/user-header') %>
+<%- include('../partials/userheader-shop') %>
 
 <% if (countInCart !== 0) { %>
       <section class="h-100 gradient-custom">
-    <div class="container py-5">
-      <div class="row d-flex justify-content-center my-4 mt-5">
+    <div class="container ">
+      <div class="row d-flex justify-content-center my-4 ">
         <div class="col-md-8">
           <div class="card mb-4">
-            <div class="card-header py-3">
+            <div class="card-header ">
               <h5 class="mb-0">Cart <%= countInCart %> items</h5>
             </div>
             <% ProductData.forEach((product)=>{ %>
@@ -37,11 +37,7 @@
                     onclick="removeProduct('<%= product._id %>','<%= product.productDetail._id %>')">          
                   <i class="fa fa-trash text-white"></i>
                   </button>
-                  <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
-          
-                    title="Move to the wish list">
-                  <a href="/wishlisht/<%= product._id %>"><i class="fa fa-heart text-white"></i> </a>  
-                  </button>
+         
                   <!-- Data -->
                 </div>
 

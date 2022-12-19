@@ -5,9 +5,7 @@ const userController=require('../controls/UserController')
 
 const VerfySession=require('../midlweare/session')
 
-
 userRouter.set('view engine','ejs')
-
 
 userRouter.get('/',userController.getHome)
 
@@ -50,4 +48,7 @@ userRouter.get('/shop',VerfySession.VerfyLoginUser,userController.shop)
 userRouter.post("/update",VerfySession.VerfyLoginUser,userController.updateprofile)
 
 userRouter.get('/checkout',VerfySession.VerfyLoginUser,userController.checkout)
+
+userRouter.post('/addNewAddress',VerfySession.VerfyLoginUser,userController.addnewaddress)
+
 module.exports=userRouter    

@@ -10,7 +10,6 @@ const cart = require('../models/CartSchema')
 const mongoose = require('mongoose');
 const products = require('../models/ProductSchema');
 const wishlist = require('../models/wishlistSchema');
-const { checkout } = require('../routes/user');
 
 
 
@@ -39,23 +38,38 @@ async function emailExists(email) {
 module.exports = {
   getHome: async (req, res) => {
     
-    const product = await Products.find({delete:false})
-
     if (req.session.isUser) {
       customer = true
-
       let usern=req.session.isUser
       let  userDatas= await UserModel.findOne({email:usern})
       profileusername = userDatas.username
  
-
-      res.render('user/home', { product,countInCart,profileusername, countInWishlist })
+      res.render('user/home',{countInCart,customer,profileusername,countInWishlist})
     } else {
       customer = false
-      res.render('user/home', { product }) 
+      res.render('user/home') 
     }
 
   },
+
+
+  
+shop: async(req,res)=>{
+  
+  if (req.session.isUser) {
+    const product = await Products.find({delete:false})  
+
+    customer = true
+  
+    res.render('user/shop', {countInCart,profileusername,countInWishlist,product})
+
+  } else {
+    customer = false
+    res.render('user/home') 
+  }
+
+},
+
 
   getlogin: (req, res) => { 
     res.render('user/login')
@@ -441,7 +455,7 @@ totalAmount: async (req, res) => {
     const userWishlist = await wishlist.findOne({ userId : userData._id})
 
 
-    if (wishlist) {
+    if (userWishlist) {
 
       let proExist =userWishlist.product.findIndex(
         (product) => product.productId == id
@@ -557,11 +571,6 @@ res.render('user/editprofile',{countInCart,customer,userData,profileusername, co
 },
 
 
-shop:(req,res)=>{
-  customer=true
-  res.render('user/shop',{countInCart,customer,profileusername })
-},
-
 
 updateprofile: async(req,res)=>{
 
@@ -599,9 +608,75 @@ await UserModel.updateOne({email:session},
 },
 
 
-checkout:(req,res)=>{
-  res.render('user/checkout',{countInWishlist,countInCart,profileusername})
+checkout: async(req,res)=>{
+const session= req.session.isUser
+const userData= await UserModel.findOne({email:session})
+
+const productData = await cart.aggregate([
+  {
+    $match: { userId: userData.id },
+  },
+  {
+    $unwind: "$product",
+  },
+  {
+    $project: {
+      item: "$product.productId",
+      quantity: "$product.quantity",
+    },
+  },
+  {
+    $lookup: {
+      from: "products",
+      localField: "item",
+      foreignField: "_id",
+      as: "productDetail",
+    },
+  },
+  {
+    $project: {
+      item: 1,
+      quantity: 1,
+      productDetail: { $arrayElemAt: ["$productDetail", 0] },
+    },
+  },
+  {
+    $addFields: {
+      productPrice: {
+        $multiply: ["$quantity", "$productDetail.price"], 
+      },
+    },
+  },
+])
+.exec()
+const sum = productData.reduce((accumulator, object) => {
+  return accumulator + object.productPrice;
+}, 0);
+
+
+  res.render('user/checkout',{countInWishlist,countInCart,profileusername,sum,productData,userData})
+},
+
+
+addnewaddress:async (req,res)=>{
+  const session = req.session.isUser
+
+  const addNewAddress={
+    housename: req.body.housename,
+    area: req.body.area,
+    landmark: req.body.landmark,
+    district: req.body.district,
+    state: req.body.state,
+    postoffice: req.body.postoffice,
+    pin: req.body.pin,
+    houseno:req.body.houseno
+  }
+
+  await UserModel.updateOne({email:session},{$push:{addressDetails:addNewAddress}})
+  res.redirect('/checkout')
+
 }
+
 
 
 
