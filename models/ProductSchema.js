@@ -9,12 +9,12 @@ const ProductSchenma = new mongoose.Schema({
     },
 
     price: {
-        type: Number,
+        type:String ,
         required: true,  
     },
     category: {
-        type:String,
-        required: true,
+        type: mongoose.Types.ObjectId,
+        ref : 'categories'
        
     },
     description:{
@@ -22,7 +22,7 @@ const ProductSchenma = new mongoose.Schema({
         required: true,
     },
     stock:{
-        type: Number,
+        type: String,
         required: true,
         
     },

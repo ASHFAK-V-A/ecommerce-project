@@ -10,6 +10,7 @@ const cart = require('../models/CartSchema')
 const mongoose = require('mongoose');
 const products = require('../models/ProductSchema');
 const wishlist = require('../models/wishlistSchema');
+const categories = require('../models/Cateogary');
 
 
 
@@ -57,18 +58,38 @@ module.exports = {
 shop: async(req,res)=>{
   
   if (req.session.isUser) {
-    const product = await Products.find({delete:false})  
+    let category= await categories.find()
+    const product = await Products.find({delete:false}).populate('category')
+
 
     customer = true
-  
-    res.render('user/shop', {countInCart,profileusername,countInWishlist,product})
 
+
+    res.render('user/shop', {countInCart,profileusername,countInWishlist,product,category})
   } else {
     customer = false
-    res.render('user/home') 
+    res.render('user/home')  
   }
 
 },
+
+
+
+
+cateogrywiseshoppage: async(req,res)=>{
+
+  const id =req.params.id
+  console.log(id);
+  const category = await categories.find()
+  const product = await Products.find({category : id}).populate('category')
+
+console.log(product); 
+customer=true
+
+res.render('user/shop',{product,category,countInCart,countInWishlist,profileusername,customer})
+},
+
+
 
 
   getlogin: (req, res) => { 
@@ -673,10 +694,10 @@ addnewaddress:async (req,res)=>{
   }
 
   await UserModel.updateOne({email:session},{$push:{addressDetails:addNewAddress}})
+
   res.redirect('/checkout')
 
-}
-
+},
 
 
 

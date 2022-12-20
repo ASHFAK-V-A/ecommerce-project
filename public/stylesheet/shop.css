@@ -110,16 +110,16 @@ select {
 }
 
 #filterbar {
+    margin-top: 5rem;
     width: 30%;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 15px;
     float: left
+
 }
 
-#filterbar input[type="radio"] {
-    visibility: hidden
-}
+
 
 #filterbar input[type='radio']:checked {
     background-color: #16c79a;
@@ -165,16 +165,6 @@ label {
     width: 0
 }
 
-.check {
-    position: absolute;
-    top: 1px;
-    left: 0;
-    height: 18px;
-    width: 18px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 3px
-}
 
 .tick:hover input~.check {
     background-color: #f3f3f3
@@ -217,8 +207,8 @@ label {
 
 #inner-box,
 #inner-box2 {
-    height: 150px;
-    overflow-y: scroll
+    height: 185px;
+   
 }
 
 #inner-box2 {
@@ -269,7 +259,7 @@ label {
     color: #444
 }
 
-#size .btn-success:not(:disabled):not(.disabled).active,
+
 #size .btn-success:not(:disabled):not(.disabled):active {
     background-color: #16c79a;
     color: #fff
@@ -321,7 +311,6 @@ label {
     position: relative
 }
 
-.card-body .btn-group>.btn-group:not(:last-child)>.btn,
 .card-body .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
     border-radius: 50%;
     transition: ease-in all .4s
@@ -331,7 +320,6 @@ label {
     visibility: hidden
 }
 
-.card-body .btn:not(:disabled):not(.disabled).active::after,
 .card-body .btn:not(:disabled):not(.disabled):active::after {
     content: "";
     width: 10px;
@@ -344,7 +332,7 @@ label {
     transition: ease-in all .4s
 }
 
-.card-body .btn.btn-light:not(:disabled):not(.disabled).active::after,
+
 .card-body .btn.btn-light:not(:disabled):not(.disabled):active::after {
     background-color: #000
 }
@@ -373,7 +361,7 @@ label {
     color: #444
 }
 
-#avail-size .btn-success:not(:disabled):not(.disabled).active,
+
 #avail-size .btn-success:not(:disabled):not(.disabled):active {
     background-color: #16c79a;
     color: #fff
@@ -467,7 +455,6 @@ label {
 input[type=range] {
     position: absolute;
     pointer-events: none;
-    -webkit-appearance: none;
     z-index: 2;
     height: 10px;
     width: 100%;

@@ -4,7 +4,11 @@ const categorySchema = new mongoose.Schema({
     category_name: {
         type: String,
         required: true
-    }
+    },
+    delete: {
+        type: Boolean,
+        default: false,
+      }
 })
 
 

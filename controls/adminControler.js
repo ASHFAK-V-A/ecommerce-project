@@ -1,8 +1,8 @@
 
-const categories = require("../models/cateogary")
+
 const products = require("../models/ProductSchema")
 const user=require('../models/UserSchema')
-
+const categories=require('../models/Cateogary')
 
 let email='admin@gmail.com'
 let Password='123'
@@ -73,7 +73,9 @@ addproducts:async (req,res)=>{
 
 ProductDetail:async(req,res)=>{
    
-        const product=await products.find()
+      
+        let product = await products.find().populate('category')
+
       res.render('admin/ProductDetails',{product})   
       console.log(product);
    
@@ -125,7 +127,7 @@ const id =req.params.id
  await products.updateOne({_id:id},{$set:{
     product_name:req.body.name,
     price:req.body.price,
-    category:req.body.category,
+    category:req.body.category_name,
     description:req.body.description,
     stock:req.body.stock
 
@@ -163,18 +165,26 @@ restoreProduct:async(req,res)=>{
 
 
 category:async(req,res)=>{
+    try{
+
         const category= await categories.find()
         let productfound=req.session.err
         req.session.err = " "
-       res.render('admin/cateogary',{productfound,category})  
-     
+        owner=true
+       res.render('admin/cateogary',{productfound,category,owner})  
+    }catch{
+ console.log(err);
+ res.render('user/500')
+    }
 },
 
 
 addcategory:async(req,res)=>{
-    
+    try{
+
     if(req.body.category_name){
         const category_name=req.body.category_name
+        console.log(category_name);
       const category=await categories.findOne({category_name:category_name}) 
 
     if(category){
@@ -192,11 +202,15 @@ addcategory:async(req,res)=>{
         }else{
             res.redirect('/admin/category')
         }
-
+    }catch{
+        console.log(err);
+        res.render('user/500')
+    }
 
 },
 
 editCategory:async(req,res)=>{
+    try{
 if(req.body.name){
     const name=req.body.name
 
@@ -215,15 +229,38 @@ if(!findName){
 }else{
     res.redirect('/admin/category')
 }
-
+    }catch{
+        console.log(err);
+        res.render('user/500')
+    }
 },
 
+
+
+
+
 deleteCategory:async (req,res)=>{
-    
+    try{
     const id=req.params.id
     console.log(id);
-    await categories.deleteOne({_id:id})
+
+    await categories.updateOne({_id:id},{$set:{
+        delete:true
+    }})
     res.redirect('/admin/category')
+    }catch{
+        console.log(err);
+        res.render('user/500')
+    }
+    
+},
+
+restorecategory:async(req,res)=>{
+    const id = req.params.id
+    console.log('restore'+id);
+    await categories.updateOne({_id:id},
+        {$set: {delete:false}})
+    res.redirect('/admin/category');
 },
 
 
