@@ -44,6 +44,14 @@ adminRouter.get('/UnblockUser/:id', adminController.UnblockUser)
 
 adminRouter.get('/dashboard',adminController.dashboard)
 
+adminRouter.get('/coupon', VerfyLogin.VerifyLoginAdmin,adminController.coupon)
 
+adminRouter.post('/addCoupon',VerfyLogin.VerfyLoginUser,adminController.addCoupon)
+
+adminRouter.post('/editCoupon/:id',adminController.editcoupon)
+
+adminRouter.get('/deleteCoupon/:id',adminController.deletecoupon)
+
+adminRouter.get('/restoreCoupon/:id',adminController.restorecoupon)
 
 module.exports=adminRouter 

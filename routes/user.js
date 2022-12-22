@@ -52,4 +52,7 @@ userRouter.get('/checkout',VerfySession.VerfyLoginUser,userController.checkout)
 userRouter.post('/addNewAddress',VerfySession.VerfyLoginUser,userController.addnewaddress)
 
 userRouter.get('/categorywise/:id',VerfySession.VerfyLoginUser,userController.cateogrywiseshoppage)
+
+userRouter.post('/placeOrder',VerfySession.VerfyLoginUser,userController.placeorder)
+
 module.exports=userRouter    

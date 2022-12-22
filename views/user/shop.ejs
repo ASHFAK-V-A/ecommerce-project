@@ -1,85 +1,42 @@
 <%- include('../partials/userheader-shop') %>
 
-    <link rel="stylesheet" href="/public/stylesheet/shop.css">
+<%- include('../partials/shopmenu') %>
+   
+<link rel="stylesheet" href="/public/stylesheet/shop.css">
     
-
-    <header class="bg-dark py-1">
-        <div class="container px-5 px-lg-5 my-3">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-            </div>
-        </div>
-    </header>
            <!-- Category -->            
-        <div id="content" class="my-5">
-            <div id="filterbar" class="collapse">
-              <div class="box border-bottom ">
-                    <div class="box-label text-uppercase d-flex align-items-center">categories <button
-                            class="btn ml-auto" type="button" data-toggle="collapse" data-target="#inner-box"
-                            aria-expanded="false" aria-controls="inner-box" id="out" onclick="outerFilter()"> <span
-                                class="fa fa-plus ms-1"></span> </button> </div>
-                    <div id="inner-box" class="collapse mt-3 mr-1">
-                        <div class="my-1"> 
-                           <% category.forEach(category => { %>
-                            <div class="form-check p-0">
-                                <a class="text-dark" href="/categorywise/<%= category._id %>">
-                                <label class="form-check-label" for="check" ><%= category.category_name %>
-                        </a>
-                                </label>
-                              </div>
-                                <% }) %> 
-                       </div>
-                        
-                      
-                     
-                      
-                    </div>
-                </div>
-         
-           </div>
-        
-            <!-- // -->
-            <div id="products">
-                <div class="row mx-0">
-                  <a href="">
+           <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+               
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <% product.forEach((products)=>{ %>
-                  
-                    <div class="col-lg-4 col-md-6 pt-md-4 pt-3">
-                        <a href="/viewproduct/<%=products?._id%>" class="text-decoration-none text-dark">
-                   
-                        <div class="card d-flex flex-column align-items-center">
-                            <div class="product-name text-center"><strong class="text fs-4"><%= products?.product_name %> </strong></div>
-                            <div class="card-img mt-2"> <img
-                                src="/products-images/<%=products?._id%>.jpg"
-                                    alt=""> </div>
-                                    
-                            <div class="card-body">
-                                <p class="text float-start m-0 text-muted"><%= products?.description %></p>
-                                <br>
-                              
-                       <p class="text float-start m-0 fw-bolder fs-4 mt-3"><%= product.category %></p>
-                            
-                       <br>
-                       <br>
-
-                                      <div>
-                                    
-                         <button type="button" class="btn btn-dark mt-3 " style="width:10rem;" >Buy</button>  </a> 
-                      
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img style="height: 13rem" class="card-img-top" src="/products-images/<%=products?._id%>.jpg" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h3 class="fw-bolder"><%= products?.product_name %></h3>
+                                    <!-- Product price-->
+                                  <strong class="text fs-4  ">$<%= products?.price%>.00 </strong> 
                                 </div>
                             </div>
-
-                      
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/viewproduct/<%=products?._id%>">View options</a></div>
+                            </div>
                         </div>
                     </div>
-                </a>
-      <% }) %>  </div>
-                </div>
-             
-            
-            </div>
-        </div>
+                    
+                    
+                    <% }) %>
+                   
+                   </div>
+                    </div>
+                    </section>
 
     <%- include('../partials/footer') %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    

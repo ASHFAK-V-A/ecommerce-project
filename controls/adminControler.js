@@ -3,6 +3,10 @@
 const products = require("../models/ProductSchema")
 const user=require('../models/UserSchema')
 const categories=require('../models/Cateogary')
+const coupon =require('../models/coupon')
+const moment = require('moment')
+const { find } = require("../models/UserSchema")
+moment().format()
 
 let email='admin@gmail.com'
 let Password='123'
@@ -73,12 +77,10 @@ addproducts:async (req,res)=>{
 
 ProductDetail:async(req,res)=>{
    
-      
-        let product = await products.find().populate('category')
+    let product = await products.find().populate('category')
 
       res.render('admin/ProductDetails',{product})   
       console.log(product);
-   
 
  },
 
@@ -296,7 +298,75 @@ UnblockUser:async(req,res)=>{
 
 dashboard:(req,res)=>{
     res.render('admin/dashboard')
-}
+},
+
+coupon: async(req,res)=>{
+    const couponData= await coupon.find()  
+    res.render('admin/coupon',{couponData})
+  },
+
+  addCoupon:(req,res)=>{
+    try{
+     const data = req.body
+     const dis= parseInt(data.discount)
+     const maxLimit = parseInt(data.maxLimit)
+     const discount = dis/100
+
+    coupon.create({
+              couponName:data.couponName,
+              discount  :discount,
+              maxLimit  :maxLimit,
+              expirationTime:data.expirationTime
+      
+            }).then((data)=>{
+              console.log(data);
+              res.redirect('/admin/coupon')
+
+            })
+
+    }catch{
+             console.log(err)
+    }
+
+
+  },
+  editcoupon:(req,res)=>{
+    try{
+    const id = req.params.id
+    const data= req.body
+
+// matching with mongodb id and product id
+    coupon.updateOne({_id:id},{
+        couponName: data.couponName,
+        discount  : data.discount/100,
+        maxLimit  : data.maxLimit,
+        expirationTime: data.expirationTime
+    }).then(()=>{
+           res.redirect('/admin/coupon')
+    })
+
+
+ 
+  }catch{
+    console.log(err);
+  }
+  },
+
+  deletecoupon: async(req,res)=>{
+ const id = req.params.id
+ await coupon.updateOne({_id : id},{$set: {delete : true}})
+ res.redirect('/admin/coupon')
+
+
+  },
+
+  restorecoupon: async(req,res)=>{
+    const id = req.params.id
+    await coupon.updateOne({_id : id},{$set: {delete : false}})
+    res.redirect('/admin/coupon')
+    
+  }
+  
 
 
 

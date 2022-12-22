@@ -1,173 +1,202 @@
-                 <%- include('../partials/user-header') %>
 
-                 <link rel="stylesheet" href="/public/stylesheet/checkout.css">
 
-                 <div class="container rounded bg-white">
-                 <div class="bg row d-flex justify-content-center pb-5 mt-5">
-                 <div class="col-sm-4 col-md-4 ml-1 p-0" style="margin-top: 4rem;">
-           
-                 <div class="bg-white p-2 d-flex flex-column mt-5" style="border-radius:14px">
-                 <!-- <div class="text-center mt-4"> <img class="img-fluid" src="https://i.imgur.com/kvdO7jw.png" width="200"/> </div> -->
+ <%- include('../partials/user-header') %>
 
-                 <h5>Your Order Details </h5>
-                 <br>
-                 <strong>Products<span class="text float-end">Price</span> </strong>
-                 <br>
-                 <% productData.forEach((product)=>{%>
+ <link rel="stylesheet" href="/public/stylesheet/checkout.css">
 
-                 <h6><%= product.productDetail.product_name %> <span class="text fs-6 fw-normal">(<%= product.quantity%>Qty)</span>
-                           <% var a=product.productDetail.price%>
-                 <% var b=product.quantity%>
-                     <% var c=a*b %>
-             
-                    <span class="text float-end">:$<%= c %>.00</span> 
-                 </h6>
-       
+ <div class="container" style="margin-top: 6rem;">
+    <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+          <span class="badge badge-secondary badge-pill">3</span>
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
                     
+                  <h6 class="my-0 " >Products</h6>
+                
+                </div>
+                <span class="text-active ">Price</span>
+                
+              </li>
+            <% productData.forEach((product)=>{%>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
 
-                    <% }) %>
-
-                    <br>
-
-                 <strong>Tottal  : <span class="text float-end green"><h4 class="green">$<%= sum %>.00</h4></span> </strong>
-              
-                 </div>
-                 </div>
-                 <div class="col-sm-5 col-md-6 mobile">
-                 <div class="py-4 d-flex justify-content-end">
-               
-                  </div>
-                  <div class="bg-white p-3 d-flex flex-column" style="border-radius:14px">
-                  <div class="pt-2">
-                    <h5>Select Your Shipping Address </h5>
-                 </div>
-                 <div class="d-flex">
-                    <select class="form-select mt-2" aria-label="Default select example">
-                        <% userData.addressDetails.forEach((address)=>{%>
-                        <option name="address"   selected> <%= address.housename %>,<%= address.postoffice%>,<%= address.landmark %>,<%=address.area %>,<%= address.district %>,<%= address.pin %>,<%=address.state %></option>
-                        <% }) %>
-                        
-                     
-                      </select>
-                             </div>
-                 
-
-                 <div class="pt-2 mt-3">
-                    <h5>Apply Coupon</h5>
-                 </div>
-                 <div class="form-group mt-2">
-                    <label for="usr">Enter Coupon Code:</label>
-                    <input type="text" class="form-control" id="usr" style="width:200px;">
-                  </div>
-       
-                 <div class="pt-2 mt-1">
-                    <div class="border-top px-4 mx-8 pt-2"></div>
-                    <h5>Payment mehods</h5>
-                 </div>
-                 <div class="form-check mt-1">
-                    <input type="radio" class="form-check-input" id="check1" name="paymentMethod">
-                    <label class="form-check-label fw-bolder" for="check1">COD <span class="text fw-lighter">(Cash on Delivery)</span></label>
-                  </div>
-                  <div class="form-check pt-1">
-                    <input type="radio" class="form-check-input" id="check2" name="paymentMethod" value="something">
-                    <label class="form-check-label fw-bolder" for="check2">Online</label>
-                  </div>
-               
-                 <input type="button" value="Place Order" class=" btn mt-4 btn-primary btn-block" style="border-radius:10px;">
-                    
-                 <!-- Modal -->
-                 
-                 <input type="button" value="Add new address" class="btn btn-dark mt-2" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                            Add new Address
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <form action="/addNewAddress" method="post">
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="recipient-name"
-                                                    class="col-form-label">Housename:</label>
-                                                <input required type="text" class="form-control" id="housename"
-                                                    name="housename" />
-                                                <p id="houseError" style="color: red"></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="recipient-name" class="col-form-label">Area:</label>
-                                                <input required type="text" class="form-control" id="area"
-                                                    name="area" />
-                                                <p id="areaError" style="color: red"></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="recipient-name" class="col-form-label">Landmark:</label>
-                                                <input required type="text" class="form-control" id="landmark"
-                                                    name="landmark" />
-                                                <p id="landmarkError" style="color: red"></p>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="firstName">District</label>
-                                                        <input required type="text" class="form-control"
-                                                            id="district" name="district" />
-                                                        <p id="stateError" style="color: red"></p>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="lastName">State</label>
-                                                        <input required type="text" class="form-control" id="state"
-                                                            name="state" />
-                                                        <p id="pincodeError" style="color: red"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="firstName">Post office</label>
-                                                        <input required type="text" class="form-control"
-                                                            id="postoffice" name="postoffice" />
-                                                        <p id="stateError" style="color: red"></p>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="lastName">Pincode</label>
-                                                        <input required type="text" class="form-control" id="pin"
-                                                            name="pin" />
-                                                        <p id="pincodeError" style="color: red"></p>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="lastName">House.NO</label>
-                                                        <input required type="text" class="form-control" id="pin"
-                                                            name="houseno" />
-                                                        <p id="housenoerr" style="color: red"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="submit" value="submit" class="btn btn-primary">
-                                                Add
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                
+              <h6 class="my-0" ><span><%= product.productDetail.product_name %><span class="text ms-1 fw-normal">(<%= product.quantity%>Qty)</span></span></h6>
+            <% var a= product.productDetail.price %>
+            <% var b=product.quantity%>
+            <% var c=a*b %>
+            <span class="text-active">$<%= c %></span>
             
+          </li>
+       
+          
+          
+          <% }) %>
 
-                 <input type="button" value="Cancel" class=" btn mt-2 btn-dark btn-block" style="border-radius:10px;">
+        
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="text fs-5">Total (USD)</span>
+            <strong class="text-success fs-4">$<%= sum %>.00</strong>
+          </li>
+        </ul>
+  
+      </div>
+      <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Select Your Shipping Address</h4>
+        <form class="needs-validation" novalidate>
+        
+          <div class="mb-3">
+            <label for="username">Address</label>
+            <div class="input-group">
+              
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <% userData.addressDetails.forEach((address)=>{%>  
+                <option value="1"> <%= address.housename %>,<%= address.postoffice%>,<%= address.landmark %>,<%=address.area %>,<%= address.district %>,<%= address.pin %>,<%=address.state %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <form class="card p-2 ">  
+             <label class="text">Apply Coupon</label>
+            <div class="input-group mt-1" style="width: 16rem;">
+              <input type="text" class="form-control" placeholder="Promo code">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Enter</button>
+              </div>
+            </div>
+          </form>
+        
+  
+        
+  
+          <hr class="mb-4 ">
+       
+    
+  
+          <h4 class="mb-3">Payment</h4>
+  
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+            COD (Cash On Delivery)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+            Online
+            </label>
+          </div>
+  
+  
+          <hr class="mb-4">
+          <button class="btn btn-primary  btn-block" type="submit">Place Order</button>
+         
+        </form>
+        <input type="button" value="Add new address" class="btn btn-dark " data-bs-toggle="modal"
+        data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+      </div>
+    </div>
+      <!-- Modal -->
+                 
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                      Add new Address
+                  </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+              </div>
+              <form action="/addNewAddress" method="post">
+                  <div class="modal-body">
+                      <div class="mb-3">
+                          <label for="recipient-name"
+                              class="col-form-label">Housename:</label>
+                          <input required type="text" class="form-control" id="housename"
+                              name="housename" />
+                          <p id="houseError" style="color: red"></p>
+                      </div>
+                      <div class="mb-3">
+                          <label for="recipient-name" class="col-form-label">Area:</label>
+                          <input required type="text" class="form-control" id="area"
+                              name="area" />
+                          <p id="areaError" style="color: red"></p>
+                      </div>
+                      <div class="mb-3">
+                          <label for="recipient-name" class="col-form-label">Landmark:</label>
+                          <input required type="text" class="form-control" id="landmark"
+                              name="landmark" />
+                          <p id="landmarkError" style="color: red"></p>
+                      </div>
+                      <div class="mb-3">
+                          <div class="row">
+                              <div class="col-md-6 mb-3">
+                                  <label for="firstName">District</label>
+                                  <input required type="text" class="form-control"
+                                      id="district" name="district" />
+                                  <p id="stateError" style="color: red"></p>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                  <label for="lastName">State</label>
+                                  <input required type="text" class="form-control" id="state"
+                                      name="state" />
+                                  <p id="pincodeError" style="color: red"></p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="mb-3">
+                          <div class="row">
+                              <div class="col-md-6 mb-3">
+                                  <label for="firstName">Post office</label>
+                                  <input required type="text" class="form-control"
+                                      id="postoffice" name="postoffice" />
+                                  <p id="stateError" style="color: red"></p>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                  <label for="lastName">Pincode</label>
+                                  <input required type="text" class="form-control" id="pin"
+                                      name="pin" />
+                                  <p id="pincodeError" style="color: red"></p>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                  <label for="lastName">House.NO</label>
+                                  <input required type="text" class="form-control" id="pin"
+                                      name="houseno" />
+                                  <p id="housenoerr" style="color: red"></p>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                 </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Close
+                      </button>
+                      <button type="submit" value="submit" class="btn btn-primary">
+                          Add
+                      </button>
                   </div>
-                 </div>
-                 <%- include('../partials/footer') %>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+ 

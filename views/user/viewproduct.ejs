@@ -25,7 +25,7 @@
 	        	<div class="col-md-6">
 	        		<div id="slider" class="owl-carousel product-slider">
 						<div class="item">
-						  	<img src="/products-images/<%=products._id%>.jpg" style="width: 29rem; height: 22rem;"/>
+						  	<img src="/products-images/<%=product._id%>.jpg" style="width: 29rem; height: 22rem;"/>
 						</div>				
 					</div>	
 				        	</div>
@@ -33,9 +33,9 @@
 	        		<div class="product-dtl">
         				<div class="product-info">
 							<button onclick="addtowishlist()" type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" >
-								<a href="/wishlisht/<%=products._id%>"><i class="fa fa-heart text-white"></i> </a>  
+								<a href="/wishlisht/<%=product._id%>"><i class="fa fa-heart text-white"></i> </a>  
 								</button>
-		        			<div class="product-name mt-1"><%=products.product_name %></div>
+		        			<div class="product-name mt-1"><%=product.product_name %></div>
 		        			<div class="reviews-counter mt-3">
 								<div class="rate">
 								    <input type="radio" id="star5" name="rate" value="5" checked />
@@ -51,17 +51,17 @@
 								  </div>
 								<span>3 Reviews</span>
 							</div>
-		        			<div class="product-price-discount mt-3"><span><%=products.price %>$ </span><span class="line-through">$29.00</span></div>
+		        			<div class="product-price-discount mt-3"><span><%=product.price %>$ </span><span class="line-through">$29.00</span></div>
 		        		</div>
-                                     <h3><%=products.category %></h3>
+                                     <h3><%= product.category.category_name %></h3>
 
-	        			<p style="margin-top:30px;"><%=products.description %></p>
+	        			<p style="margin-top:30px;"><%=product.description %></p>
 	        			
 	        			<div class="product-count mt-5">
 
 							<a href="#" class="round-black-btn mt-5  text-decoration-none">Buy now</a>
                       
-                                <a href="/addtocart/<%=products?._id%>" class="round-black-btn mt-5 text-decoration-none" > Add to Cart</a>
+                                <a href="/addtocart/<%=product._id%>" class="round-black-btn mt-5 text-decoration-none" > Add to Cart</a>
                          
 	        			</div>
 	        		</div>

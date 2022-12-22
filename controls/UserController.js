@@ -438,8 +438,9 @@ totalAmount: async (req, res) => {
 
   viewproduct:async(req,res)=>{
       const id =req.params.id
-    const products = await Products.findOne({_id:id})
-    res.render('user/viewproduct',{products,countInCart,profileusername, countInWishlist })
+      const product = await Products.findOne({_id:id}).populate('category')
+  console.log(product);
+    res.render('user/viewproduct',{product,countInCart,profileusername, countInWishlist })
     
   },
 
@@ -667,15 +668,16 @@ const productData = await cart.aggregate([
         $multiply: ["$quantity", "$productDetail.price"], 
       },
     },
-  },
+  }, 
 ])
 .exec()
 const sum = productData.reduce((accumulator, object) => {
   return accumulator + object.productPrice;
-}, 0);
+}, 0); 
+customer=true 
 
-
-  res.render('user/checkout',{countInWishlist,countInCart,profileusername,sum,productData,userData})
+console.log();
+  res.render('user/checkout',{countInWishlist,countInCart,profileusername,sum,productData,userData,customer})
 },
 
 
@@ -700,8 +702,15 @@ addnewaddress:async (req,res)=>{
 },
 
 
+placeorder:(req,res)=>{
+  let invalid;
+  let couponDeleted;
 
 }
+ 
+
+
+} 
 
 
  
