@@ -8,12 +8,11 @@ require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
 const cart = require('../models/CartSchema')
 const mongoose = require('mongoose');
-const products = require('../models/ProductSchema');
 const wishlist = require('../models/wishlistSchema');
 const categories = require('../models/Cateogary');
-
-
-
+const coupon = require('../models/coupon')
+const order = require ('../models/order');
+const moment = require('moment')
 
 
 let name
@@ -34,6 +33,33 @@ async function emailExists(email) {
   }
 }
 
+function checkCoupon(data,id){
+  return new Promise((resolve)=>{
+    if(data.coupon){
+      coupon.find(
+        {couponName: data.coupon},
+        {users: { $elemMatch : { userId:id}}}
+      )
+      .then((exist)=>{
+        console.log(exist);
+        if(exist[0].users.length){
+          console.log('inside if function');
+          console.log(exist[0].users.length);
+          resolve(true)
+
+        }else{
+          console.log('else working check coupon');
+          coupon.find({ couponName: data.coupon}).then((discount)=>{
+            resolve(discount)
+          })
+        }
+      })
+    }else{
+      console.log('No more coupon');
+      resolve(false)
+    }
+  })
+}
 
 
 module.exports = {
@@ -702,15 +728,143 @@ addnewaddress:async (req,res)=>{
 },
 
 
-placeorder:(req,res)=>{
+placeOrder :async (req,res)=>{
+     
   let invalid;
   let couponDeleted;
+  const data = req.body
+
+  const session = req.session.isUser;
+  const userData = await UserModel.findOne({ email: session })
+  const cartData = await cart.findOne({ userId: userData._id });
+  const objId = mongoose.Types.ObjectId(userData._id)
+
+if(data.coupon){
+ 
+  invalid = await coupon.findOne({ couponName:data.coupon })
+ 
+  if(invalid?.delete == true){
+
+    couponDeleted =true
+  }  
+}else{
+  invalid = 0;
+}
+
+if(invalid == null){
+
+  res.json({ invalid: true });
+}
+else if(couponDeleted){
+
+  res.json({couponDeleted:true})
+}
+else{
+
+  const discount = await checkCoupon(data,objId)
+
+  if(discount == true){
+    res.json({ coupon : true})
+  }
+  else{
+
+    if (cartData) {
+      const productData = await cart
+        .aggregate([
+          {
+            $match: { userId: userData.id },
+          },
+          {
+            $unwind: "$product",
+          },
+          {
+            $project: {
+              productItem: "$product.productId",
+              productQuantity: "$product.quantity",
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "item",
+              foreignField: "_id",
+              as: "productDetail",
+            },
+          },
+          {
+            $project: {
+              item: 1,
+              quantity: 1,
+              productDetail: { $arrayElemAt: ["$productDetail", 0] },
+            },
+          },
+          {
+            $addFields: {
+              productPrice: {
+                $multiply: ["$quantity", "$productDetail.price"]
+              }
+            }
+          }
+        ])
+        .exec();
+      const sum = productData.reduce((accumulator, object) => {
+        return accumulator + object.productPrice;
+      }, 0);
+
+      if (discount == false){
+         var total = sum;
+      }
+      else{
+        var dis = sum * discount[0].discount
+        if(dis > discount[0].maxLimit){
+          total = sum-discount[0].maxLimit;
+
+        }else{
+          total = sum-dis;
+        }
+      }
+
+      const orderData = await order.create({
+        userId: userData._id,
+        name: userData.username,
+        phonenumber: userData.phone,
+        address: req.body.address,
+        orderItems: cartData.product,
+        totalAmount: total,
+        paymentMethod: req.body.paymentMethod,
+        orderDate: moment().format("MMM Do YY"),
+        deliveryDate: moment().add(3, "days").format("MMM Do YY")
+      })
+
+      // const amount = orderData.totalAmount * 100
+      const orderId = orderData._id
+      await cart.deleteOne({ userId: userData._id });
+      
+      if (req.body.paymentMethod === "COD") {
+       await order.updateOne({_id:orderId},{$set:{orderStatus:'placed'}})
+       
+       res.json({ success: true})
+       coupon.updateOne(
+        {couponName:data.coupon},
+        {$push:{users: {userId : objId}}}
+       ).then((updated)=>{
+        console.log(updated);
+       })
+      }
+    }
+  } 
+}
+
+},
+
+ordersuccess:(req,res)=>{
+  res.render('user/ordersucess')
+}
+
+
 
 }
- 
 
-
-} 
 
 
  

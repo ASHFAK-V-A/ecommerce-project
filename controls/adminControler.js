@@ -351,13 +351,13 @@ coupon: async(req,res)=>{
     console.log(err);
   }
   },
-
+ 
   deletecoupon: async(req,res)=>{
  const id = req.params.id
  await coupon.updateOne({_id : id},{$set: {delete : true}})
  res.redirect('/admin/coupon')
-
-
+  
+ 
   },
 
   restorecoupon: async(req,res)=>{
