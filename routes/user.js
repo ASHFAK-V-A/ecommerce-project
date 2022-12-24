@@ -56,4 +56,5 @@ userRouter.get('/categorywise/:id',VerfySession.VerfyLoginUser,userController.ca
 userRouter.post('/placeOrder',VerfySession.VerfyLoginUser,userController.placeOrder)
 
 userRouter.get('/ordersuccess',VerfySession.VerfyLoginUser,userController.ordersuccess)
+
 module.exports=userRouter    

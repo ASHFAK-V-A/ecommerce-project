@@ -43,7 +43,7 @@ function checkCoupon(data,id){
       .then((exist)=>{
         console.log(exist);
         if(exist[0].users.length){
-          console.log('inside if function');
+   
           console.log(exist[0].users.length);
           resolve(true)
 
@@ -779,8 +779,8 @@ else{
           },
           {
             $project: {
-              productItem: "$product.productId",
-              productQuantity: "$product.quantity",
+              item: "$product.productId",
+              quantity: "$product.quantity",
             },
           },
           {
@@ -854,9 +854,7 @@ else{
     }
   } 
 }
-
 },
-
 ordersuccess:(req,res)=>{
   res.render('user/ordersucess')
 }
