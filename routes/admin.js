@@ -54,4 +54,11 @@ adminRouter.get('/deleteCoupon/:id',adminController.deletecoupon)
 
 adminRouter.get('/restoreCoupon/:id',adminController.restorecoupon)
 
+adminRouter.get('/orderreport',VerfyLogin.VerifyLoginAdmin, adminController.orderreport)
+
+adminRouter.post('/orderStatuschange/:id',VerfyLogin.VerifyLoginAdmin,adminController.orderStatus)
+
+adminRouter.get('/orderedProductview/:id',VerfyLogin.VerifyLoginAdmin,adminController.orderedProductview)
+
+
 module.exports=adminRouter 

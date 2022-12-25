@@ -41,21 +41,18 @@ function checkCoupon(data,id){
         {users: { $elemMatch : { userId:id}}}
       )
       .then((exist)=>{
-        console.log(exist);
+    
         if(exist[0].users.length){
-   
-          console.log(exist[0].users.length);
+       
           resolve(true)
 
         }else{
-          console.log('else working check coupon');
           coupon.find({ couponName: data.coupon}).then((discount)=>{
             resolve(discount)
           })
         }
       })
     }else{
-      console.log('No more coupon');
       resolve(false)
     }
   })
@@ -275,6 +272,7 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
   };;
 
   const UserData= await UserModel.findOne({email:session})
+
   const userCart = await cart.findOne({userId :UserData._id})
 
     if(userCart){
@@ -767,7 +765,6 @@ else{
     res.json({ coupon : true})
   }
   else{
-
     if (cartData) {
       const productData = await cart
         .aggregate([
@@ -857,7 +854,103 @@ else{
 },
 ordersuccess:(req,res)=>{
   res.render('user/ordersucess')
+},
+
+
+orderdetails:async(req,res)=>{
+customer=true
+const session = req.session.isUser
+const userData=  await UserModel.findOne({email:session})
+
+const orderData = await order.find({userId: userData._id}).sort({createdAt:-1})
+
+  const orderlength = orderData.length
+;
+
+  res.render("user/order-history",{countInCart,countInWishlist,customer,profileusername,orderData,orderlength})
+
+ 
+},
+
+TrackOrder:async(req,res)=>{
+  customer=true
+  const id = req.params.id
+  const objId =  mongoose.Types.ObjectId(id)
+  const ProductData = await order.aggregate([
+    {
+      $match:{_id:objId}
+    },
+    {
+      $unwind:"$orderItems"
+    },
+    {
+      $project:{
+        iteam:"$orderItems.productId",
+        quantity:"$orderItems.quantity",
+        address:1,
+        phonenumber:1,
+        deliveryDate:1,
+        orderStatus:1,
+      }
+    },
+    {
+      $lookup:{
+        from:"products",
+        localField:"iteam",
+        foreignField:"_id",
+        as:"productDetail"
+      
+    }
+  },
+  {
+    $project :{
+      iteam:1,
+      quantity: 1,
+      name: 1,
+      phonenumber: 1,
+      address: 1, 
+      deliveryDate:1,
+      orderStatus:1,
+      productDetail: { $arrayElemAt: ["$productDetail", 0] },
+    }
+  },
+  {
+    $lookup: {
+      from: 'categories',
+      localField: 'productDetail.category',
+      foreignField: "_id",
+      as: "category_name"
+    }
+  },
+    {
+      $unwind: "$category_name"
+    },
+ 
+  
+  ])
+
+
+
+
+res.render('user/track-order',{countInCart,countInWishlist,profileusername,customer,ProductData})
+},
+
+
+cancelorder:async(req,res)=>{
+const id = req.params.id
+const objId = mongoose.Types.ObjectId(id)
+
+await order.deleteOne({_id:objId},{
+
+})
+
+res.redirect('/orderhistory')
+
+
+
+
 }
+
 
 
 
@@ -868,6 +961,7 @@ ordersuccess:(req,res)=>{
  
 
 // muhammadarshad8935@gmail.com
+
 
   //password 
   //af10ashfak#ii               

@@ -6,6 +6,9 @@ const categories=require('../models/Cateogary')
 const coupon =require('../models/coupon')
 const moment = require('moment')
 const { find } = require("../models/UserSchema")
+const order = require("../models/order")
+const { orderdetails } = require("./UserController")
+const { default: mongoose } = require("mongoose")
 moment().format()
 
 let email='admin@gmail.com'
@@ -365,9 +368,136 @@ coupon: async(req,res)=>{
     await coupon.updateOne({_id : id},{$set: {delete : false}})
     res.redirect('/admin/coupon')
     
-  }
+  },
   
 
+    orderreport: async (req, res) => {
 
+        try {
+
+            order.aggregate([
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: "orderIteams.productId",
+                        foreignField: "_id",
+                        as: "product",
+                    }
+                },
+                {
+                    $sort: {
+                        createdAt: -1
+                    }
+                },
+
+            ]).then((orderdetails) => {
+                owner=true
+                res.render('admin/orderdetails', { orderdetails,owner })
+
+            })
+
+        } catch (err) {
+
+            console.log(err);
+            res.render('user/500')
+      
+        }
+
+
+    },
+
+    orderStatus:async(req,res)=>{
+        try{
+        const id = req.params.id
+        const data = req.body
+        console.log(data);
+
+        await order.updateOne(
+            {_id:id},
+            {
+                $set:{
+                    orderStatus:data.orderStatus,
+                    paymentStatus:data.paymentStatus
+                }
+            }
+        )
+        
+       res.redirect('/admin/orderreport')
+    }catch(err){
+console.log(err);
+}
+
+},
+
+
+orderedProductview:async(req,res)=>{
+    const id = req.params.id
+    const objId = mongoose.Types.ObjectId(id)
+    const ProductData = await order.aggregate([
+        {
+          $match:{_id:objId}
+        },
+        {
+          $unwind:"$orderItems"
+        },
+        {
+          $project:{
+            iteam:"$orderItems.productId",
+            quantity:"$orderItems.quantity",
+            address:1,
+            phonenumber:1,
+          name:1,
+
+          }
+        },
+        {
+          $lookup:{
+            from:"products",
+            localField:"iteam",
+            foreignField:"_id",
+            as:"productDetail"
+          
+        }
+      },
+      {
+        $project :{
+          iteam:1,
+          quantity: 1,
+          name: 1,
+          phonenumber: 1,
+          address: 1, 
+          deliveryDate:1,
+          productDetail: { $arrayElemAt: ["$productDetail", 0] },
+        }
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'productDetail.category',
+          foreignField: "_id",
+          as: "category_name"
+        }
+      },
+        {
+          $unwind: "$category_name"
+        },
+     
+      {
+        $addFields: {
+            productPrice: {
+              $multiply: ["$quantity", "$productDetail.price"]
+            }
+          }
+      }
+      ]).exec();
+      const sum = ProductData.reduce((accumulator, object) => {
+        return accumulator + object.productPrice;
+      }, 0);
+
+console.log(sum);
+owner=true
+res.render('admin/orderdprodcutview',{ProductData,owner,sum})
+}
+      
 
 }

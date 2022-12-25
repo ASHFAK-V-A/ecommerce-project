@@ -2,6 +2,7 @@ const express=require('express')
 const userRouter=express()
 
 const userController=require('../controls/UserController')
+const { VerifyLoginAdmin } = require('../midlweare/session')
 
 const VerfySession=require('../midlweare/session')
 
@@ -57,4 +58,9 @@ userRouter.post('/placeOrder',VerfySession.VerfyLoginUser,userController.placeOr
 
 userRouter.get('/ordersuccess',VerfySession.VerfyLoginUser,userController.ordersuccess)
 
+userRouter.get('/orderhistory',VerfySession.VerfyLoginUser,userController.orderdetails)
+
+userRouter.get('/TrackOrder/:id',VerfySession.VerfyLoginUser,userController.TrackOrder)
+
+userRouter.get('/cancelorder/:id',VerfySession.VerfyLoginUser,userController.cancelorder)
 module.exports=userRouter    
