@@ -5,10 +5,10 @@ const user=require('../models/UserSchema')
 const categories=require('../models/Cateogary')
 const coupon =require('../models/coupon')
 const moment = require('moment')
-const { find } = require("../models/UserSchema")
+
 const order = require("../models/order")
-const { orderdetails } = require("./UserController")
-const { default: mongoose } = require("mongoose")
+
+
 moment().format()
 
 let email='admin@gmail.com'
@@ -18,12 +18,62 @@ let err='invalid password or email'
 module.exports={
 
 
-      getadminhome:(req,res)=>{
-       
-            owner=true
-           res.render('admin/admin-home',{owner})
-     
+      getadminhome:async(req,res)=>{
         
+
+        
+      const orderData = await order. find({ orderStatus: { $ne: "cancelled" } })
+      
+      const totalRevenue = orderData.reduce((accumulator, object) => {
+        return accumulator + object.totalAmount;
+ 
+    }, 0);
+
+
+    const todayOrder = await order.find({
+        orderDate: moment().format("MMM DO YY"),
+        orderStatus: { $ne: "cancelled" }
+    });
+
+    const todayRevenue = todayOrder.reduce((accumulator, object) => {
+        return accumulator + object.totalAmount;
+    }, 0);
+               
+    const start = moment().startOf("month");
+
+    const end = moment().endOf("month");
+  
+    const oneMonthOrder = await order.find({ orderStatus: { $ne: "cancelled" }, createdAt: { $gte: start, $lte: end }, })
+
+    const monthlyRevenue = oneMonthOrder.reduce((accumulator, object) => {
+        return accumulator + object.totalAmount;
+    }, 0);
+
+         
+    const pending = await order.find({ orderStatus: "pending" }).count();
+
+    const conformed = await order.find({ orderStatus: "Order confirmed" }).count();
+
+    const delivered = await order.find({ orderStatus: "Delivered" }).count();
+
+    const cancelled = await order.find({ orderStatus: "Canecl" }).count();
+
+    const cod = await order.find({ paymentMethod: "COD" }).count();
+
+    const online = await order.find({ paymentMethod: "Online" }).count();
+
+    const product = await products.find({ delete: false }).count();
+
+
+    const allOrders = await order.find().count();
+    
+    const activeUsers = await user.find({ isBlocked: false }).count();
+    
+           owner=true
+           console.log(delivered);    
+                  res.render('admin/dashboard',{totalRevenue,todayRevenue,monthlyRevenue,delivered,
+                    conformed,cancelled,pending,allOrders,activeUsers,product,cod,online,cancelled})
+     
       
      
      },
@@ -34,7 +84,7 @@ module.exports={
 
          if(req.session.isAdmin){
            
-            res.redirect('/admin/admin-home')
+            res.redirect('/admin')
          }else{
            owner=false
              res.render("admin/admin-login")
@@ -80,6 +130,8 @@ addproducts:async (req,res)=>{
 
 ProductDetail:async(req,res)=>{
    
+    
+
     let product = await products.find().populate('category')
 
       res.render('admin/ProductDetails',{product})   
@@ -273,8 +325,10 @@ restorecategory:async(req,res)=>{
 
 getusers:async(req,res)=>{
    
+
+
         const users=await user.find()
-        console.log(users);
+
         res.render('admin/userDetails',{users})   
   
  

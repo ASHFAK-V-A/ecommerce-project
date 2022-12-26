@@ -940,10 +940,7 @@ cancelorder:async(req,res)=>{
 const id = req.params.id
 const objId = mongoose.Types.ObjectId(id)
 
-await order.deleteOne({_id:objId},{
-
-})
-
+await order.updateOne({ _id: data }, { $set: { orderStatus: "cancelled" } })
 res.redirect('/orderhistory')
 
 
