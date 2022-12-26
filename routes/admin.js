@@ -1,6 +1,7 @@
 const express =require('express')
 const adminRouter=express()
 const adminController =require('../controls/adminControler')
+const UserController = require('../controls/UserController')
 const VerfyLogin=require('../midlweare/session')
 adminRouter.set('view engine','ejs')
 
@@ -60,5 +61,10 @@ adminRouter.post('/orderStatuschange/:id',VerfyLogin.VerifyLoginAdmin,adminContr
 
 adminRouter.get('/orderedProductview/:id',VerfyLogin.VerifyLoginAdmin,adminController.orderedProductview)
 
+adminRouter.get('/salesReport',VerfyLogin.VerifyLoginAdmin,adminController.salesReport)
+
+adminRouter.get('/dailyReport',VerfyLogin.VerifyLoginAdmin,adminController.dailysales)
+
+adminRouter.get('/monthlyReport',VerfyLogin.VerifyLoginAdmin,adminController.monthlyreport)
 
 module.exports=adminRouter 

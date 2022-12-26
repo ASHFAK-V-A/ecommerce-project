@@ -551,7 +551,79 @@ orderedProductview:async(req,res)=>{
 console.log(sum);
 owner=true
 res.render('admin/orderdprodcutview',{ProductData,owner,sum})
-}
+},
+
       
+salesReport :async(req,res)=>{
+    try{
+
+      const allOrderDetails = await order.find({
+          paymentStatus:"paid",
+          orderStatus:"Delivered"
+      })
+
+
+      res.render('admin/salesReport',{allOrderDetails})
+
+    }
+    catch{
+      res.render('user/error')
+    }
+     
+  },
+
+
+  dailysales:(req,res)=>{
+  
+      try{
+              order.find({
+                $and:[
+                    {paymentStatus:"paid",orderStatus:"Delivered"}
+                    ,{
+                        orderDate:moment().format("MMM Do YY"),
+                    }
+                ]
+              }).then((allOrderDetails)=>{
+  
+                res.render("admin/salesReport", { allOrderDetails });
+              })
+      }catch{
+
+      }
+
+  },
+
+  monthlyreport: async(req,res)=>{
+     
+try{
+const start = moment().startOf("month")
+const end = moment().endOf("month")
+      
+  await order.find({
+    $and:[
+        {
+           paymentStatus:"paid",orderStatus:"Delivered"
+        },
+        {
+            createdAt:{
+                $gte:start,
+                $lte:end,
+            }
+        }
+    ]
+  }).then((allOrderDetails)=>{
+
+    res.render('admin/salesReport',{allOrderDetails})
+  })
+
+
+}catch{
+
+}
+
+
+  },
+
+
 
 }
