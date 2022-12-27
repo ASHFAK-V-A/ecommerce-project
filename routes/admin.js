@@ -67,4 +67,13 @@ adminRouter.get('/dailyReport',VerfyLogin.VerifyLoginAdmin,adminController.daily
 
 adminRouter.get('/monthlyReport',VerfyLogin.VerifyLoginAdmin,adminController.monthlyreport)
 
+adminRouter.get('/banner',VerfyLogin.VerifyLoginAdmin,adminController.banner)
+
+adminRouter.post('/addBanner',VerfyLogin.VerifyLoginAdmin,adminController.addbanner)
+
+adminRouter.post('/edit-banner/:id',VerfyLogin.VerifyLoginAdmin,adminController.editbanner)
+
+adminRouter.get('/delete-banner/:id',VerfyLogin.VerifyLoginAdmin,adminController.deletebanner)
+
+adminRouter.get('/restore-banner/:id',VerfyLogin.VerifyLoginAdmin,adminController.restorebanner)
 module.exports=adminRouter 

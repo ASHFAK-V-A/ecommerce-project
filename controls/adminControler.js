@@ -5,8 +5,10 @@ const user=require('../models/UserSchema')
 const categories=require('../models/Cateogary')
 const coupon =require('../models/coupon')
 const moment = require('moment')
-
+const banner = require('../models/banner')
 const order = require("../models/order")
+
+
 
 
 moment().format()
@@ -438,6 +440,16 @@ coupon: async(req,res)=>{
                         as: "product",
                     }
                 },
+                
+                    {
+                        $lookup: {
+                           from: "users",
+                           localField: "userId",
+                           foreignField: "_id",
+                           as: "user",
+                        
+                       }
+                },
                 {
                     $sort: {
                         createdAt: -1
@@ -617,13 +629,99 @@ const end = moment().endOf("month")
   })
 
 
-}catch{
-
+}catch(err){
+console.log(err);
 }
 
 
   },
 
+banner:async(req,res)=>{
+
+   const banners =await banner.find()
+
+    res.render('admin/banner',{banners})
+},
+
+addbanner:async(req,res)=>{
+
+try{
+
+const body = req.body
+
+await banner.create({
+    offerType:body.offerType,
+    bannerText:body.bannerText,
+    couponName:body.couponName
+})
+
+res.redirect('/admin/banner')   
+}catch{
+
+}
+
+ 
+},
+
+editbanner:async(req,res)=>{
+    try{
+       
+           const id=req.params.id
+
+           await banner.updateOne(
+
+            {_id:id},
+            {
+                $set:{
+                    offerType:req.body.offerType,
+                    bannerText:req.body.bannerText,
+                    couponName:req.body.couponName
+                }
+            }
+           )
+
+    res.redirect("/admin/banner")
+
+
+    }catch{
+
+    }
+
+},
+
+deletebanner:async(req,res)=>{
+    try{
+        
+       const id= req.params.id
+
+ await banner.updateOne(
+    {_id:id},
+    {$set:{
+        isDeleted:true
+    }}
+ )
+ res.redirect('/admin/banner')
+
+
+    }catch{
+
+    }
+},
+
+restorebanner:async(req,res)=>{
+    const id= req.params.id
+   
+     await banner.updateOne(
+        {_id:id},
+        {$set:{
+            isDeleted:false
+        }}
+     )
+res.redirect("/admin/banner")
+
+}
+
+  
 
 
 }

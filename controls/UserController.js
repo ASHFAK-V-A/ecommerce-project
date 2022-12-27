@@ -13,7 +13,7 @@ const categories = require('../models/Cateogary');
 const coupon = require('../models/coupon')
 const order = require ('../models/order');
 const moment = require('moment')
-
+const banner = require('../models/banner')
 
 let name
 let email
@@ -68,7 +68,9 @@ module.exports = {
       let  userDatas= await UserModel.findOne({email:usern})
       profileusername = userDatas.username
  
-      res.render('user/home',{countInCart,customer,profileusername,countInWishlist})
+
+      const bannerData = await banner.find({ isDeleted:false }).sort({createdAt: -1}).limit(1)
+      res.render('user/home',{countInCart,customer,profileusername,countInWishlist,bannerData})
     } else {
       customer = false
       res.render('user/home') 
