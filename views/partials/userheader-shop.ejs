@@ -33,15 +33,16 @@
                               
                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                        Cart
-                                 <% if (countInCart>0) { %>
-                                        <span class="badge bg-dark text-white ms-1 rounded-pill"><%= countInCart %> </span>
-                                   <% } %>
+                                     
+                                        <span class="badge bg-dark text-white ms-1 rounded-pill"><%= countInCart %> </span>   </button></a> 
+                                 
+                                        <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger"></i></a>
+                                        <% if (countInWishlist>0) { %>
+                                            <sup>  <span class="badge rounded-pill badge-notification bg-danger "><%=countInWishlist %> </span></sup> 
+                                        <% } %>
                                   
-                                   </button></a> 
+                          
                 <% } %>   
-                           <a href="/viewWishlist"> <i class="fa fa-heart ms-2 text-danger">  </i> </a>
-                           
-                           
                          
                            <% if(customer) {%>   
                             <button class="btn btn-light btn-circle btn-circle-xl m-1 ms-3" 

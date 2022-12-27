@@ -49,10 +49,13 @@
                                     <% } %>
                                    
                                     </button></a> 
-                
-                           <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger"></i></a>
-                        
-                            <sup>  <span class="badge rounded-pill badge-notification bg-danger "><%=countInWishlist %> </span></sup> 
+
+                       
+                         <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger"></i></a>
+                           <% if (countInWishlist >0) { %>       
+                         <sup>  <span class="badge rounded-pill badge-notification bg-danger "><%=countInWishlist %> </span></sup> 
+                            <% } %>
+                          
                      <% } %>
                              <% if(customer) {%>  
                             <button class="btn btn-light btn-circle btn-circle-xl m-1 ms-3" 

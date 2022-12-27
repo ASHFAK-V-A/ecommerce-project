@@ -13,7 +13,8 @@ const categories = require('../models/Cateogary');
 const coupon = require('../models/coupon')
 const order = require ('../models/order');
 const moment = require('moment')
-const banner = require('../models/banner')
+const banner = require('../models/banner');
+const otp = require('../models/otp');
 
 let name
 let email
@@ -70,7 +71,9 @@ module.exports = {
  
 
       const bannerData = await banner.find({ isDeleted:false }).sort({createdAt: -1}).limit(1)
+
       res.render('user/home',{countInCart,customer,profileusername,countInWishlist,bannerData})
+    
     } else {
       customer = false
       res.render('user/home') 
@@ -104,11 +107,11 @@ shop: async(req,res)=>{
 cateogrywiseshoppage: async(req,res)=>{
 
   const id =req.params.id
-  console.log(id);
+
   const category = await categories.find()
   const product = await Products.find({category : id}).populate('category')
 
-console.log(product); 
+
 customer=true
 
 res.render('user/shop',{product,category,countInCart,countInWishlist,profileusername,customer})
@@ -125,7 +128,7 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
   postlogin: async (req, res) => {
 
     const { email, Password } = req.body
-    const user = await UserModel.findOne({ email })
+    const user = await UserModel.findOne({email})
     try {
       if (user) {
         if (user.isBlocked == false) {
@@ -135,18 +138,21 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
  
             res.redirect('/')
           } else {
-            res.render('user/login')
+            console.log('invalid password');
+            res.render('user/login',{msg:'invalid pasword'})
           }
         } else {
           res.render('user/login', { blocked: "You can't login" })
         }
       } else {
-        res.render('user/login')
+
+        res.render('user/login',{msg:'user not found'})
       }
     } catch (error) {
       console.log(error);
     }
   },
+
   getsignup: (req, res) => {
     
     res.render('user/signup')
@@ -155,88 +161,138 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
 
   // Signup Validation
   postsignup:async (req,res)=>{
-   
-      
-        const ValidEmail=emailregex.test(req.body.email)
-        const  ValiPassword=PasswordRegex.test(req.body.Password)
+  try{
  
-        if(req.body.Password === req.body.CPassword){
+const {email,Password}=req.body
 
-             const userExist= await emailExists(req.body.email)
+const UserData= await UserModel.findOne({email:email})
 
+if(UserData){
+  res.render('user/signup')
+}else if(req.body.Password===req.body.CPassword){
 
-          if(userExist==true){
-          console.log('user exist');
-          res.render('user/signup',{msg:'User Already Exist'})
-    
-          } else if(!ValidEmail && !ValiPassword){  
-            console.log('ivaid password or email');
-            res.render('user/signup')
-
-    
-
-         }else{ 
-                    
-               bcrypt.hash(req.body.Password,12).then((data)=>{
+  const hash = await bcrypt.hash(req.body.Password,10)
 
 
-                    name=req.body.username,  
-                    email=req.body.email,
-                    phone=req.body.phone,
-                    Password=data
-             
-           const mailDetails={
-            from:process.env.EMAIL,
-            to:email,
-            subject : 'Otp for TheMenFactory',
-            html: `<p>Your OTP for registering in TheMenFactory is ${mailer.OTP}</p>`,
-           }
-           mailer.mailTransporter.sendMail(mailDetails,function(err){
-            if(err){
-                console.log(err);
-            }else{
-                res.redirect('/otp')  
-            }
-              
-           
+const name = req.body.username
+const email = req.body.email
+const phone = req.body.phone
+const password = hash
 
-               }) 
-              })
-              
-            }
-            
-        }else{
-          res.render('user/signup') 
-        }
-          },
+const OTP = `${Math.floor(1000 + Math.random() * 9000)}`
+const mailDetails = {
+    from :process.env.EMAIL,
+    to : email,
+    subject : 'Otp for TheMenFactory',
+    html: `<p>Your OTP for registering in TheMenFactory is ${OTP}</p>`,
+}
 
+const User = {
+  name :name,
+  email:email,
+  phone:phone,
+  password:password
+}
+mailer.mailTransporter.sendMail(mailDetails, async function(err){
+ if(err){
+  console.log(err);
+ }else{
+
+  const userfound = await otp.findOne({email:email})
+  if(userfound){
+    otp.deleteOne({email:email}).then(()=>{
+      otp.create({
+        email:email,
+        otp:OTP
+      }).then(()=>{
+       
+        res.redirect(`/otp?name=${User.name}&email=${User.email}&phone=${User.phone}&password=${User.password}`);
+
+      })
+
+    })
+  
+ 
+ }else{
+    otp.create({
+      email:email,
+      otp:OTP
+    }).then(()=>{
+      res.redirect(`/otp?name=${User.name}&email=${User.email}&phone=${User.phone}&password=${User.password}`);
+    })
+  }
+}
+})
+
+
+}else{
+console.log('password doesnt match');
+}
+
+
+  }catch(err){
+    console.log(err);
+  }
+  },
 
           getotp:(req,res)=>{
-           
-              res.render('user/otp') 
+
+          let userData = req.query
+       
+          res.render('user/otp',{userData}) 
        
            
           },
 
    
-            postotp: (req,res)=>{
-              const otp = req.body.otp
-                if(mailer.OTP == otp){
-                  UserModel.create({
-                    username: name,
-                    phone: phone,
-                    email: email,
-                    Password: Password
-                 }).then(()=>{
-                  res.redirect('/login')
-                 }) 
-                  
-                }else{ 
-                  res.render('user/otp',{invalid:'invalid otp'})
-                  
-                 }
+            postotp: async(req,res)=>{
+              try{
+
+             
+
+              const body = req.body
+              const userData = {
+                name:body.name,
+                email:body.email,
+                phone:body.phone,
+                password:body.password
+
+                
+              }
+         
+             
+              otp.findOne({email:body.email}).then(async(sendOtp)=>{
+
+  
+                         if(req.body.otp == sendOtp.otp){
+
+                          await UserModel.create({
+                            username:body.name,
+                            phone:body.phone,
+                            email:body.email,
+                            Password:body.password
+                          })
+                          console.log('otp success');
+                            res.redirect('/login')
+                         }else{
+                          res.render('user/otp',{invalid:'Invalid OTP',userData})
+                         }
+    
+              })
+    
+
+}catch(err){
+
+}
+        
+                 
               
-              },
+           
+
+           
+    
+          },
+            
 
   
   getlogout: (req, res) => { 
@@ -257,7 +313,7 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
 
   addTocart: async(req,res)=>{
 
-    console.log('api cal');
+
     // Product Id
     const proid=req.params.id
 
@@ -376,11 +432,12 @@ const sum = ProductData.reduce((accumulator, object) => {
   return accumulator + object.productPrice;
 }, 0);
 
+customer=true
 
 countInCart = ProductData.length
 
 
-res.render('user/cart',{ProductData,countInCart,sum,profileusername, countInWishlist})
+res.render('user/cart',{ProductData,countInCart,sum,profileusername, countInWishlist,customer})
 
 },
 
@@ -465,7 +522,7 @@ totalAmount: async (req, res) => {
   viewproduct:async(req,res)=>{
       const id =req.params.id
       const product = await Products.findOne({_id:id}).populate('category')
-  console.log(product);
+
     res.render('user/viewproduct',{product,countInCart,profileusername, countInWishlist })
     
   },
@@ -573,7 +630,6 @@ totalAmount: async (req, res) => {
       ]) , 
    
       countInWishlist = wishlistData.length
-
 
     res.render('user/wishlist', { wishlistData, countInWishlist, countInCart,profileusername  })
 
@@ -702,7 +758,7 @@ const sum = productData.reduce((accumulator, object) => {
 }, 0); 
 customer=true 
 
-console.log();
+
   res.render('user/checkout',{countInWishlist,countInCart,profileusername,sum,productData,userData,customer})
 },
 
@@ -959,8 +1015,3 @@ res.redirect('/orderhistory')
 
  
 
-// muhammadarshad8935@gmail.com
-
-
-  //password 
-  //af10ashfak#ii               
