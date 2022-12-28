@@ -2,7 +2,7 @@ const express=require('express')
 const userRouter=express()
 
 const userController=require('../controls/UserController')
-const { VerifyLoginAdmin } = require('../midlweare/session')
+
 
 const VerfySession=require('../midlweare/session')
 
@@ -72,4 +72,9 @@ userRouter.post("/recivedOTP",userController.forgotpassotp)
 
 userRouter.post("/newpassword",userController.newpassword)
 
+userRouter.get('/resendotp',userController.resendOTP)
+
+userRouter.get('/changepassword',userController.chagepassword)
+
+userRouter.post('/newchangedpassword',userController.changedpassword)
 module.exports=userRouter    

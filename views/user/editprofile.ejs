@@ -38,13 +38,13 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group mt-4">
                                 <label for="Street">Name</label>
-                                <input type="name" class="form-control" value="<%= userData.username %>" name="username" id="Street" placeholder="Enter Your Name" required/>
+                                <input type="name" class="form-control mt-2" value="<%= userData.username %>" name="username" id="Street" placeholder="Enter Your Name" required/>
                             </div>
                         </div>
                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group mt-4">     
                                 <label for="ciTy">Phone</label>
-                       <input type="text" class="form-control" value="<%= userData.phone %>" name="phone" id="ciTy" placeholder="Enter New Phone Number " required="true">
+                       <input type="text" class="form-control mt-2" value="<%= userData.phone %>" name="phone" id="ciTy" placeholder="Enter New Phone Number " required="true">
                     
                             </div>
                         </div>
@@ -60,13 +60,13 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group mt-2">
                                 <label for="Street">House Name</label>
-                                <input type="name" class="form-control" name="house" value="<%= userData?.addressDetails[0]?.housename %>" placeholder="Enter House Name" required/>
+                                <input type="name" class="form-control mt-2" name="house" value="<%= userData?.addressDetails[0]?.housename %>" placeholder="Enter House Name" required/>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group mt-2">     
                                 <label for="ciTy">Area</label>
-                       <input type="text" class="form-control" name="area" value="<%= userData?.addressDetails[0]?.area %>" id="ciTy" placeholder="Enter Street" required="true">
+                       <input type="text" class="form-control mt-2" name="area" value="<%= userData?.addressDetails[0]?.area %>" id="ciTy" placeholder="Enter Street" required="true">
                           <br>
                             </div>
                         </div>
@@ -74,18 +74,18 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="sTate">Landmark</label>
-                                <input type="text" class="form-control" name="landmark" value="<%= userData?.addressDetails[0]?.landmark %>" id="sTate" placeholder="Enter Landmark">
+                                <input type="text" class="form-control mt-2" name="landmark" value="<%= userData?.addressDetails[0]?.landmark %>" id="sTate" placeholder="Enter Landmark">
                             </div>
    <br>
                             <div class="form-group">
                                 <label for="sTate">District</label>
-                                <input type="text" name="district" class="form-control" value="<%= userData?.addressDetails[0]?.district %>" id="sTate" placeholder="Enter District">
+                                <input type="text" name="district mt-2" class="form-control" value="<%= userData?.addressDetails[0]?.district %>" id="sTate" placeholder="Enter District">
                                
                             </div>
                          <br>
                             <div class="form-group">
                                 <label for="sTate">Post office</label>
-                                <input type="text" class="form-control" name="postoffice" id="pos" value="<%= userData?.addressDetails[0]?.state %>" placeholder="Enter Post office">
+                                <input type="text" class="form-control mt-2" name="postoffice" id="pos" value="<%= userData?.addressDetails[0]?.state %>" placeholder="Enter Post office">
                           
                             </div>
                             
@@ -95,19 +95,19 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="zIp">House.No</label>
-                                <input type="text" class="form-control" name="houseno" value="<%= userData?.addressDetails[0]?.houseno %>" id="zIp" placeholder="Enter House.No">
+                                <input type="text" class="form-control mt-2" name="houseno" value="<%= userData?.addressDetails[0]?.houseno %>" id="zIp" placeholder="Enter House.No">
                                
                             </div>
                              <br>
                             <div class="form-group">
                                 <label for="zIp">State</label>
-                                <input type="text" value="<%= userData?.addressDetails[0]?.state %>" class="form-control" name="state"  id="zIp" placeholder="Enter State" read>
+                                <input type="text" value="<%= userData?.addressDetails[0]?.state %>" class="form-control mt-2" name="state"  id="zIp" placeholder="Enter State" read>
                              
                             </div> 
                             <br>
                             <div class="form-group">
                                 <label for="sTate">Pin Code</label>
-                                <input type="text" class="form-control"  name="pincode" value="<%= userData?.addressDetails[0]?.pin %>" placeholder="Enter Pin Code">
+                                <input type="text" class="form-control "  name="pincode" value="<%= userData?.addressDetails[0]?.pin %>" placeholder="Enter Pin Code">
                           
                             </div>
                                <br>

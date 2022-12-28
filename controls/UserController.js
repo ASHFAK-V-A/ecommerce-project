@@ -15,7 +15,7 @@ const order = require ('../models/order');
 const moment = require('moment')
 const banner = require('../models/banner');
 const otp = require('../models/otp');
-const e = require('express');
+const swal = require('sweetalert')
 
 let name
 let email
@@ -300,7 +300,7 @@ forgotpassword:async(req,res)=>{
     try{
   
       const email = req.body.email
-      console.log(email);
+   
       const OTP = `${Math.floor(1000 + Math.random() * 9000)}`
       const mailDetails = {
           from :process.env.EMAIL,
@@ -373,14 +373,82 @@ if(password===body.cnewpassword){
       Password:hash
     }}
   )
-res.redirect('/login')
+  
+ res.redirect('/login')   
+
 
 }else{
-  console.log('Password doesnt match');
+  res.render('user/newpassword',{email,invalid:"Password does not match !"})
+  console.log('Password doesnt match ');
 }
 
   },
+  resendOTP:(req,res)=>{
   
+    const body = req.body
+
+  const email = body.email
+  console.log(email);
+
+
+  },
+
+
+  chagepassword:(req,res)=>{
+res.render('user/chagepassword')
+
+  },
+
+
+
+
+
+  
+  changedpassword:async(req,res)=>{
+
+const body = req.body
+
+const currenntPass= body.cuttentPass
+
+const secondPass = body.secondpaswword
+console.log(secondPass);
+const session = req.session.isUser
+
+if(body.firstpassword===secondPass){
+
+
+  
+  const userData = await UserModel.findOne({email:session})
+  
+  const passwordMatch = await bcrypt.compare(body.currenntPass,userData.Password)
+  console.log(passwordMatch);
+
+  if(passwordMatch){
+    console.log('hashing');
+    const hashPassword = await bcrypt.hash(secondPass,10)
+
+    UserModel.updateOne({email:session},
+      {$set:{Password:hashPassword}}).then(()=>{
+        req.session.destroy();
+       res.redirect('/')  
+      
+      })
+
+  }else{
+
+    console.log('invalid');
+    res.render('user/chagepassword',{invalid:"Invalid Current Password !"})
+  }
+}else{
+
+  res.render('user/chagepassword',{invalid:"Password Does't Match !"})
+
+}
+
+
+
+
+},
   
 
   getlogout: (req, res) => { 
