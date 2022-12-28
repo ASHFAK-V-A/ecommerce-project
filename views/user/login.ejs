@@ -35,14 +35,18 @@
                 </div>
                 <% if(locals.blocked){%>
                   <p class="text-danger"><%=blocked%></p>
-                <%}%>
                 
+                <%}%>
+                <div class="row mt-3">
+                  <a class="text-center" href="/forgotpassword"><p>Forgot Password?</a></p>
+          
                 <div class="row ms-5">
-                  <input type="submit" value="Submit" class="btnn">
+                  <input  type="submit" value="Submit" class="btnn m-2" >
                 </div>
+           
               </form>
             </div>
-            <div class="row">
+            <div class="row m-2">
               <p>Don't have an account? <a href="/signup">Register Here</a></p>
             </div>
           </div>

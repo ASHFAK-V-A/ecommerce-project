@@ -15,6 +15,7 @@ const order = require ('../models/order');
 const moment = require('moment')
 const banner = require('../models/banner');
 const otp = require('../models/otp');
+const e = require('express');
 
 let name
 let email
@@ -284,17 +285,104 @@ console.log('password doesnt match');
 }catch(err){
 
 }
-        
-                 
-              
-           
-
-           
-    
-          },
+       
+},
             
 
   
+forgotpassword:async(req,res)=>{
+ 
+  res.render('user/forgotpassword')
+  },
+  
+  postforgotpassword:async(req,res)=>{
+  
+    try{
+  
+      const email = req.body.email
+      console.log(email);
+      const OTP = `${Math.floor(1000 + Math.random() * 9000)}`
+      const mailDetails = {
+          from :process.env.EMAIL,
+          to : email,
+          subject : 'Otp for TheMenFactory',
+          html: `<p>Your OTP for registering in TheMenFactory is ${OTP}</p>`,
+      }
+
+
+          const userData= await UserModel.findOne({email:email})
+
+          if(userData){
+            mailer.mailTransporter.sendMail(mailDetails,async function(err){
+              if(err){
+                console.log(err);
+              }else{
+                otp.findOne({email:email}).then(async(userfound)=>{
+                  if(userfound){
+                    await otp.deleteOne({email:email})
+                  }
+                })
+                otp.create({
+                  email:email,
+                  otp:OTP
+                }).then(()=>{
+                  res.render('user/recivedotp',{email})
+                  
+                })
+              }
+            })
+          }else{
+
+            res.render('user/forgotpassword',{invalid:"Invalid Email !"})  
+          }
+
+
+    }catch(err){
+  
+    }
+  
+  
+  },
+
+  forgotpassotp:async(req,res)=>{
+const body =  req.body
+const email = body.email
+const usernewpassword = await otp.findOne({email:email})
+if(body.otp == usernewpassword.otp){
+  res.render("user/newpassword",{email})
+
+}else{
+  res.render('user/recivedotp',{email,invalid:"Invaid OTP !"})
+  console.log('invalid otp');
+}
+
+
+  },
+
+  newpassword:async(req,res)=>{
+
+    const body = req.body
+    const email = body.email
+const password = body.newpassword
+const hash =  await bcrypt.hash(password,10)
+if(password===body.cnewpassword){
+    
+  await UserModel.findOneAndUpdate(
+    {email:email},
+    {$set:{
+      Password:hash
+    }}
+  )
+res.redirect('/login')
+
+}else{
+  console.log('Password doesnt match');
+}
+
+  },
+  
+  
+
   getlogout: (req, res) => { 
     req.session.destroy((err) => {
       if (err) throw err;
@@ -1001,10 +1089,8 @@ const objId = mongoose.Types.ObjectId(id)
 await order.updateOne({ _id: data }, { $set: { orderStatus: "cancelled" } })
 res.redirect('/orderhistory')
 
+},
 
-
-
-}
 
 
 

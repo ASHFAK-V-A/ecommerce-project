@@ -63,4 +63,13 @@ userRouter.get('/orderhistory',VerfySession.VerfyLoginUser,userController.orderd
 userRouter.get('/TrackOrder/:id',VerfySession.VerfyLoginUser,userController.TrackOrder)
 
 userRouter.get('/cancelorder/:id',VerfySession.VerfyLoginUser,userController.cancelorder)
+
+userRouter.get('/forgotpassword',userController.forgotpassword)
+
+userRouter.post('/postforgotpassword',userController.postforgotpassword)
+
+userRouter.post("/recivedOTP",userController.forgotpassotp)
+
+userRouter.post("/newpassword",userController.newpassword)
+
 module.exports=userRouter    
