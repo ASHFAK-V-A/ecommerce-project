@@ -88,7 +88,7 @@ module.exports = {
 shop: async(req,res)=>{
   
   if (req.session.isUser) {
-   console.log(countInWishlist);
+
 
     let category= await categories.find()
     const product = await Products.find({delete:false}).populate('category')
@@ -1168,7 +1168,7 @@ cancelorder:async(req,res)=>{
 const id = req.params.id
 const objId = mongoose.Types.ObjectId(id)
 
-await order.updateOne({ _id: data }, { $set: { orderStatus: "cancelled" } })
+await order.updateOne({ _id:objId}, { $set: { orderStatus: "cancelled" } })
 res.redirect('/orderhistory')
 
 },
