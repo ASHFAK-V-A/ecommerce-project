@@ -21,9 +21,9 @@ let name
 let email
 let Password
 let phone
-let countInCart;
+var countInCart;
 let profileusername;
-let countInWishlist;
+let countInWishlist
 
 
 async function emailExists(email) {
@@ -63,7 +63,8 @@ function checkCoupon(data,id){
 
 module.exports = {
   getHome: async (req, res) => {
-    
+
+
     if (req.session.isUser) {
       customer = true
       let usern=req.session.isUser
@@ -87,6 +88,8 @@ module.exports = {
 shop: async(req,res)=>{
   
   if (req.session.isUser) {
+   console.log(countInWishlist);
+
     let category= await categories.find()
     const product = await Products.find({delete:false}).populate('category')
 
@@ -122,12 +125,23 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
 
 
   getlogin: (req, res) => { 
-    res.render('user/login')
+  
+    const session = req.session.isUser
+
+    if(session){
+      res.redirect('/')
+    }else{
+      res.render("user/login")
+    }
+  
+
   },
 
 
   postlogin: async (req, res) => {
 
+ 
+  
     const { email, Password } = req.body
     const user = await UserModel.findOne({email})
     try {
@@ -136,7 +150,7 @@ res.render('user/shop',{product,category,countInCart,countInWishlist,profileuser
           const passwordMatch = await bcrypt.compare(Password, user.Password)
           if (passwordMatch) {
             req.session.isUser =req.body.email
- 
+          
             res.redirect('/')
           } else {
             console.log('invalid password');
@@ -688,7 +702,7 @@ totalAmount: async (req, res) => {
     const data = req.body;
     await cart.aggregate([
       {
-        $unwind: "$product"
+        $unwind: "$product" 
       }
     ])
     await cart
@@ -783,9 +797,9 @@ totalAmount: async (req, res) => {
           }
         }
 
-      ]) , 
+      ]) 
    
-      countInWishlist = wishlistData.length
+       countInWishlist = wishlistData.length
 
     res.render('user/wishlist', { wishlistData, countInWishlist, countInCart,profileusername  })
 
