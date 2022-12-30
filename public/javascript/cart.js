@@ -21,7 +21,7 @@ location.reload()
 
 
 function removeProduct(cartId,productId){
-    console.log('remoce');
+ 
 $.ajax({
     url:'/removeproduct',
     data:{
@@ -30,8 +30,13 @@ $.ajax({
     },
     method:'post',
     success: () => {
-        alert('deleted')
-    location.reload()
+        swal({
+            title: "Product removed from cart",
+            icon: "success",
+            confirmButtonText: "OK",
+        }).then(()=>{
+        location.reload()
+        })
     
 }
 })

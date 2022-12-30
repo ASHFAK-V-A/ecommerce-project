@@ -23,7 +23,6 @@ adminRouter.post('/addCategory',adminController.addcategory)
 
 adminRouter.post('/editCategory/:id',adminController.editCategory)
 
-adminRouter.get('/restore-category/:id',VerfyLogin.VerifyLoginAdmin,adminController.restorecategory)
 
 adminRouter.get('/delete-category/:id', adminController.deleteCategory)
 

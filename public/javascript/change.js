@@ -37,6 +37,30 @@
     })
   }
 
+function addtowishlist(wishlist){
+  console.log('working');
+$.ajax({
+  url:'/wishlisht/'+wishlist,
+  method:'get',
+  success:()=>{
+    swal({
+         title: "Product added to Wishlist",
+         icon: "success",
+         confirmButtonText: "OK",
+ }).then(()=>{
+ location.reload()
+ })
+}
+})
+
+
+}
+
+
+
+
+
+
 
   function removewishlist(wishlistId,productId){
     console.log('working');

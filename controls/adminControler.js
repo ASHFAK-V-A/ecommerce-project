@@ -300,27 +300,25 @@ if(!findName){
 
 deleteCategory:async (req,res)=>{
     try{
-    const id=req.params.id
-    console.log(id);
-
-    await categories.updateOne({_id:id},{$set:{
-        delete:true
-    }})
-    res.redirect('/admin/category')
-    }catch{
-        console.log(err);
-        res.render('user/500')
-    }
+        const id=req.params.id
+        console.log(id);
+        await categories.deleteOne({_id:id})
+    
+        await categories.updateOne({_id:id},{$set:{
+            delete:true
+        }})
+        res.redirect('/admin/category')
+        }catch{
+            console.log(err);
+            res.render('user/500')
+        }
+    
+    
+    
     
 },
 
-restorecategory:async(req,res)=>{
-    const id = req.params.id
-    console.log('restore'+id);
-    await categories.updateOne({_id:id},
-        {$set: {delete:false}})
-    res.redirect('/admin/category');
-},
+
 
 
 // USER LIST

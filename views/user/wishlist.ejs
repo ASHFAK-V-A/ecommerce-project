@@ -1,55 +1,63 @@
 <%- include('../layout/metatag') %>
 
-<%- include('../partials/user-header') %>
+    <%- include('../partials/user-header') %>
 
-<section>
-<link rel="stylesheet" href="/public/stylesheet/wishlist.css">
-<div class="container ">
-    <div class="row">
+        <section>
+            <link rel="stylesheet" href="/public/stylesheet/wishlist.css">
+            <div class="container ">
+                <div class="row">
 
-        <!-- Wishlist-->
-        <div class="col-lg-8 pb-5 mt-5" style="margin-left: 10rem;">
-            <!-- Item-->
-            <p class="h2 text-center mb-4 mt-">My Wishlist</p>
-            <% wishlistData.forEach((product)=> { %>  
-                
-      
-            <div class="cart-item d-md-flex justify-content-between">
-            
-                <div class="px-3 my-3">
-                    <a class="cart-item-product" href="#">
-                        <div class="cart-item-product-thumb"><img src="/products-images/<%= product.productDetail._id %>.jpg" alt=""></div>
-                        <div class="cart-item-product-info">
-                            <h2 class="cart-item-product-title mt-2"><%= product.productDetail.product_name %></h2>
-                       
-                            <div class="text-lg text-body font-weight-medium pb-1"><strong>$<%= product.productDetail.price%> </strong></div>
-                            <span>Availability: <span style="color:rgb(75 169 67);">In Stock </span>  </span>
-                                <button onclick="removewishlist('<%= product._id %>','<%= product.productDetail._id %>')" class="btn btn-dark" style="float: right ;    
+                    <!-- Wishlist-->
+                    <div class="col-lg-8 pb-5 mt-5" style="margin-left: 10rem;">
+                        <!-- Item-->
+                        <p class="h2 text-center mb-4 mt-">My Wishlist</p>
+                        <% wishlistData.forEach((product)=> { %>
+
+
+                            <div class="cart-item d-md-flex justify-content-between">
+
+                                <div class="px-3 my-3">
+                                    <a class="cart-item-product" href="#">
+                                        <div class="cart-item-product-thumb"><img
+                                                src="/products-images/<%= product.productDetail._id %>.jpg" alt="">
+                                        </div>
+                                        <div class="cart-item-product-info">
+                                            <h2 class="cart-item-product-title mt-2">
+                                                <%= product.productDetail.product_name %>
+                                            </h2>
+
+                                            <div class="text-lg text-body font-weight-medium pb-1"><strong>$<%=
+                                                        product.productDetail.price%> </strong></div>
+                                            <span>Availability: <span style="color:rgb(75 169 67);">In Stock </span>
+                                            </span>
+                                            <button
+                                                onclick="removewishlist('<%= product._id %>','<%= product.productDetail._id %>')"
+                                                class="btn btn-dark" style="float: right ;    
                                  position: relative;
                                 bottom: 35px;
                                 left: 108px;
                                 ">
-                          <span class="fa fa-trash text-white"></span>      
-                            </button> 
-                            
-                            <button class="btn" style="float: right;    
+                                                <span class="fa fa-trash text-white"></span>
+                                            </button>
+
+                                            <button class="btn" style="float: right;    
                             position: relative;
                            bottom: 35px;
                            left: 97px;
                            background-color: black;" onclick="addtocart('<%= product._id %>')">
-                     <span class="fa fa-shopping-cart text-white"></span>      
-                       </button> 
-                        </div>
-                    </a>
+                                                <span class="fa fa-shopping-cart text-white"></span>
+                                            </button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
                 </div>
             </div>
-              <% }) %>
-            </div>
-            </div>
-            </div>
-        
-        </section>   
-         
-  <%- include('../partials/footer') %>
-        <script src="/public/javascript/change.js"></script>
-        <script src="/public/javascript/cart.js"></script>
+
+        </section>
+
+        <%- include('../partials/footer') %>
+            <script src="/public/javascript/change.js"></script>
+            <script src="/public/javascript/cart.js"></script>

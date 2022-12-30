@@ -1,8 +1,6 @@
 
 const UserModel = require('../models/UserSchema')
 const bcrypt = require('bcrypt');
-const emailregex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
-const PasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 const Products = require('../models/ProductSchema')
 require('dotenv').config()
 const mailer=require('../midlweare/otpvalidation')
@@ -15,7 +13,7 @@ const order = require ('../models/order');
 const moment = require('moment')
 const banner = require('../models/banner');
 const otp = require('../models/otp');
-const swal = require('sweetalert')
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 let name
 let email
@@ -955,7 +953,7 @@ addnewaddress:async (req,res)=>{
 
 
 placeOrder :async (req,res)=>{
-     
+     try{
   let invalid;
   let couponDeleted;
   const data = req.body
@@ -1032,6 +1030,7 @@ else{
           }
         ])
         .exec();
+   
       const sum = productData.reduce((accumulator, object) => {
         return accumulator + object.productPrice;
       }, 0);
@@ -1061,7 +1060,7 @@ else{
         deliveryDate: moment().add(3, "days").format("MMM Do YY")
       })
 
-      // const amount = orderData.totalAmount * 100
+  
       const orderId = orderData._id
       await cart.deleteOne({ userId: userData._id });
       
@@ -1073,12 +1072,44 @@ else{
         {couponName:data.coupon},
         {$push:{users: {userId : objId}}}
        ).then((updated)=>{
-        console.log(updated);
+      
        })
+      
+  
+  
+      }else{
+        
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          mode: "payment",
+          line_items: productData.map(item => {
+               const product= item.productDetail
+               
+       console.log(productData);
+            return {
+              price_data: {
+                currency: "usd",
+                product_data: {
+                  name:product.product_name,
+                },
+                unit_amount:product.price * 100,
+              },
+              quantity: item.quantity,
+            }
+         
+          }),
+          success_url:`${process.env.SERVER_URL}/ordersuccess`,
+          cancel_url:`${process.env.SERVER_URL}/checkout`,
+          })
+          res.json({url:session.url})
       }
+
     }
   } 
 }
+     }catch(e){
+      res.status(500).json({error: e.message})
+     }
 },
 ordersuccess:(req,res)=>{
   res.render('user/ordersucess')

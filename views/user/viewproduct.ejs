@@ -32,8 +32,8 @@
 	        	<div class="col-md-6">
 	        		<div class="product-dtl">
         				<div class="product-info">
-							<button onclick="addtowishlist()" type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" >
-								<a href="/wishlisht/<%=product._id%>"><i class="fa fa-heart text-white"></i> </a>  
+							<button onclick="addtowishlist('<%=product._id%>')" type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" >
+								<i class="fa fa-heart text-white"></i> </a>  
 								</button>
 		        			<div class="product-name mt-1"><%=product.product_name %></div>
 		        			<div class="reviews-counter mt-3">
@@ -61,7 +61,7 @@
 
 							<a href="#" class="round-black-btn mt-5  text-decoration-none">Buy now</a>
                       
-                                <a class="round-black-btn mt-5 text-decoration-none " onclick="addtocart('<%=product._id%>')" > Add to Cart</a>
+                                <button class="round-black-btn mt-5 text-decoration-none " onclick="addtocart('<%=product._id%>')" >Add To Cart</button>
                          
 	        			</div>
 	        		</div>
@@ -128,5 +128,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="	sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/public/javascript/cart.js"></script>
+<script src="/public/javascript/change.js"></script>
 
 <%- include('../partials/footer') %>
