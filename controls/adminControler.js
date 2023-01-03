@@ -152,7 +152,7 @@ const Product =new products({
     price:req.body.price,
     category:req.body.category_name,
     description:req.body.description,
-    stock:req.body.stock
+
 
 })  
 

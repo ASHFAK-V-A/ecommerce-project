@@ -1,5 +1,5 @@
 # ecommerce project
 
-Project Name: The Men Factory
+Project Name: The Watch Factory
 
-Category: men life style products include skin care products and perfumes
+Category: Premium watch ecommerce shop

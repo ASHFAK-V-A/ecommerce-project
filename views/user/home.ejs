@@ -5,7 +5,6 @@
      
        
 
-        <h2 class="text text-center mt-5">SMART WATCH</h2>
     
  
         <div class="container-fluid">
@@ -17,7 +16,7 @@
                 <div class="text-center "> <img src="/public/logo/apple-logo-icon-14895.png" width="120" alt=""> </div>
               <h1 class="featurette-heading text-center">Apple Watch Series 7 <p class="text-muted fs-4 mt-4">The Apple Watch Series 7 45mm Starlight Sports Band is the largest, most advanced display Smart Watch. Here, the display is Crack Resistant, Dust Resistant (IP6X), and Swimproof with WR50 water resistance.</p></h1>
         
-                <div class="text-center "><a class="btn btn-outline-dark p-2 mt-2 ">View Product</a>
+                <div class="text-center "><a class="btn btn-outline-dark p-2 mt-2 " href="/shop">View shop</a>
                 </div>
                 
          
@@ -36,20 +35,20 @@
         <img class="ms-5 mt-2" src="/public/watches/apple5.jpg" alt="Generic placeholder image" width="170" height="180">
         <h2 class="fw-bolder m-2 fs-3">Apple Watch Series 5 <p class="text-muted mt-1 fs-4"> GPS Model (Brand New)</p></h2>
         
-        <p><a class="btn btn-outline-dark mt-4 " href="#" role="button">View details »</a></p>
+        <p><a class="btn btn-outline-dark mt-4 " href="/shop" role="button">View shop »</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 bg-white">
         <img class="ms-5 mt-2" src="/public/watches/apple7.jpg" alt="Generic placeholder image" width="160" height="180">
         <h2 class="fw-bolder m-2 fs-3">Apple Watch Series 7<p class="text-muted mt-1 fs-4">45mm Starlight Sports Band
          </p></h2>
        
-          <p><a class="btn btn-outline-dark mt-4" href="#" role="button">View details »</a></p>
+          <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 bg-white">
         <img class="ms-5 mt-2" src="/public/watches/apple6.jpg" alt="Generic placeholder image"width="150" height="170">
         <h2 class="fw-bolder m-2 fs-3">Apple Watch Series 6  <p class="text-muted mt-1 fs-4">Aluminum Case and Sport Band</p></h2>
      
-        <p><a class="btn btn-outline-dark mt-2" href="#" role="button">View details »</a></p>
+        <p><a class="btn btn-outline-dark mt-2" href="/shop" role="button">View shop »</a></p>
       </div><!-- /.col-lg-4 -->
     </div>
     </div>
@@ -73,7 +72,7 @@
                   <div class="text-center "> <img src="/public/logo/samsung_logo_icon_144912 (1).png" width="150" alt=""> </div>
                 <h1 class="featurette-heading text-center">Samsung Galaxy Watch 4 <p class="text-muted fs-4 mt-4">Galaxy Watch 4 Classic and Galaxy Watch 4 are the newest Samsung smartwatches. These two succeed Galaxy Watch 3 and Galaxy Watch Active 2 respectively. These two also bring the return to the Wear OS platform 7 years after the Gear Live.   </p></h1>
           
-                  <div class="text-center mt-2 mt-4 mb-3"><a class="btn btn-outline-dark p-2 ">View Product</a>
+                  <div class="text-center mt-2 mt-4 mb-3"><a class="btn btn-outline-dark p-2 " href="/shop">View shop</a>
                   </div>
                   
            
@@ -92,23 +91,145 @@
              <img class="ms-5 mt-2" src="/public/watches/samsung active.jpg" alt="Generic placeholder image" width="150" height="170">
              <h2 class="fw-bolder m-2 fs-3">Samsung Galaxy Watch Active SM-R500<p class="text-muted mt-1 fs-4"> Smartwatch 40mm Aluminum Silver, for Android & iOS </p></h2>
              
-             <p><a class="btn btn-outline-dark mt-4" href="#" role="button">View details »</a></p>
+             <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
            </div><!-- /.col-lg-4 -->
            <div class="col-lg-4 bg-white">
              <img class="ms-5 mt-2" src="/public/watches/sm4.jpg" alt="Generic placeholder image" width="150" height="170">
              <h2 class="fw-bolder m-2 fs-3">Samsung Galaxy Watch 4<p class="text-muted mt-1 fs-4">Bluetooth(4.4 cm, Black, Compatible with Android only)
 </p></h2>
             
-               <p><a class="btn btn-outline-dark mt-4" href="#" role="button">View details »</a></p>
+               <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
            </div><!-- /.col-lg-4 -->
            <div class="col-lg-4 bg-white">
              <img class="ms-5 mt-2" src="/public/watches/sm2.jpg" alt="Generic placeholder image"width="150" height="170">
              <h2 class="fw-bolder m-2">Samsung Galaxy Watch Active 2 <p class="text-muted mt-1 fs-3">Smartwatch (Stainless Steel, 40mm, Silver)</p></h2>
           
-             <p><a class="btn btn-outline-dark mt-2" href="#" role="button">View details »</a></p>
+             <p><a class="btn btn-outline-dark mt-2" href="/shop" role="button">View shop »</a></p>
            </div><!-- /.col-lg-4 -->
          </div>
          </div>
+
+         <hr class="featurette-divider">
+         
+         <% if(customer){ %>             
+          <% if(bannerData.length){ %> 
+  <section class="bg-dark text-light p-3 text-center">
+    <div class="container">
+     <div>
+         <div class="d-flex justify-content-center">
+       
+       
+     
+          <h1 class="text mb-3"><%= bannerData[0].offerType %>
+            <br>
+          
+            <p class="text fs-3 mt-4 text-center">USE CODE: <%=bannerData[0].couponName%></p>
+</h1>        
+                 
+          </div>
+ 
+     </div>
+    </div>
+  </section>
+  <% } %> 
+  <% } %> 
+  <hr class="featurette-divider">
+         
+         <div class="container-fluid">
+     
+    
+            <div class="row featurette bg-white mt-2">
+              
+              <div class="col-md-7  ">
+                  <div class="text-center "> <img src="/public/logo/ro130rol29bb-rolex-logo-rolex-eps-vector-logo-rolex-eps-logo-vector-free-download.png" width="150" alt=""> </div>
+                <h1 class="featurette-heading text-center">Rolex Submariner <p class="text-muted fs-4 mt-4">Rolex Submariner No Date in stainless steel with black ceramic bezel. Certified preowned Sport Rolex Submariner No Date 114060 watch is made out of Stainless steel on a Stainless Steel bracelet with a Stainless Steel Fliplock buckle.  </p></h1>
+          
+                  <div class="text-center mt-2 mt-4 mb-3"><a class="btn btn-outline-dark p-2 "  href="/shop">View shop</a>
+                  </div>
+                  
+           
+              </div>
+              <div class="col-md-5 ">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 400px; height: 400px;" src="/public/watches/R.jpg" data-holder-rendered="true">
+              </div>
+            </div>
+    </div>
+    
+       <div class="container marketing mt-4">
+ 
+         <!-- Three columns of text below the carousel -->
+         <div class="row">
+           <div class="col-lg-4  bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/rolexwomen.png" alt="Generic placeholder image" width="150" height="170">
+             <h2 class="fw-bolder m-2 fs-3">Rolex Datejust Watch 16200 <p class="text-muted mt-1 fs-4"> Rolex Datejust 36MM with a Jubilee Band </p></h2>
+             
+             <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+           <div class="col-lg-4 bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/rolexblack.png "alt="Generic placeholder image" width="150" height="170">
+             <h2 class="fw-bolder m-2 fs-3">Rolex Black-Pvd Cosmograph Daytona Black Dial<p class="text-muted mt-1 fs-4">Stainless Steel  Men's Watch
+</p></h2>
+            
+               <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+           <div class="col-lg-4 bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/wom.png" alt="Generic placeholder image"width="150" height="170">
+             <h2 class="fw-bolder m-2">Rolex Pearlmaster For Women <p class="text-muted mt-1 fs-3">18K Pink Gold | 34 Mm Sapphire Crystal Glass</p></h2>
+          
+             <p><a class="btn btn-outline-dark mt-2" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+         </div>
+         </div>
+
+         <hr class="featurette-divider">
+         
+         <div class="container-fluid">
+     
+    
+            <div class="row featurette bg-white mt-4">
+              
+              <div class="col-md-7  order-md-2">
+                  <div class="text-center "> <img src="/public/logo/Fossil_logo_PNG3.png" width="150" alt=""> </div>
+                <h1 class="featurette-heading text-center mt-4">Fossil Georgia Round Rose gold <p class="text-muted fs-4 mt-5">Presenting a striking ladies watch from Fossil is the ultimate fashion accessory underlining statement to your outfit of the day. This quartz watch comes in a round, stainless steel case.  </p></h1>
+          
+                  <div class="text-center mt-2 mt-5 mb-3"><a class="btn btn-outline-dark p-2 " href="/shop">View shop</a>
+                  </div>
+                  
+           
+              </div>
+              <div class="col-md-5 ">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 400px; height: 500px;" src="/public/watches/Fossil-ES3226-Women-Watch-SDL632201047-1-a73a9.jpg" data-holder-rendered="true">
+              </div>
+            </div>
+    </div>
+    
+       <div class="container marketing mt-4">
+ 
+         <!-- Three columns of text below the carousel -->
+         <div class="row">
+           <div class="col-lg-4  bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/fosswoen.jpg" alt="Generic placeholder image" width="150" height="170">
+             <h2 class="fw-bolder m-2 fs-3">FOSSIL<p class="text-muted mt-1 fs-4">Georgia Round Rose gold</p></h2>
+             
+             <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+           <div class="col-lg-4 bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/a22bab62ca42bd9e876f695e1141ff3c.jpg "alt="Generic placeholder image" width="150" height="170">
+             <h2 class="fw-bolder m-2 fs-3">Fossil<p class="text-muted mt-1 fs-4">Stainless Steel  Men's Watch
+</p></h2>
+            
+               <p><a class="btn btn-outline-dark mt-4" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+           <div class="col-lg-4 bg-white">
+             <img class="ms-5 mt-2" src="/public/watches/Fossil-Sloan-HR-Gen-4.jpg" alt="Generic placeholder image"width="150" height="170">
+             <h2 class="fw-bolder m-2">Fossil <p class="text-muted mt-1 fs-3"> Sloan HR Gen 4 Smartwatch</p></h2>
+          
+             <p><a class="btn btn-outline-dark mt-2" href="/shop" role="button">View shop »</a></p>
+           </div><!-- /.col-lg-4 -->
+         </div>
+         </div>
+
+         
           <!-- /.row -->
  
  

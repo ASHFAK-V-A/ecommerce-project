@@ -1,13 +1,13 @@
-<%- include('../layout/metatag') %>    <header> 
-    <link rel="stylesheet" href="/public/stylesheet/home.css">
+<%- include('../layout/metatag') %>   
 
+    <header> 
         <div class="container-fluid">
             <div class="row">
                 <nav class="navbar  navbar-expand-lg bg-white ">
-                    <div class="container-fluid ">
+                    <div class="container-fluid p-2 ">
                         <a class="navbar-brand" href="#">
-                            <img class="mustache" src="/public/logo/mustache.png" alt="">
-                            The Men Factory</a>
+                           
+                            The Watch Factory</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -16,50 +16,61 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto  mb-lg-0  ">
                                 <li class="nav-item">
-                                    <a class="nav-link active " aria-current="page" href="/">Home</a>
+                                    <a class="nav-link active fw-semibold" aria-current="page" href="/" >Home</a>
                                 </li>
                         
                                 <li class="nav-item">
-                                    <a class="nav-link active " href="/shop">Shop</a>
+                                    <a class="nav-link active fw-semibold" href="/shop">Shop</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link active fw-semibold" href="/orderhistory">My orders</a>
                                 </li>
                                
                                 <li class="nav-item">
-                                    <a class="nav-link active ms-2 " href="#">About Us</a>
+                                    <a class="nav-link active fw-semibold ms-2 " href="#">About Us</a>
                                                   
                             </ul>
-                             </li> 
-                            </li>           
-                                <a href="/viewcart"> 
-                                     <button class="btn btn-outline-dark me-2" type="submit">
-                                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                       Cart         
-                                        <% if(customer) { %>
-                                            <% if (countInCart>0) { %>
-                                        <span class="badge bg-dark text-white ms-1 rounded-pill"><%= countInCart %>
-
-                                        </span>  
-                                                  <%} %>
-                                     </button>
-                                    </a> 
+                             </li>         
+                                 <a href="/viewcart">  <button class="btn btn-outline-dark me-2" type="submit">
                                  
-                                        <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger"></i></a>
-                                        <% if (countInWishlist > 0) { %>
-                                            <sup>  <span class="badge rounded-pill badge-notification bg-danger "><%=countInWishlist %> </span></sup> 
-                                        <% } %>
-                                  
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        Cart
+                                  <% if(customer) { %>
+
+                                     <% if (countInCart>0) { %>
+                                         <span class="badge bg-dark text-white ms-1 rounded-pill">
+                                            
+                                                
+                                            <%= countInCart %>
+                                         </span>
+                                    <% } %>
+                                   
+                                    </button></a> 
+
+                       
+                         <a href="/viewWishlist"> <i class="fa fa-heart ms-1 text-danger"></i></a>
+                           <% if (countInWishlist >0) { %>       
+                         <sup>  <span class="badge rounded-pill badge-notification bg-danger "><%=countInWishlist %> </span></sup> 
+                            <% } %>
                           
-                <% } %>   
-                         
-                           <% if(customer) {%>   
+                     <% } %>
+                             <% if(customer) {%>  
                             <button class="btn btn-light btn-circle btn-circle-xl m-1 ms-3" 
                             style="border-radius: 20px; 
-                              "><a href="/userprofile" class="text-decoration-none"> <i class="fa fa-user text-dark"></i>  <span class="text-dark"><%=profileusername%></span>
+                            
+                              "><a href="/userprofile" class="text-decoration-none">
+                                 <i class="fa fa-user text-dark"></i> 
+                                  
+                                  <span class="text-dark"><%=profileusername%></span>
                                </button>
                              </a>
         
                              
                                 <%} %>
                            
+                           
+                            </form>
                             <div class="dropdown ">
                                 <button class="btn btn-secondary bg-dark ms-3" type="button"
                                     aria-expanded="false">
@@ -82,4 +93,13 @@
 
             </div>
         </div>
+        </header>
+
+<body>
+
+    
+</body>
+
+
+  
 
