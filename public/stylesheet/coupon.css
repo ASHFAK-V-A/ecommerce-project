@@ -1,0 +1,32 @@
+body {
+    background-color: #eee
+}
+
+.card {
+    border: none;
+    position: relative
+}
+
+.off {
+    font-size: 60px;
+    margin-top: -16px !important;
+    color: blue
+}
+
+.flat {
+    font-size: 20px
+}
+
+.star {
+    margin-top: 25px !important;
+    font-size: 28px
+}
+
+.line {
+    padding-right: 8rem !important;
+    padding-left: 8rem !important
+}
+
+.line hr {
+    height: 2px
+}

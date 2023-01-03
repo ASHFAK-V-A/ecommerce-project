@@ -1,0 +1,78 @@
+<%- include('../partials/user-header') %>
+<link rel="stylesheet" href="/public/stylesheet/track-order.css">
+<div class="container " style="margin-top: 6rem;">
+  <article class="card">
+      <header class="card-header"> My Orders / Tracking </header>
+      <div class="card-body">
+          <h6>Order ID: OD45345345435</h6>
+          <article class="card">
+              <div class="card-body row">
+           
+                  <div class="col"> <strong>Estimated Delivery time:</strong> <br> <br> <strong class="text "><%=ProductData[0].deliveryDate%> </strong> </div>
+                 
+                  <div class="col"> <strong>Shipping TO: <%=ProductData[0].address %></strong> <br> <%=ProductData[0].name %> | <i class="fa fa-phone"></i> <%=ProductData[0].phonenumber %> </div>
+
+                  <div class="col"> <strong>Status:</strong> <br> <%= ProductData[0].orderStatus  %> </div>
+       
+                
+                  <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
+              </div>
+          </article>
+          <div class="track">
+               <% if (ProductData[0].orderStatus==="Order confirmed") { %>
+              <div class="step active">
+                 <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text ">Order confirmed</span> </div>
+                 <%}else{%>
+                    <div class="step">
+                        <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                    <%} %>
+                    <% if (ProductData[0].orderStatus==="Picked by courier" ) { %>
+                       
+                        <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+        
+                <%}else{%>
+                    <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+                    <%} %>
+                    <% if (ProductData[0].orderStatus==="On the way" ) { %>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+             
+                    <%}else{%>
+                        <div class="step "> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+                        <%} %>
+                        <% if (ProductData[0].orderStatus==="Delivered" ) { %>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
+                    <%}else{%>
+                        <div class="step"> <span class="icon"> <i class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
+                        <%} %>
+                </div>
+          <hr>
+          <ul class="row">
+            <% ProductData.forEach((order)=>{ %>
+              <li class="col-md-4">
+                  <figure class="itemside mb-3">
+                      <div class="aside"><img src="/products-images/<%=order.productDetail._id %>.jpg" class="img-sm border"></div>
+                      <figcaption class="info align-self-center">
+                          <p class="title fw-bolder"><%= order.productDetail.product_name %>(<%= order.quantity %>Qty)<br> <span class="text-muted"> <%= order.category_name.category_name%> </span>
+                        
+                            <% var a=order.quantity%>
+                            <% var b=order.productDetail.price%>
+                              <% var c=a*b %>
+                        
+                            <p class="text">Total: $<%= c %>.00</p>
+                        </figcaption>
+                  </figure>
+                  <a href="/cancelorder/<%=order._id%>" class="btn btn-dark " data-abc="true"> Cancel order</a>
+            </li>
+              <%  }) %> 
+            
+              
+          </ul>
+          <br>
+          <br>
+          <hr>
+          <a href="/orderhistory" class="btn btn-dark " data-abc="true"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+        
+      </div>
+  </article>
+</div>
+<%- include('../partials/footer') %>

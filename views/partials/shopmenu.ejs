@@ -1,0 +1,118 @@
+
+
+
+       <link rel="stylesheet" href="/public/stylesheet/shopmenu.css">
+  
+<style>
+
+
+
+
+#inavbar{
+    z-index: 1;
+}
+#inavbar {
+  overflow: hidden;
+  background-color: rgb(226, 226, 226);
+}
+
+#inavbar a {
+  float: left;
+  display: block;
+  color: #080808;
+  text-align: center;
+  padding: 14px 3px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#inavbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#inavbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+     <%- include('../partials/userheader-shop') %>
+</div>
+
+<div id="inavbar">
+    <nav >
+
+        <ul class="container">  <li> <a href="/shop">All</a> </li>
+            <% category.forEach(category => { %>
+          <li>
+          <a href="/categorywise/<%= category._id %>">
+            <%= category.category_name %>
+         </li>
+        </a>
+       
+         <% }) %> 
+        
+        </ul><!-- .container -->
+      </nav>
+</div> 
+ 
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("inavbar");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>The Men Factory</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+
+
+  
+</head>
+
+        </ul><!-- .container -->
+      </nav>
+     
+  
+</body>
+
+</html>

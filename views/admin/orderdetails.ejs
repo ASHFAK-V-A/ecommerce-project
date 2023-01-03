@@ -1,0 +1,123 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-sidebar')%>
+
+
+
+<div class="col ">
+
+  <section>
+    <div class="container mt-5 table-responsive"></div>
+    <div class="d-flex align-items-center justify-content-center">
+      <h1 class="text-decoration-underline ">Product details</h1>
+    </div>
+
+    <table class="table mt-5" id="table">
+      <thead>
+        <tr>
+
+          <th scope="col">Customer Name</th>
+          <th scope="col">Ordered Date   </th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Payment Status</th>
+          <th scope="col">Order Status</th>
+          <th scope="col">Delivery Date</th>
+          <th scope="col">Total</th>
+          <th scope="col">View</th>
+          <th scope="col">Edit</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tbody>
+          <% orderdetails.forEach((order)=>{ %>
+          
+           <tr>
+               <td>
+                <%= order.name %>
+               </td>
+               <td>
+                <%= order.orderDate %>
+               </td>
+               <td>
+                <%= order.paymentMethod %>
+               </td>
+               <td>
+                <%= order.paymentStatus %>
+               </td>
+               <td>
+                <%= order.orderStatus %>
+               </td>
+               <td>
+                <%= order.deliveryDate
+                %>
+               </td>
+               <td>
+                $<%=order.totalAmount %>
+               </td>
+               <td>
+               <a href="/admin/orderedProductview/<%=order._id%>"><button class="btn  btn-primary"><i class="fa fa-search"></i> </button> </a> 
+          
+           </button>
+         </td>
+         <td>
+
+          <button type="button" class="btn btn-success" data-bs-toggle="modal"
+          data-bs-target="#exampleModal-<%= order._id %>">
+<i class="fa fa-edit"></i></button>
+         </td>
+       </tr>
+      
+       <div class="modal fade" id="exampleModal-<%= order._id %>" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit orders</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/orderStatuschange/<%= order._id %>" method="post">
+                        <div class="mb-3">
+                            <label for="recipient-name" name="orderStatus"
+                                class="col-form-label"> Order Status</label>
+                            <select class="form-select" name="orderStatus" aria-label="Default select example" id="">
+                                
+                                <option selected><%= order.orderStatus %></option>
+                                <option value="Order confirmed" name="orderStatus">Conformed</option>
+                                <option value="Picked by courier" name="orderStatus">Picked</option>
+                                <option value="On the way" name="orderStatus">On the way</option>
+                                <option value="Delivered" name="orderStatus">Delivered</option>
+                                <option value="Canecl" name="orderStatus">Cancel</option>
+                               
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="message-text" name="orderStatus "class="col-form-label">Payment status</label>
+                            <select  name="paymentStatus" class="form-select" id="">
+                                
+                                <option selected><%= order.paymentStatus %></option>
+                                <option value="not paid" name="paymentStatus">not paid</option>
+                                <option value="paid" name="paymentStatus">paid</option>
+                               
+                            </select>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save changes</button>
+                                
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+ <% }) %>
+      </tbody>  

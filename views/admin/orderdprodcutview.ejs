@@ -1,0 +1,119 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-sidebar')%>
+
+
+
+<div class="col ">
+
+    <section>
+      <div class="container mt-5 table-responsive"></div>
+      <div class="d-flex align-items-center justify-content-center">
+        <h1 class="text-decoration-underline ">Product details</h1>
+      </div>
+  
+      <table class="table mt-5" id="table">
+        <thead>
+          <tr>
+  
+            <th scope="col">Image</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Ordered quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+            <th scope="col">Address</th>
+  
+  
+          </tr>
+        </thead>
+        <tbody>
+            <% ProductData.forEach((order)=>{ %>
+   
+            
+             <tr>
+                 <td>
+                  <img style="    height: 59px;
+                  width: 60px;
+                  margin-top: 26px;
+                  margin-left: -35px;" src="/products-images/<%= order.productDetail._id %>.jpg"
+                  class="img-fluid" alt="" /></td>
+                 </td>
+                 <td>
+              <%= order.productDetail.product_name %>
+                 </td>
+                 <td>
+                  <%= order.category_name.category_name%>
+                  
+                 </td>
+                 <td>
+                  <%= order.quantity %>Qty
+                 </td>
+                 <% var a=order.quantity%>
+                 <% var b=order.productDetail.price%>
+                   <% var c=a*b %>
+                 <td>
+                 $<%= c%>
+                 </td>
+                 <td>
+      $ <%=c %>.00
+        
+                 </td>
+                 
+                 <td>
+                  
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+<i class="fa fa-info"></i></button>
+           </td>
+          
+         </tr>
+        
+         <% }) %>
+         <div class="modal fade" id="exampleModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delivery Address</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body text-start text-black p-4">
+                           
+            
+                            <div class="d-flex justify-content-between ">
+                              <p class="fw-bold mb-0 text-uppercase">Delivered To : <%=ProductData[0].name %> <br> </p>     
+                            </div>
+                            
+            
+                            <div class="d-flex justify-content-between mt-2">
+                              <p class=" mb-0 fw-bold text-uppercase">Address :   <span class="small fw-bold text-uppercase "> <%=ProductData[0].address %>.</span></p>
+                            </div>
+            
+                            <div class="d-flex justify-content-between pb-1">
+                              <p class="fw-bold text-uppercase mt-2">Phone: <%=ProductData[0].phonenumber %></p>
+            
+                            </div>
+            
+                            <div class="d-flex justify-content-between">
+                              <p class="fw-bold">Total</p>
+                              <p class="fw-bold" style="color: #35558a;">$<%= sum %>.00</p>
+                            </div>
+            
+                            <div class="modal-footer">
+    
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              
+                            </div>
+                 
+    
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+        </tbody>  
+        </table>
+        </section>

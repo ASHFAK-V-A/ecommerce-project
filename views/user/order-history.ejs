@@ -1,0 +1,76 @@
+
+       <%- include('../partials/user-header') %>
+<link rel="stylesheet" href="/public/stylesheet/order-history.css">
+
+
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+
+<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+
+<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+
+
+<div class="contanier" style="margin-top: 5rem;">
+<h1 class="text fw-bolder text-center">Order Details</h1>
+<div class="limiter mt-3">
+<div class="container-table50">
+<div class="wrap-table100">
+<div class="table100">
+<table>
+<thead>
+<tr class="table100-head">
+<th class="column1">No</th>
+<th class="column2">Order Date</th>
+<th class="column3">Payment Method</th>
+<th class="column4">paymentStatus</th>
+<th class="column5">Order Status</th>
+<th class="column6">Amount</th>
+<th scope="column7">Delivery date</th>
+<th scope="column8">Controlls</th>
+</tr>
+</thead>
+<tbody>
+    <%let count=1%> 
+    <% orderData.forEach((order)=>{ %>
+
+
+<tr>
+<td class="column1 text-dark"><%= count %></td>
+<td class="column2 text-black"><%= order. orderDate %> </td>
+<td class="column3 text-black"><%= order.paymentMethod %></td>
+<td class="column4 text-black"><%= order.paymentStatus %></td>
+<td class="column5 text-black"><%= order.orderStatus %></td>
+<td class="column6 text-black"><%= order.totalAmount %> </td>
+<td class="column7 text-black"><%= order.deliveryDate %></td>
+
+<td class="column8"><button class="btn btn-dark">
+
+    <i class="fa fa-trash"></i> </button>
+   <a href="/TrackOrder/<%= order._id %>">
+    <button class="btn btn-info"><i class="fa fa-info"></i></button></a>
+ </td>
+</tr>
+<% count++ %>     
+
+<% }) %> 
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<%- include('../partials/footer') %>

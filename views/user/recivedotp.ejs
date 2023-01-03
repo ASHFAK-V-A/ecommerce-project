@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>OTP</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300i,400,700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <style>
+         body {
+         background-color: #c5c5c5;
+         font-family: Nunito Sans;
+         }
+         .btn {
+         background-color: #cccccc;
+         width: 100%;
+         color: #fff;
+         padding: 10px;
+         font-size: 18px;
+         }
+         .btn:hover {
+         background-color: #2d3436;
+         color: #fff;
+         }
+         input {
+         height: 50px !important;
+         }
+         .form-control:focus {
+         border-color: #18dcff;
+         box-shadow: none;
+         }
+         h3 {
+         color: #17c0eb;
+         font-size: 36px;
+         }
+         .cw {
+         width: 35%;
+         }
+         @media(max-width: 992px) {
+         .cw {
+         width: 60%;
+         }
+         }
+         @media(max-width: 768px) {
+         .cw {
+         width: 80%;
+         }
+         }
+         @media(max-width: 492px) {
+         .cw {
+         width: 90%;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container d-flex justify-content-center align-items-center vh-100">
+         <div class="bg-white text-center p-5 center">
+            <h3 class="text-dark">OTP Verification</h3>
+            <% if (locals.invalid) { %> 
+ <p class="text-danger"><%= invalid %></p>
+                <% }else{ %>
+                    <p class="text">Have you recived a verification code?<br><p class="text-muted">send to <%=email%></p> </p>
+                    <% } %>
+           
+            <form class="pb-3" action="/recivedOTP" method="post">
+               <div class="form-group">
+                <input type="hidden" name="email" value="<%=email%>">
+                 <input type="text"  name="otp" class="form-control" placeholder="Enter Recived OTP*" required/>
+               </div>
+            
+            <button  type="submit" class="btn mt-3">VERIFY</button> 
+        
+            </form>
+       
+
+            
+            </p>
+         </div>
+      </div>
+   </body>
+</html>
+
+
+
