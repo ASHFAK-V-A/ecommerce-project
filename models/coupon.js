@@ -11,7 +11,7 @@ const couponScema = new Schema(
         discount: {
             type:Number,
             required:true,
-        },
+        }, 
         maxLimit:{
             type:Number,
             required:true,
