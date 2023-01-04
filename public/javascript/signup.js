@@ -2,8 +2,8 @@ const form = document.getElementById('form')
 const nam = document.getElementById('name')
 const phone= document.getElementById('phone')
 const email= document.getElementById('email')
-const password= document.getElementById('Password')
-const confirmPassword= document.getElementById('CPassword')
+const password= document.getElementById('password')
+const confirmPassword= document.getElementById('conpassword')
 
 
 form.addEventListener('submit',(e)=>{
@@ -54,7 +54,7 @@ form.addEventListener('submit',(e)=>{
         setError(password,'Password must atleast 8 characters','passwordError')
         flag = 1
     }else if(passwordValue.length > 14){
-        setError(password,'Password length cant exceed 15 characters','passwordError')
+        setError(password,'Password length cant exced 15 characters','passwordError')
         flag = 1
     }else{
         setSuccess(password,'passwordError')
@@ -87,9 +87,29 @@ form.addEventListener('submit',(e)=>{
     }
 
 })
-
+ 
+function setError(element,massage,id){
+    const inputControl = element.parentElement
+    document.getElementById(id).innerHTML = massage
+    inputControl.classList.add('danger')
+    inputControl.classList.remove('success')
+}
 
 
 function onlyLetter(str){
     return /^[a-zA-Z]+$/.test(str)
+}
+
+function setSuccess(element,id){
+    const inputControl = element.parentElement
+    document.getElementById(id).innerHTML = ""
+    inputControl.classList.add('success')
+    inputControl.classList.remove('danger')
+}
+
+
+function emailValidation(email){
+    return String(email)
+    .toLowerCase()
+    .match(  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 }

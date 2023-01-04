@@ -31,27 +31,29 @@
                   </div>
                   <div class="form-group">
                       <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                      <input type="email" name="email" class="form-control" >
-                   
+                      <input type="email" id="email" name="email" class="form-control" >
+                      <p id="emailError" class="text-danger err"></p>
                   </div>
                              
                   <div class="form-group">
                     <label for="pc"><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="num" name="phone" class="form-control"  >
-                    
+                    <input type="num" name="phone" id="phone" class="form-control"  >
+                    <p id="phoneError" class="text-danger err"></p>
                   
                 </div>
                   <div class="form-group">
                       
                   <div class="form-group">
                       <label for="p"><i class="fas fa-lock"></i> Password</label>
-                      <input type="password" name="Password" class="form-control" >
+                      <input type="password" name="Password" id="password" class="form-control" >
+        
+			<p id="passwordError" class="text-danger err"></p>
                   </div>
                             
                   <div class="form-group">
                     <label for="pwd"><i class="fas fa-lock"></i> Conform Password</label>
-                    <input type="password" name="CPassword" class="form-control"   >
-                    
+                    <input type="password" name="CPassword" id="conpassword" class="form-control"   >
+                    <p id="conpasswordError" class="text-danger err"></p>
                   
                 </div>
            
@@ -68,3 +70,5 @@
   </div>
 </body>
 </html>
+
+<script src="/public/javascript/signup.js"></script>

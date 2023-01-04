@@ -22,7 +22,6 @@ adminRouter.post('/addCategory',adminController.addcategory)
 
 adminRouter.post('/editCategory/:id',adminController.editCategory)
 
-
 adminRouter.get('/delete-category/:id', adminController.deleteCategory)
 
 adminRouter.get('/ProductDetails', VerfyLogin.VerifyLoginAdmin,adminController.ProductDetail) 
