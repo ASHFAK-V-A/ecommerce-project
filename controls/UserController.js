@@ -235,7 +235,7 @@ module.exports = {
 
 
       } else {
-        console.log('password doesnt match');
+        console.log('password doesnt matched');
       }
 
 
