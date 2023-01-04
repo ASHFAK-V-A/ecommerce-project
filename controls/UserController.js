@@ -192,8 +192,8 @@ module.exports = {
         const mailDetails = {
           from: process.env.EMAIL,
           to: email,
-          subject: 'Otp for TheMenFactory',
-          html: `<p>Your OTP for registering in TheMenFactory is ${OTP}</p>`,
+          subject: 'Otp for TheWatchFactory',
+          html: `<p>Your OTP for registering in TheWatchFactory is ${OTP}</p>`,
         }
 
         const User = {
@@ -313,8 +313,8 @@ module.exports = {
       const mailDetails = {
         from: process.env.EMAIL,
         to: email,
-        subject: 'Otp for TheMenFactory',
-        html: `<p>Your OTP for registering in TheMenFactory is ${OTP}</p>`,
+        subject: 'Otp for TheWatchFactory',
+        html: `<p>Your OTP for registering in TheWatchFactory is ${OTP}</p>`,
       }
 
 
