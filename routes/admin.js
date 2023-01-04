@@ -5,7 +5,7 @@ const UserController = require('../controls/UserController')
 const VerfyLogin=require('../midlweare/session')
 adminRouter.set('view engine','ejs')
 
-adminRouter.get('/', adminController.getadminhome)
+adminRouter.get('/',VerfyLogin.VerifyLoginAdmin, adminController.getadminhome)
 
 adminRouter.get('/admin-signin',adminController.adminsignin)
 

@@ -8,7 +8,7 @@ const VerfySession=require('../midlweare/session')
 
 userRouter.set('view engine','ejs')
 
-userRouter.get('/',userController.getHome)
+userRouter.get('/', userController.getHome)
 
 userRouter.get('/login',userController.getlogin)
 

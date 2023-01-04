@@ -88,11 +88,17 @@ module.exports={
 
     adminsignin:(req,res)=>{
 
-  
-             res.render("admin/admin-login")
-         
-       
-    },
+        if(req.session.isAdmin){
+
+           res.redirect('/admin')
+        }else{
+          owner=false
+
+            res.render("admin/admin-login")
+        }
+
+
+   },
 
 
 
