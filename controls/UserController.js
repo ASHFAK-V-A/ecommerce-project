@@ -148,7 +148,7 @@ module.exports = {
             res.redirect('/')
           } else {
             console.log('invalid password');
-            res.render('user/login', { msg: 'invalid pasword' })
+            res.render('user/login', { invalid: 'invalid pasword' })
           }
         } else {
           res.render('user/login', { blocked: "You can't login" })
@@ -177,7 +177,7 @@ module.exports = {
       const UserData = await UserModel.findOne({ email: email })
 
       if (UserData) {
-        res.render('user/signup')
+        res.render('user/signup',{err_message:'User Alreadey exists'})
       } else if (req.body.Password === req.body.CPassword) {
 
         const hash = await bcrypt.hash(req.body.Password, 10)
@@ -313,8 +313,8 @@ module.exports = {
       const mailDetails = {
         from: process.env.EMAIL,
         to: email,
-        subject: 'Otp for TheWatchFactory',
-        html: `<p>Your OTP for registering in TheWatchFactory is ${OTP}</p>`,
+        subject: 'Otp for TheMenFactory',
+        html: `<p>Your OTP for registering in TheMenFactory is ${OTP}</p>`,
       }
 
 

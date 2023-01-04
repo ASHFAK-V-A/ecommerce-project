@@ -1,3 +1,6 @@
+
+<%- include('../layout/metatag') %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/public/stylesheet/signup.css">
 </head>
 
@@ -22,10 +23,11 @@
                 <h1 class="text-center pt-3">Create Account<br> Now</h1>
             </div>
             <div class="col-md-6 bg-dark">
-                <form action="/signup" method="post" class="p-4 text-white">
+                <form action="/signup" method="post" id="form" class="p-4 text-white">
                   <div class="form-group">
                       <label for="name"><i class="fas fa-user"></i> User Name</label>
-                      <input type="text" name="username" class="form-control" required >
+                      <input type="text" name="username" class="form-control" id="name" required >
+                      <p id="nameError" class="text-danger err"></p>
                   </div>
                   <div class="form-group">
                       <label for="email"><i class="fas fa-envelope"></i> Email</label>
@@ -35,7 +37,7 @@
                              
                   <div class="form-group">
                     <label for="pc"><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="num" name="phone" class="form-control" id="pc" >
+                    <input type="num" name="phone" class="form-control"  >
                     
                   
                 </div>
@@ -43,12 +45,12 @@
                       
                   <div class="form-group">
                       <label for="p"><i class="fas fa-lock"></i> Password</label>
-                      <input type="password" name="Password" class="form-control" id="p" >
+                      <input type="password" name="Password" class="form-control" >
                   </div>
                             
                   <div class="form-group">
                     <label for="pwd"><i class="fas fa-lock"></i> Conform Password</label>
-                    <input type="password" name="CPassword" class="form-control" id="pwd" >
+                    <input type="password" name="CPassword" class="form-control"   >
                     
                   
                 </div>

@@ -17,6 +17,8 @@ let email='admin@gmail.com'
 let Password='123'
 let err='invalid password or email'
 
+
+
 module.exports={
 
 
@@ -28,7 +30,9 @@ module.exports={
       
       const totalRevenue = orderData.reduce((accumulator, object) => {
         return accumulator + object.totalAmount;
- 
+  
+  
+
     }, 0);
 
 
@@ -84,13 +88,9 @@ module.exports={
 
     adminsignin:(req,res)=>{
 
-         if(req.session.isAdmin){
-           
-            res.redirect('/admin')
-         }else{
-           owner=false
+  
              res.render("admin/admin-login")
-         }
+         
        
     },
 
