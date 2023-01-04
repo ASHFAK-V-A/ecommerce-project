@@ -141,9 +141,9 @@ ProductDetail:async(req,res)=>{
     
 
     let product = await products.find().populate('category')
-
+    console.log(product);
       res.render('admin/ProductDetails',{product})   
-      console.log(product);
+     
 
  },
 
@@ -166,7 +166,7 @@ const Product =new products({
  if(ProductDetails){
     let productId =ProductDetails._id
     console.log("productId"+productId);
-    image.mv('./public/products-Images/'+productId +'.jpg', (err)=>{
+    image.mv('./public/products-images/'+productId +'.jpg', (err)=>{
         if(!err){
             res.redirect('/admin/ProductDetails')
         }else{
