@@ -243,12 +243,8 @@ body{
 .btn-dark{
 background-color: rgb(0, 0, 0);
 
-
-
 }
 
-.btn-dark:hover{
-  cursor: pointer;
-  background-color: rgb(228, 41, 41);
- 
-}
+
+
+

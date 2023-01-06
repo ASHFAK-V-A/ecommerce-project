@@ -589,7 +589,18 @@ module.exports = {
             $multiply: ["$quantity", "$productDetail.price"]
           }
         }
-      }
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'productDetail.category',
+          foreignField: "_id",
+          as: "category_name"
+        }
+      },
+      {
+        $unwind: "$category_name"
+      },
 
     ])
 
@@ -601,7 +612,7 @@ module.exports = {
     customer = true
 
     countInCart = ProductData.length
-
+console.log(ProductData);
 
     res.render('user/cart', { ProductData, countInCart, sum, profileusername, countInWishlist, customer })
 
@@ -698,7 +709,7 @@ module.exports = {
     const data = req.body;
     await cart.aggregate([
       {
-        $unwind: "$product"
+        $unwind: "$products"
       }
     ])
     await cart
@@ -711,7 +722,7 @@ module.exports = {
 
       });
   },
-
+ 
   addToWishlist: async (req, res) => {
 
     const id = req.params.id;
@@ -794,10 +805,10 @@ module.exports = {
         }
 
       ])
-
+customer=true
     countInWishlist = wishlistData.length
 
-    res.render('user/wishlist', { wishlistData, countInWishlist, countInCart, profileusername })
+    res.render('user/wishlist', { wishlistData, countInWishlist, countInCart, profileusername,customer})
 
   },
 
