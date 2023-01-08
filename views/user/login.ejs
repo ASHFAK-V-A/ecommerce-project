@@ -36,6 +36,13 @@
                   <p class="text-danger"><%=blocked%></p>
                 
                 <%}%>
+                <% if(locals.invalid){%>
+                <p class="text-danger"><%=invalid%></p>
+                <%}%>
+                <% if(locals.msg){%>
+                
+                  <p class="text-danger"><%=msg%></p>
+                  <%}%>
                 <div class="row mt-3">
                   <a class="text-center" href="/forgotpassword"><p>Forgot Password?</a></p>
           

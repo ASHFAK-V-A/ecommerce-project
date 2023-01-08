@@ -18,11 +18,9 @@
 	<div class="pd-wrap">
 		<link rel="stylesheet" href="/public//stylesheet/viewpage.css">
         <link rel="stylesheet" href="/public/javascript/productdetails.js">
-     <div class="container">
-	        <div class="heading-section">
-	            <h2 style="margin-top: 30px;">Product Details</h2>
-	        </div>
-	        <div class="row">
+     <div class="container mt-4">
+	    
+	        <div class="row mt-5">
 	        	<div class="col-md-6">
 	        		<div id="slider" class="owl-carousel product-slider">
 						<div class="item">
@@ -33,37 +31,22 @@
 	        	<div class="col-md-6">
 	        		<div class="product-dtl">
         				<div class="product-info">
-							<button onclick="addtowishlist('<%=product._id%>')" type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip" title="Move to the wish list" >
+
 								<i class="fa fa-heart text-white"></i> </a>  
 								</button>
-		        			<div class="product-name mt-1"><%=product.product_name %></div>
-		        			<div class="reviews-counter mt-3">
-								<div class="rate">
-								    <input type="radio" id="star5" name="rate" value="5" checked />
-								    <label for="star5" title="text">5 stars</label>
-								    <input type="radio" id="star4" name="rate" value="4" checked />
-								    <label for="star4" title="text">4 stars</label>
-								    <input type="radio" id="star3" name="rate" value="3" checked />
-								    <label for="star3" title="text">3 stars</label>
-								    <input type="radio" id="star2" name="rate" value="2" />
-								    <label for="star2" title="text">2 stars</label>
-								    <input type="radio" id="star1" name="rate" value="1" />
-								    <label for="star1" title="text">1 star</label>
-								  </div>
-								<span>3 Reviews</span>
-							</div>
-		        			<div class="product-price-discount mt-3"><span><%=product.price %>$ </span><span class="line-through">$29.00</span></div>
+		        			<div class="product-name mt-2 fs-3"><%=product.product_name %></div>
+		        	
+		        			<div class="product-price-discount mt-3 fw-bolder"><span>$<%=product.price %>.00</span><span class="line-through">$29.00</span></div>
 		        		</div>
-                                     <h3><%= product.category.category_name %></h3>
+                                 
 
-	        			<p style="margin-top:30px;"><%=product.description %></p>
+	        			<p class="text mt-4"><%=product.description %></p>
 	        			
-	        			<div class="product-count mt-5">
+	        			<div class="product-count">
 
-				
                       
                                 <button class="round-black-btn mt-5 text-decoration-none " onclick="addtocart('<%=product._id%>')" >Add To Cart</button>
-                         
+								<button class="round-black-btn mt-5 text-decoration-none " onclick="addtowishlist('<%=product._id%>')" >Add To Wishlist <i class="fa fa-heart"></i></button>
 	        			</div>
 	        		</div>
 	        	</div>

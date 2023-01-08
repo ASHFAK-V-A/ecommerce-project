@@ -57,7 +57,7 @@ function checkCoupon(data, id) {
 
 module.exports = {
   getHome: async (req, res) => {
-
+try{
 
     if (req.session.isUser) {
       customer = true
@@ -74,13 +74,15 @@ module.exports = {
       customer = false
       res.render('user/home')
     }
-
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
 
   shop: async (req, res) => {
-
+try{
     if (req.session.isUser) {
 
 
@@ -96,14 +98,16 @@ module.exports = {
       customer = false
       res.render('user/home')
     }
-
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
 
 
   cateogrywiseshoppage: async (req, res) => {
-
+try{
     const id = req.params.id
 
     const category = await categories.find()
@@ -113,6 +117,9 @@ module.exports = {
     customer = true
 
     res.render('user/shop', { product, category, countInCart, countInWishlist, profileusername, customer })
+}catch{
+  res.render('partials/404')
+}
   },
 
 
@@ -155,7 +162,7 @@ module.exports = {
         }
       } else {
 
-        res.render('user/login', { msg: 'user not found' })
+        res.render('user/login', { msg: 'invalid email' })
       }
     } catch (error) {
       console.log(error);
@@ -240,7 +247,7 @@ module.exports = {
 
 
     } catch (err) {
-      console.log(err);
+      res.render('partials/404')
     }
   },
 
@@ -291,7 +298,7 @@ module.exports = {
 
 
     } catch (err) {
-
+      res.render('partials/404')
     }
 
   },
@@ -346,7 +353,7 @@ module.exports = {
 
 
     } catch (err) {
-
+      res.render('partials/404')
     }
 
 
@@ -369,6 +376,7 @@ module.exports = {
 
   newpassword: async (req, res) => {
 
+    try{
     const body = req.body
     const email = body.email
     const password = body.newpassword
@@ -391,15 +399,19 @@ module.exports = {
       res.render('user/newpassword', { email, invalid: "Password does not match !" })
       console.log('Password doesnt match ');
     }
-
+  }catch{
+    res.render('partials/404')
+  }
   },
   resendOTP: (req, res) => {
-
+try{
     const body = req.body
 
     const email = body.email
     console.log(email);
-
+}catch{
+  res.render('partials/404')
+}
 
   },
 
@@ -415,7 +427,7 @@ module.exports = {
 
 
   changedpassword: async (req, res) => {
-
+try{
     const body = req.body
 
     const currenntPass = body.cuttentPass
@@ -456,17 +468,23 @@ module.exports = {
     }
 
 
-
+  }catch{
+    res.render('partials/404')
+  }
 
   },
 
 
   getlogout: (req, res) => {
+    try{
     req.session.destroy((err) => {
       if (err) throw err;
       customer = false
       res.redirect('/')
     })
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
@@ -478,7 +496,7 @@ module.exports = {
 
 
   addTocart: async (req, res) => {
-
+try{
 
     // Product Id
     const proid = req.params.id
@@ -543,9 +561,15 @@ module.exports = {
       })
 
     }
+  }catch{
+    res.render('partials/404')
+  }
   },
 
   viewcart: async (req, res) => {
+    try{
+
+    
     const session = req.session.isUser
 
     const userData = await UserModel.findOne({ email: session })
@@ -615,10 +639,13 @@ module.exports = {
 console.log(ProductData);
 
     res.render('user/cart', { ProductData, countInCart, sum, profileusername, countInWishlist, customer })
-
+  }catch{
+    res.render('partials/404')
+  }
   },
 
   changequantity: (req, res, next) => {
+    try{
     const data = req.body
     const objId = mongoose.Types.ObjectId(data.productId)
 
@@ -638,11 +665,13 @@ console.log(ProductData);
         next()
       })
     }
-
+  }catch{
+    res.render('partials/404')
+  }
 
   },
   totalAmount: async (req, res) => {
-
+try{
     let session = req.session.isUser;
     const userData = await UserModel.findOne({ email: session });
     const productData = await cart.aggregate([
@@ -690,22 +719,28 @@ console.log(ProductData);
       },
     ]).exec();
     res.json({ status: true, productData });
-
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
 
 
   viewproduct: async (req, res) => {
+    try{
     const id = req.params.id
     const product = await Products.findOne({ _id: id }).populate('category')
 
     res.render('user/viewproduct', { product, countInCart, profileusername, countInWishlist })
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
   removeProduct: async (req, res) => {
+    try{
     const data = req.body;
     await cart.aggregate([
       {
@@ -721,10 +756,13 @@ console.log(ProductData);
         res.json({ status: true });
 
       });
+    }catch{
+      res.render('partials/404')
+    }
   },
  
   addToWishlist: async (req, res) => {
-
+try{
     const id = req.params.id;
     const objId = mongoose.Types.ObjectId(id);
     const session = req.session.isUser;
@@ -767,10 +805,12 @@ console.log(ProductData);
         res.redirect('/viewWishlist')
       });
     }
-
+  }catch{
+    res.render('partials/404')
+  }
   },
   viewWishlist: async (req, res) => {
-
+try{
     const session = req.session.isUser;
     const userData = await UserModel.findOne({ email: session })
     const userId = mongoose.Types.ObjectId(userData._id);;
@@ -809,11 +849,14 @@ customer=true
     countInWishlist = wishlistData.length
 
     res.render('user/wishlist', { wishlistData, countInWishlist, countInCart, profileusername,customer})
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
   removeFromWishlist: async (req, res) => {
+    try{
     const data = req.body
     const objId = mongoose.Types.ObjectId(data.productId)
     await wishlist.aggregate([
@@ -828,32 +871,42 @@ customer=true
       .then(() => {
         res.json({ status: true })
       })
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
   userprofile: async (req, res) => {
+    try{
     const session = req.session.isUser
     customer = true
     const userData = await UserModel.findOne({ email: session })
 
     res.render('user/userprofile', { countInCart, userData, customer, profileusername, countInWishlist })
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
   editprofile: async (req, res) => {
-
+try{
     const session = req.session.isUser
     customer = true
 
     const userData = await UserModel.findOne({ email: session })
     res.render('user/editprofile', { countInCart, customer, userData, profileusername, countInWishlist })
+}catch{
+  res.render('partials/404')
+}
   },
 
 
 
   updateprofile: async (req, res) => {
+
+try{
 
 
 
@@ -886,10 +939,14 @@ customer=true
 
 
     res.redirect('/userprofile')
+}catch{
+  res.render('partials/404')
+}
   },
 
 
   checkout: async (req, res) => {
+    try{
     const session = req.session.isUser
     const userData = await UserModel.findOne({ email: session })
 
@@ -937,10 +994,14 @@ customer=true
 
 
     res.render('user/checkout', { countInWishlist, countInCart, profileusername, sum, productData, userData, customer })
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
   addnewaddress: async (req, res) => {
+    try{
     const session = req.session.isUser
 
     const addNewAddress = {
@@ -957,7 +1018,9 @@ customer=true
     await UserModel.updateOne({ email: session }, { $push: { addressDetails: addNewAddress } })
 
     res.redirect('/checkout')
-
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
@@ -1116,8 +1179,8 @@ customer=true
           }
         }
       }
-    } catch (e) {
-      res.status(500).json({ error: e.message })
+    } catch {
+      res.render('partials/404')
     }
   },
   ordersuccess: (req, res) => {
@@ -1126,6 +1189,7 @@ customer=true
 
 
   orderdetails: async (req, res) => {
+    try{
     customer = true
     const session = req.session.isUser
     const userData = await UserModel.findOne({ email: session })
@@ -1137,10 +1201,13 @@ customer=true
 
     res.render("user/order-history", { countInCart, countInWishlist, customer, profileusername, orderData, orderlength })
 
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
   TrackOrder: async (req, res) => {
+    try{
     customer = true
     const id = req.params.id
     const objId = mongoose.Types.ObjectId(id)
@@ -1202,16 +1269,22 @@ customer=true
 
 
     res.render('user/track-order', { countInCart, countInWishlist, profileusername, customer, ProductData })
+  }catch{
+    res.render('partials/404')
+  }
   },
 
 
   cancelorder: async (req, res) => {
+    try{
     const id = req.params.id
     const objId = mongoose.Types.ObjectId(id)
 
     await order.updateOne({ _id: objId }, { $set: { orderStatus: "cancelled" } })
     res.redirect('/orderhistory')
-
+    }catch{
+      res.render('partials/404')
+    }
   },
 
 
