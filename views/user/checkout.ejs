@@ -14,18 +14,19 @@
                     data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add new Address</button>  
                  <form id="placeOrder">
                         <div class="box">   
-                            <h3 class="box-title">Select Your Hosting Plan</h3>
-                            <select name="address" class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <% userData.addressDetails.forEach((address)=>{%>
-                                    <option>
-                                        <%= address.housename %>,<%= address.postoffice%>,<%= address.landmark %>,
-                                                    <%=address.area %>,<%= address.district %>,<%= address.pin %>,
-                                                                <%=address.state %>
-                                    </option>
-                                    <% }) %>
+                            <h3 class="box-title">Shipping Address</h3>  
+                        
+                                    <input type="text" class="w-100" id="txt" readonly="readonly" value=" <%= userData.addressDetails[0]?.housename %> ">
+                                    <input type="text" class="mt-3" id="txt" readonly="readonly" value=" <%= userData.addressDetails[0]?.area %>">
+                                    <input type="text" id="txt" class="mt-3 " readonly="readonly" value="<%= userData.addressDetails[0]?.landmark %>">
+                                    <input type="text" id="txt" class="mt-3 " readonly="readonly" value="<%= userData.addressDetails[0]?.district %>">
+                                    <input type="text" id="txt" class="mt-3 " readonly="readonly" value=" <%= userData.addressDetails[0]?.  state %>">
+                                    <input type="text" id="txt" class="mt-3" readonly="readonly" value=" <%= userData.addressDetails[0]?. postoffice %>">
+                                    <input type="text" id="txt" class="mt-3" readonly="readonly" value=" <%= userData.addressDetails[0]?.pin %>">
+
                             </select>
                             <form class="card p-2 ">
+                                <br>
                                 <label class="text mt-3">Apply Coupon</label>
                                 <div class="input-group mt-1" style="width: 16rem;">
                                     <input type="text" name="coupon" class="form-control" placeholder="Promo code">
@@ -150,13 +151,12 @@
                             <% productData.forEach((product)=>{%>
                                 <div class="summary-content p-0">
                                     <div class="summary-head">
-
                                         <h5 class="summary-title">
-                                            <%= product.productDetail.product_name %>(<%= product.quantity%>Qty)
+                                            <%= product?.productDetail?.product_name %>(<%= product.quantity%>Qty)
                                         </h5>
                                     </div>
 
-                                    <% var a=product.productDetail.price %>
+                                    <% var a=product.productDetail?.price %>
                                         <% var b=product.quantity%>
                                             <% var c=a*b %>
                                                 <div class="summary-price">

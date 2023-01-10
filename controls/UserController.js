@@ -887,6 +887,7 @@ customer=true
     }catch{
       res.render('partials/404')
     }
+
   },
 
 
@@ -912,7 +913,7 @@ try{
 
     const session = req.session.isUser
 
-
+console.log(req.body.district);
     await UserModel.updateOne({ email: session },
       {
         $set: {
@@ -993,6 +994,8 @@ try{
     customer = true
 
 
+const data = userData
+console.log(data);
     res.render('user/checkout', { countInWishlist, countInCart, profileusername, sum, productData, userData, customer })
     }catch{
       res.render('partials/404')
@@ -1015,9 +1018,10 @@ try{
       houseno: req.body.houseno
     }
 
-    await UserModel.updateOne({ email: session }, { $push: { addressDetails: addNewAddress } })
+    await UserModel.updateOne({ email: session }, { $set: { addressDetails: addNewAddress } })
 
     res.redirect('/checkout')
+
   }catch{
     res.render('partials/404')
   }
