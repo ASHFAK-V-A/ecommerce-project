@@ -1018,7 +1018,7 @@ console.log(data);
       houseno: req.body.houseno
     }
 
-    await UserModel.updateOne({ email: session }, { $set: { addressDetails: addNewAddress } })
+    await UserModel.updateOne({ email: session }, { $push: { addressDetails: addNewAddress } })
 
     res.redirect('/checkout')
 
