@@ -254,7 +254,7 @@ try{
   getotp: (req, res) => {
 
     let userData = req.query
-
+console.log("datassssss",userData);
     res.render('user/otp', { userData })
 
 
