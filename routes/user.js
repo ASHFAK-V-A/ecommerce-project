@@ -22,7 +22,7 @@ userRouter.post('/signup',userController.postsignup)
 
 userRouter.get('/otp',userController.getotp)
 
-userRouter.post('/otpid',userController.postotp)
+userRouter.post('/otpid',userController.postotp) 
 
 userRouter.get('/addtocart/:id',VerfySession.VerfyLoginUser,userController.addTocart)
 
@@ -44,7 +44,7 @@ userRouter.get('/userprofile',VerfySession.VerfyLoginUser,userController.userpro
 
 userRouter.get('/editprofile',VerfySession.VerfyLoginUser,userController.editprofile)
 
-userRouter.get('/shop',VerfySession.VerfyLoginUser,userController.shop)
+userRouter.get('/shop',userController.shop)
 
 userRouter.post("/update",VerfySession.VerfyLoginUser,userController.updateprofile)
 
@@ -52,7 +52,7 @@ userRouter.get('/checkout',VerfySession.VerfyLoginUser,userController.checkout)
 
 userRouter.post('/addNewAddress',VerfySession.VerfyLoginUser,userController.addnewaddress)
 
-userRouter.get('/categorywise/:id',VerfySession.VerfyLoginUser,userController.cateogrywiseshoppage)
+userRouter.get('/categorywise/:id',userController.cateogrywiseshoppage)
 
 userRouter.post('/placeOrder',VerfySession.VerfyLoginUser,userController.placeOrder)
 

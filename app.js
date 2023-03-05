@@ -46,7 +46,7 @@ app.use(session({
    cookie:{
     maxAge:6000000
      
-   }
+   }  
  
 
 })

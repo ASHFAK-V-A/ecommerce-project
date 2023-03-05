@@ -83,21 +83,19 @@ try{
 
   shop: async (req, res) => {
 try{
-    if (req.session.isUser) {
+ 
 
 
       let category = await categories.find()
       const product = await Products.find({ delete: false }).populate('category')
 
 
-      customer = true
-
 
       res.render('user/shop', { countInCart, profileusername, countInWishlist, product, category })
-    } else {
-      customer = false
-      res.render('user/home')
-    }
+
+    
+
+    
   }catch{
     res.render('partials/404')
   }
@@ -114,9 +112,7 @@ try{
     const product = await Products.find({ category: id }).populate('category')
 
 
-    customer = true
-
-    res.render('user/shop', { product, category, countInCart, countInWishlist, profileusername, customer })
+    res.render('user/shop', { product, category, countInCart, countInWishlist, profileusername,})
 }catch{
   res.render('partials/404')
 }
